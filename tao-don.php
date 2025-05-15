@@ -8,7 +8,6 @@
 </head>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 <script>
 let data = [];
 
@@ -16,11 +15,9 @@ async function loadData() {
   const res = await axios.get("https://provinces.open-api.vn/api/?depth=3");
   data = res.data;
 
-  // Load tỉnh cho cả người gửi và người nhận
   loadTinhOptions("tinh_gui");
   loadTinhOptions("tinh_nhan");
 
-  // Gán sự kiện
   setupAddressSelector("tinh_gui", "huyen_gui", "xa_gui");
   setupAddressSelector("tinh_nhan", "huyen_nhan", "xa_nhan");
 }
@@ -45,6 +42,12 @@ function setupAddressSelector(tinhId, huyenId, xaId) {
     selectedTinh?.districts.forEach(h => {
       huyenSelect.innerHTML += `<option value="${h.code}">${h.name}</option>`;
     });
+
+    // Cập nhật tên tỉnh cho input hidden
+    document.getElementById(tinhId + '_text').value = tinhSelect.selectedOptions[0]?.text || '';
+    // Reset huyện và xã khi thay đổi tỉnh
+    document.getElementById(huyenId + '_text').value = '';
+    document.getElementById(xaId + '_text').value = '';
   });
 
   huyenSelect.addEventListener("change", () => {
@@ -54,12 +57,21 @@ function setupAddressSelector(tinhId, huyenId, xaId) {
     selectedHuyen?.wards.forEach(x => {
       xaSelect.innerHTML += `<option value="${x.code}">${x.name}</option>`;
     });
+
+    // Cập nhật tên huyện cho input hidden
+    document.getElementById(huyenId + '_text').value = huyenSelect.selectedOptions[0]?.text || '';
+    // Reset xã khi thay đổi huyện
+    document.getElementById(xaId + '_text').value = '';
+  });
+
+  xaSelect.addEventListener("change", () => {
+    // Cập nhật tên xã cho input hidden
+    document.getElementById(xaId + '_text').value = xaSelect.selectedOptions[0]?.text || '';
   });
 }
 
 loadData();
 </script>
-
 
 <!-- Thêm CSS cho Leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -80,7 +92,7 @@ loadData();
 
 <div class="container px-4 pb-5">
     <h2 class="mb-4">Tạo đơn hàng mới</h2>
-    <form method="POST">
+    <form action="" method="POST">
         <div class="row g-4">
             <!-- Cột trái -->
             <div class="col-md-5">
@@ -126,8 +138,8 @@ loadData();
                     <!-- Tổng phí vận chuyển -->
                     <div class="mb-0">
                         <label class="form-label">Tổng phí vận chuyển (VNĐ)</label>
-                        <input type="text" name="phi_van_chuyen" class="form-control" id="shippingCost" value="0" readonly>
-                        
+                        <input type="text" class="form-control" id="phi_van_chuyen_hienthi" readonly> <!-- chỉ hiển thị -->
+                        <input type="hidden" name="phi_van_chuyen" id="shippingCost"> <!-- giá trị gửi đi -->    
                     </div>
 
                     <!-- Ngày giao dự kiến -->
@@ -139,7 +151,7 @@ loadData();
                     <!-- Nút submit -->
                     <div class="mb-0">
                         <input type="hidden" name="ma_khach_hang" value="1"> <!-- Gán cứng demo -->
-                        <button type="submit" class="btn btn-primary px-4">Tạo đơn hàng</button>
+                        <button type="submit" class="btn btn-primary px-4" name="tao_don">Tạo đơn hàng</button>
                     </div>
                 </div>
                 </div>
@@ -168,21 +180,20 @@ loadData();
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Tỉnh/Thành phố</label>
-                            <select id="tinh_gui" class="form-select" required></select>
+                            <select id="tinh_gui" name="tinh_gui" class="form-select" required></select>
+                            <input type="hidden" id="tinh_gui_text" name="tinh_gui_text" />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Quận/Huyện</label>
-                            <select id="huyen_gui" class="form-select" required></select>
+                            <select id="huyen_gui" name="huyen_gui" class="form-select" required></select>
+                            <input type="hidden" id="huyen_gui_text" name="huyen_gui_text" />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Xã/Phường</label>
-                            <select id="xa_gui" class="form-select" required></select>
+                            <select id="xa_gui" name="xa_gui" class="form-select" required></select>
+                            <input type="hidden" id="xa_gui_text" name="xa_gui_text" />
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Đường/Thôn/Xóm</label>
-                            <input type="text" name="duong_gui" class="form-control" placeholder="Ấp, đường, xóm, số nhà..." required>
-                        </div>
-
+                       
                         <div class="col-md-6 mb-3">
                             <button type="button" class="btn btn-secondary" onclick="openMapPopup()">Chọn vị trí trên bản đồ</button>
                             <div id="previewLocation" class="text-muted small">
@@ -196,7 +207,7 @@ loadData();
                         <div id="mapModal" style="display:none; position:fixed; z-index:1000; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5)">
                             <div style="width: 80%; height: 80%; margin: 5% auto; background:white; position:relative; border-radius:10px; overflow:hidden;">
                                 <div id="leafletMap" style="width:100%; height:100%"></div>
-                                <button onclick="closeMapPopup()" style="position:absolute; top:10px; right:10px; z-index:1001;" class="btn btn-danger">Đóng</button>
+                                <button type="button" onclick="closeMapPopup()" style="position:absolute; top:10px; right:10px; z-index:1001;" class="btn btn-danger">Đóng</button>
                             </div>
                         </div>
 
@@ -205,10 +216,10 @@ loadData();
                     <div class="mb-3">
                         <label class="form-label">Thời gian hẹn lấy</label>
                         <select name="thoi_gian_hen_lay" class="form-select" required>
-                            <option value="ca_ngay">Cả ngày</option>
-                            <option value="sang">Sáng 8:00 - 12:00</option>
-                            <option value="chieu">Chiều 13:30 - 17:30</option>
-                            <option value="toi">Tối 18:30 - 20:30</option>
+                            <option value="Cả ngày">Cả ngày</option>
+                            <option value="Sáng 8:00 - 12:00">Sáng 8:00 - 12:00</option>
+                            <option value="Chiều 13:30 - 17:30">Chiều 13:30 - 17:30</option>
+                            <option value="Tối 18:30 - 20:30">Tối 18:30 - 20:30</option>
                         </select>
                     </div>
                 </div>
@@ -232,21 +243,20 @@ loadData();
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Tỉnh/Thành phố</label>
-                            <select id="tinh_nhan" class="form-select" required></select>
+                            <select id="tinh_nhan" name="tinh_nhan" class="form-select" required></select>
+                            <input type="hidden" id="tinh_nhan_text" name="tinh_nhan_text" />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Quận/Huyện</label>
-                            <select id="huyen_nhan" class="form-select" required></select>
+                            <select id="huyen_nhan" name="huyen_nhan" class="form-select" required></select>
+                            <input type="hidden" id="huyen_nhan_text" name="huyen_nhan_text" />
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Xã/Phường</label>
-                            <select id="xa_nhan" class="form-select" required></select>
+                            <select id="xa_nhan" name="xa_nhan" class="form-select" required></select>
+                            <input type="hidden" id="xa_nhan_text" name="xa_nhan_text" />
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Đường/Thôn/Xóm</label>
-                            <input type="text" name="duong_nhan" class="form-control" placeholder="Ấp, đường, xóm, số nhà..." required>
-                        </div>
-
+                       
                         <div class="col-md-6 mb-3">
                             <button type="button" class="btn btn-secondary" onclick="openReceiverMapPopup()">Chọn vị trí trên bản đồ</button>
                             <div id="receiverPreviewLocation" class="text-muted small">
@@ -260,7 +270,7 @@ loadData();
                         <div id="receiverMapModal" style="display:none; position:fixed; z-index:1000; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5)">
                             <div style="width: 80%; height: 80%; margin: 5% auto; background:white; position:relative; border-radius:10px; overflow:hidden;">
                                 <div id="receiverLeafletMap" style="width:100%; height:100%"></div>
-                                <button onclick="closeReceiverMapPopup()" style="position:absolute; top:10px; right:10px; z-index:1001;" class="btn btn-danger">Đóng</button>
+                                <button type="button" onclick="closeReceiverMapPopup()" style="position:absolute; top:10px; right:10px; z-index:1001;" class="btn btn-danger">Đóng</button>
                             </div>
                         </div>
 
@@ -277,6 +287,60 @@ loadData();
   
 </body>
 </html>
+
+<?php
+require_once 'controller/cls-khachhang.php'; 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tao_don'])) {
+
+    $tinhNhan = $_POST['tinh_nhan_text'] ?? '';
+    $huyenNhan = $_POST['huyen_nhan_text'] ?? '';
+    $xaNhan = $_POST['xa_nhan_text'] ?? '';
+
+    $tinhGui = $_POST['tinh_gui_text'] ?? '';
+    $huyenGui = $_POST['huyen_gui_text'] ?? '';
+    $xaGui = $_POST['xa_gui_text'] ?? '';
+
+    // Gộp lại địa chỉ mặc định
+    $diaChiNhanMacDinh = "$xaNhan, $huyenNhan, $tinhNhan";
+    $diaChiGuiMacDinh = "$xaGui, $huyenGui, $tinhGui";
+
+    $data = [
+        'ma_don_hang' => uniqid('DH'),  
+        'ten_don_hang' => $_POST['ten_don_hang'],
+        'so_luong' => $_POST['so_luong'],
+        'trong_luong' => $_POST['trong_luong'],
+        'ten_nguoi_gui' => $_POST['ten_nguoi_gui'],
+        'sdt_nguoi_gui' => $_POST['sdt_nguoi_gui'],
+        'ma_khach_hang' => $_POST['ma_khach_hang'],
+        'ten_nguoi_nhan' => $_POST['ten_nguoi_nhan'],
+        'sdt_nguoi_nhan' => $_POST['sdt_nguoi_nhan'],
+        'dia_chi_nguoi_gui' => $_POST['dia_chi_nguoi_gui'],
+        'lat_nguoi_gui' => $_POST['vi_do'],
+        'lng_nguoi_gui' => $_POST['kinh_do'],
+        'dia_chi_nguoi_nhan' => $_POST['dia_chi_nguoi_nhan'],
+        'lat_nguoi_nhan' => $_POST['nguoi_nhan_vi_do'],
+        'lng_nguoi_nhan' => $_POST['nguoi_nhan_kinh_do'],
+        'thu_ho' => $_POST['thu_ho'] ?? 0,
+        'phi_van_chuyen' => isset($_POST['phi_van_chuyen']) ? (int)$_POST['phi_van_chuyen'] : 0,
+        'nguoi_tra_phi' => $_POST['nguoi_tra_phi'],
+        'thoi_gian_hen_lay' => $_POST['thoi_gian_hen_lay'],
+        'ngay_giao_du_kien' => $_POST['ngay_giao_du_kien'],
+        'ghi_chu' => $_POST['ghi_chu'] ?? '',
+        'dia_chi_nguoi_gui_mac_dinh' => $diaChiGuiMacDinh,
+        'dia_chi_nguoi_nhan_mac_dinh' => $diaChiNhanMacDinh,
+    ];
+
+    $kh = new clsKhachhang();
+    if ($kh->themDonHang($data)) {
+        echo "Tạo đơn hàng thành công!";
+    } else {
+        echo "Có lỗi xảy ra khi tạo đơn hàng.";
+    }
+}
+?>
+
+
 
 <script>
 let map, marker;
@@ -346,7 +410,6 @@ function openMapPopup() {
 
 function closeMapPopup() {
   document.getElementById('mapModal').style.display = 'none';
-  calculateShippingCostAndDate();
 }
 </script>
 
@@ -418,7 +481,6 @@ function openReceiverMapPopup() {
 
 function closeReceiverMapPopup() {
   document.getElementById('receiverMapModal').style.display = 'none';
-  calculateShippingCostAndDate();
 }
 </script>
 
@@ -478,7 +540,9 @@ async function calculateShippingCostAndDate() {
         }
     }
 
-    document.getElementById('shippingCost').value = cost.toLocaleString('vi-VN');
+    document.getElementById('phi_van_chuyen_hienthi').value = cost.toLocaleString('vi-VN'); 
+    document.getElementById('shippingCost').value = cost; 
+
 
     // Ước tính ngày giao hàng theo zone
     const today = new Date();
@@ -499,7 +563,7 @@ function handleInputWeight() {
     clearTimeout(weightTimeout);
     weightTimeout = setTimeout(() => {
         calculateShippingCostAndDate();
-    }, 200); // chỉ gọi hàm nếu không gõ gì thêm trong 0.5 giây
+    }, 200); // chỉ gọi hàm nếu không gõ gì thêm trong 0.2 giây
 }
 </script>
 
