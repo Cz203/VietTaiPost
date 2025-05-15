@@ -333,9 +333,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tao_don'])) {
 
     $kh = new clsKhachhang();
     if ($kh->themDonHang($data)) {
-        echo "Tạo đơn hàng thành công!";
+       echo "<script>alert('Tạo đơn hàng thành công!');</script>";
     } else {
-        echo "Có lỗi xảy ra khi tạo đơn hàng.";
+        echo "<script>alert('Có lỗi xảy ra khi tạo đơn hàng.');</script>";
     }
 }
 ?>
