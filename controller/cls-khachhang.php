@@ -59,5 +59,24 @@ class clsKhachhang extends ConnectDB
             return false;
         }
     }
+
+    public function getTatCaBuuCuc()
+    {
+        $conn = $this->connect(); // PDO
+        $stmt = $conn->prepare("SELECT * FROM buu_cuc");
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getBuuCucTheoTimKiem($search)
+    {
+        $conn = $this->connect();
+        $search = "%$search%";
+        $sql = "SELECT * FROM buu_cuc WHERE dia_chi LIKE ? OR xa_huyen_tinh LIKE ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$search, $search]);  // phải truyền 2 phần tử trong mảng
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
