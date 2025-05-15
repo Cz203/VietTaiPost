@@ -47,7 +47,7 @@ if (!empty($search)) {
             </div>
             </form>
 
-            <div class="list-group" style="height: 520px; overflow-y: auto;">
+            <div class="list-group" style="height: 550px; overflow-y: auto;">
                 <?php foreach ($buuCucs as $buuCuc): ?>
                     <div class="list-group-item">
                         <h6 class="mb-1"><?= htmlspecialchars($buuCuc['ten_buu_cuc']) ?></h6>
@@ -65,7 +65,6 @@ if (!empty($search)) {
     </div>
 </div>
 
-
 <script>
     // Khởi tạo bản đồ Leaflet
     var map = L.map('map').setView([10.77584, 106.700806], 13); // trung tâm TP.HCM
@@ -74,6 +73,20 @@ if (!empty($search)) {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+
+    // Tạo mảng lưu marker
+    var markers = [];
+
+    <?php foreach($buuCucs as $row): ?>
+        var marker = L.marker([<?= $row['vi_do'] ?>, <?= $row['kinh_do'] ?>])
+            .bindPopup(`<?= addslashes(htmlspecialchars($row['ten_buu_cuc'])) ?>`);
+        marker.addTo(map);
+        markers.push(marker);
+    <?php endforeach; ?>
+
+    // Tạo nhóm marker và zoom vừa đủ chứa tất cả
+    var group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds());
 </script>
 
 <script>
