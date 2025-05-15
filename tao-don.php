@@ -96,12 +96,12 @@ loadData();
                         <input type="number" name="so_luong" class="form-control" required>
                     </div>
                     <label class="form-label">Trọng lượng gram</label>
-                    <input type="number" name="trong_luong" id="trong_luong" class="form-control" step="0.1" min="0.1" required>
+                    <input type="number" name="trong_luong" id="trong_luong" class="form-control" step="0.1" min="0.1" required oninput="handleInputWeight()">
 
                 </div>
 
                 <!-- Thông tin thanh toán -->
-                <div class="card border rounded-4 p-3 mt-4">
+                <div class="card border rounded-4 p-3 mt-1">
                     <h5>Thanh toán & Ghi chú</h5>
                     <div class="mb-3">
                         <label class="form-label">Tiền thu hộ (VNĐ)</label>
@@ -119,6 +119,31 @@ loadData();
                         <textarea name="ghi_chu" class="form-control"></textarea>
                     </div>
                 </div>
+
+                <div class="card border rounded-4 p-3 mt-1">
+
+                <div class="d-flex align-items-end flex-wrap gap-3">
+                    <!-- Tổng phí vận chuyển -->
+                    <div class="mb-0">
+                        <label class="form-label">Tổng phí vận chuyển (VNĐ)</label>
+                        <input type="text" name="phi_van_chuyen" class="form-control" id="shippingCost" value="0" readonly>
+                        
+                    </div>
+
+                    <!-- Ngày giao dự kiến -->
+                    <div class="mb-0">
+                        <label class="form-label">Ngày giao dự kiến</label>
+                        <input type="text" name="ngay_giao_du_kien" class="form-control" id="deliveryDate" readonly>
+                    </div>
+
+                    <!-- Nút submit -->
+                    <div class="mb-0">
+                        <input type="hidden" name="ma_khach_hang" value="1"> <!-- Gán cứng demo -->
+                        <button type="submit" class="btn btn-primary px-4">Tạo đơn hàng</button>
+                    </div>
+                </div>
+                </div>
+
             </div>
 
             <!-- Cột phải -->   
@@ -126,6 +151,15 @@ loadData();
                 <!-- Thông tin người gửi -->
                 <div class="card border rounded-4 p-3">
                     <h5>Thông tin người gửi</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tên người gửi</label>
+                        <input type="text" name="ten_nguoi_gui" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">SĐT người gửi</label>
+                        <input type="text" name="sdt_nguoi_gui" class="form-control">
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">Địa chỉ người gửi</label>
                         <textarea name="dia_chi_nguoi_gui" class="form-control" placeholder="Ghi đầy đủ và mô tả thêm nếu cần cho shipper dễ định vị hơn" required></textarea>
@@ -180,7 +214,7 @@ loadData();
                 </div>
 
                 <!-- Thông tin người nhận -->
-                <div class="card border rounded-4 p-3 mt-4">
+                <div class="card border rounded-4 p-3 mt-1">
                     <h5>Thông tin người nhận</h5>
                     <div class="mb-3">
                         <label class="form-label">Tên người nhận</label>
@@ -192,7 +226,7 @@ loadData();
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Địa chỉ người nhận</label>
-                        <textarea name="dia_chi_nguoi_nhan" class="form-control" required></textarea>
+                        <textarea name="dia_chi_nguoi_nhan" class="form-control" placeholder="Ghi đầy đủ và mô tả thêm nếu cần cho shipper dễ định vị hơn" required></textarea>
                     </div>  
                     
                     <div class="row">
@@ -234,29 +268,7 @@ loadData();
 
                 </div>
 
-                <div class="card border rounded-4 p-3 mt-1">
-
-                <div class="d-flex align-items-end flex-wrap gap-3">
-                    <!-- Tổng phí vận chuyển -->
-                    <div class="mb-0">
-                        <label class="form-label">Tổng phí vận chuyển (VNĐ)</label>
-                        <input type="text" name="phi_van_chuyen" class="form-control" id="shippingCost" value="0" readonly>
-                        
-                    </div>
-
-                    <!-- Ngày giao dự kiến -->
-                    <div class="mb-0">
-                        <label class="form-label">Ngày giao dự kiến</label>
-                        <input type="text" name="ngay_giao_du_kien" class="form-control" id="deliveryDate" readonly>
-                    </div>
-
-                    <!-- Nút submit -->
-                    <div class="mb-0">
-                        <input type="hidden" name="ma_khach_hang" value="1"> <!-- Gán cứng demo -->
-                        <button type="submit" class="btn btn-primary px-4">Tạo đơn hàng</button>
-                    </div>
-                </div>
-             </div>
+                
 
             </div>
         </div>
@@ -334,6 +346,7 @@ function openMapPopup() {
 
 function closeMapPopup() {
   document.getElementById('mapModal').style.display = 'none';
+  calculateShippingCostAndDate();
 }
 </script>
 
@@ -410,55 +423,109 @@ function closeReceiverMapPopup() {
 </script>
 
 <script>
+async function calculateShippingCostAndDate() {
+    // const senderLat = parseFloat(document.getElementById('vi_do').value);
+    // const senderLng = parseFloat(document.getElementById('kinh_do').value);
+    // const receiverLat = parseFloat(document.getElementById('receiver_vi_do').value);
+    // const receiverLng = parseFloat(document.getElementById('receiver_kinh_do').value);
+    const weight = parseFloat(document.getElementById('trong_luong').value); // gram
 
-
-function calculateShippingCostAndDate() {
-    const senderLat = document.getElementById('vi_do').value;// chua lay duoc 5 gia tri nay
-    const senderLng = document.getElementById('kinh_do').value;
-    const receiverLat = document.getElementById('receiver_vi_do').value;
-    const receiverLng = document.getElementById('receiver_kinh_do').value;
-    const weight = document.getElementById('trong_luong').value;
-
-    console.log(weight);
-    
-    
     const weightKg = weight / 1000;
 
-    // Chỉnh lại URL OSRM, đảm bảo tham số đúng
-    const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${senderLng},${senderLat};${receiverLng},${receiverLat}?overview=false`;
+    // Gọi reverse geocode để lấy tỉnh của người gửi và nhận
+    // const provinceSender = await getProvinceFromCoordinates(senderLat, senderLng);
+    // const provinceReceiver = await getProvinceFromCoordinates(receiverLat, receiverLng);
 
-    console.log("OSRM Request URL:", osrmUrl); // Kiểm tra URL
+    const provinceSender = document.getElementById('tinh_gui').value;
+    const provinceReceiver = document.getElementById('tinh_nhan').value;
 
-    fetch(osrmUrl)
-        .then(response => response.json())
-        .then(data => {
-            console.log("OSRM data:", data);
-            if (data.routes && data.routes.length > 0) {
-                const distance = data.routes[0].distance / 1000; // km
-                const duration = data.routes[0].duration / 3600; // giờ
+    const regionMap = {
+        "Miền Bắc": ["Hà Nội", "Hải Phòng", "Quảng Ninh", "Bắc Ninh", "Bắc Giang", "Vĩnh Phúc", "Hưng Yên", "Hà Nam", "Nam Định", "Ninh Bình", "Thái Bình", "Lạng Sơn", "Cao Bằng", "Bắc Kạn", "Tuyên Quang", "Hà Giang", "Yên Bái", "Lào Cai", "Sơn La", "Lai Châu", "Điện Biên", "Hòa Bình", "Phú Thọ", "Thái Nguyên"],
+        "Miền Trung": ["Thanh Hóa", "Nghệ An", "Hà Tĩnh", "Quảng Bình", "Quảng Trị", "Thừa Thiên Huế", "Đà Nẵng", "Quảng Nam", "Quảng Ngãi", "Bình Định", "Phú Yên", "Khánh Hòa", "Ninh Thuận", "Bình Thuận", "Kon Tum", "Gia Lai", "Đắk Lắk", "Đắk Nông", "Lâm Đồng"],
+        "Miền Nam": ["TP. Hồ Chí Minh", "Bình Dương", "Đồng Nai", "Bà Rịa - Vũng Tàu", "Tây Ninh", "Bình Phước", "Long An", "Tiền Giang", "Bến Tre", "Trà Vinh", "Vĩnh Long", "Đồng Tháp", "An Giang", "Cần Thơ", "Hậu Giang", "Kiên Giang", "Sóc Trăng", "Bạc Liêu", "Cà Mau"]
+    };
 
-                const baseRate = 10000; // mỗi km
-                const weightRate = 2000; // mỗi kg
-
-                const shippingCost = Math.round((baseRate * distance) + (weightRate * weightKg));
-
-                document.getElementById('shippingCost').value = shippingCost.toLocaleString('vi-VN');
-
-                const today = new Date();
-                today.setHours(today.getHours() + duration);
-
-                const deliveryDate = today.toLocaleDateString('vi-VN');
-                document.getElementById('deliveryDate').value = deliveryDate;
-            } else {
-                console.error("Không thể lấy được dữ liệu từ OSRM.");
+    function getRegion(province) {
+        for (let region in regionMap) {
+            if (regionMap[region].includes(province)) {
+                return region;
             }
-        })
-        .catch(error => {
-            console.error("Lỗi khi gọi OSRM API:", error);
-        });
+        }
+        return null;
+    }
+
+    const senderRegion = getRegion(provinceSender);
+    const receiverRegion = getRegion(provinceReceiver);
+
+    let zone = "";
+    if (provinceSender === provinceReceiver) {
+        zone = "nội_tỉnh";
+    } else if (senderRegion === receiverRegion) {
+        zone = "nội_miền";
+    } else {
+        zone = "liên_miền";
+    }
+
+    let cost = 0;
+    if (zone === "nội_tỉnh") {
+        if (weight <= 2000) cost = 17000;
+        else {
+            cost = 17000 + Math.ceil((weight - 1000) / 500) * 2500;
+        }
+    } else if (zone === "nội_miền") {
+        if (weight <= 1000) cost = 21000;
+        else if (weight <= 2000) cost = 25000;
+        else {
+            cost = 25000 + Math.ceil((weight - 2000) / 500) * 3000;
+        }
+    } else if (zone === "liên_miền") {
+        if (weight <= 1000) cost = 21000;
+        else if (weight <= 2000) cost = 26000  ;
+        else {
+            cost = 26000 + Math.ceil((weight - 2000) / 500) * 4500;
+        }
+    }
+
+    document.getElementById('shippingCost').value = cost.toLocaleString('vi-VN');
+
+    // Ước tính ngày giao hàng theo zone
+    const today = new Date();
+    if (zone === "nội_tỉnh") today.setDate(today.getDate() + 2.5);
+    else if (zone === "nội_miền") today.setDate(today.getDate() + 3);
+    else today.setDate(today.getDate() + 4);
+
+    const deliveryDate = today.toLocaleDateString('vi-VN');
+    document.getElementById('deliveryDate').value = deliveryDate;
 }
+
+// Hàm lấy tỉnh từ toạ độ (dùng API Nominatim)
+// async function getProvinceFromCoordinates(lat, lon) {
+//     const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
+//     try {
+//         const response = await fetch(url);
+//         const data = await response.json();
+//         return data.address.state || data.address.city || data.address.province || "Không rõ";
+//     } catch (error) {
+//         console.error("Lỗi lấy tỉnh từ tọa độ:", error);
+//         return "Không rõ";
+//     }
+// }
 
 calculateShippingCostAndDate();
 </script>
 
+<script>
+let weightTimeout;
+function handleInputWeight() {
+    clearTimeout(weightTimeout);
+    weightTimeout = setTimeout(() => {
+        calculateShippingCostAndDate();
+    }, 200); // chỉ gọi hàm nếu không gõ gì thêm trong 0.5 giây
+}
+</script>
+
+<script>
+document.getElementById('tinh_gui').addEventListener('change', calculateShippingCostAndDate);
+document.getElementById('tinh_nhan').addEventListener('change', calculateShippingCostAndDate);
+</script>
 
