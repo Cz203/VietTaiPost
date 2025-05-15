@@ -424,18 +424,10 @@ function closeReceiverMapPopup() {
 
 <script>
 async function calculateShippingCostAndDate() {
-    // const senderLat = parseFloat(document.getElementById('vi_do').value);
-    // const senderLng = parseFloat(document.getElementById('kinh_do').value);
-    // const receiverLat = parseFloat(document.getElementById('receiver_vi_do').value);
-    // const receiverLng = parseFloat(document.getElementById('receiver_kinh_do').value);
-    const weight = parseFloat(document.getElementById('trong_luong').value); // gram
+    
+    const weight = parseFloat(document.getElementById('trong_luong').value); 
 
     const weightKg = weight / 1000;
-
-    // Gọi reverse geocode để lấy tỉnh của người gửi và nhận
-    // const provinceSender = await getProvinceFromCoordinates(senderLat, senderLng);
-    // const provinceReceiver = await getProvinceFromCoordinates(receiverLat, receiverLng);
-
     const provinceSender = document.getElementById('tinh_gui').value;
     const provinceReceiver = document.getElementById('tinh_nhan').value;
 
@@ -497,19 +489,6 @@ async function calculateShippingCostAndDate() {
     const deliveryDate = today.toLocaleDateString('vi-VN');
     document.getElementById('deliveryDate').value = deliveryDate;
 }
-
-// Hàm lấy tỉnh từ toạ độ (dùng API Nominatim)
-// async function getProvinceFromCoordinates(lat, lon) {
-//     const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
-//     try {
-//         const response = await fetch(url);
-//         const data = await response.json();
-//         return data.address.state || data.address.city || data.address.province || "Không rõ";
-//     } catch (error) {
-//         console.error("Lỗi lấy tỉnh từ tọa độ:", error);
-//         return "Không rõ";
-//     }
-// }
 
 calculateShippingCostAndDate();
 </script>
