@@ -78,5 +78,14 @@ class clsKhachhang extends ConnectDB
         $stmt->execute([$search, $search]);  // phải truyền 2 phần tử trong mảng
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function layDonHangKhachHang($ma_khach_hang) 
+    {
+        $conn = $this->connect(); // thêm dòng này để lấy kết nối
+        $sql = "SELECT * FROM don_hang WHERE ma_khach_hang = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ma_khach_hang]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
