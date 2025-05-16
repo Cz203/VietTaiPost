@@ -66,8 +66,7 @@ if (!empty($search)) {
 </div>
 
 <script>
-    // Khởi tạo bản đồ Leaflet
-    var map = L.map('map').setView([10.77584, 106.700806], 13); // trung tâm TP.HCM
+    var map = L.map('map').setView([10.77584, 106.700806], 13); 
 
     // Thêm tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
