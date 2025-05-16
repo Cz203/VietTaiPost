@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2025 at 09:48 PM
+-- Generation Time: May 16, 2025 at 09:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,7 @@ CREATE TABLE `buu_cuc` (
 --
 
 INSERT INTO `buu_cuc` (`id`, `ten_buu_cuc`, `dia_chi`, `xa_huyen_tinh`, `vi_do`, `kinh_do`, `so_dien_thoai`, `thoi_gian_tao`) VALUES
-(1, 'Bưu cục Lê Đức Thọ', '170 Đường Lê Đức Thọ', 'Phường 5, Gò Vấp, Hồ Chí Minh', 10.8361360, 106.6811300, '02838882222', '2025-05-15 18:39:39'),
+(1, 'Bưu cục Lê Đức Thọ', '170 Đường Lê Đức Thọ', 'Phường 5, Gò Vấp, Hồ Chí Minh', 10.8361360, 106.6811300, '028388822223', '2025-05-15 18:39:39'),
 (2, 'Bưu cục Nguyễn Thái Bình', '20 Nguyễn Thái Bình', 'Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh', 10.7731940, 106.6997240, '02838212345', '2025-05-15 18:39:39'),
 (3, 'Bưu cục Lý Chính Thắng', '168 Lý Chính Thắn', 'Phường 7, Quận 3, Hồ Chí Minh', 10.7872910, 106.6825390, '02839393939', '2025-05-15 18:39:39'),
 (4, 'Bưu cục Tôn Đản', '180 Tôn Đản', 'Phường 8, Quận 4, Hồ Chí Minh', 10.7644410, 106.7041140, '02838209191', '2025-05-15 18:39:39'),
@@ -55,7 +55,12 @@ INSERT INTO `buu_cuc` (`id`, `ten_buu_cuc`, `dia_chi`, `xa_huyen_tinh`, `vi_do`,
 (10, 'Bưu cục Minh Phụng', '202 Minh Phụng', 'Phường 6, Quận 11, Hồ Chí Minh', 10.7621640, 106.6451920, '02839696666', '2025-05-15 18:39:39'),
 (11, 'Bưu cục Trường Chinh', '783 Trường Chinh', 'Phường Tây Thạnh, Tân Bình, Hồ Chí Minh', 10.8006910, 106.6200010, '02838446688', '2025-05-15 18:39:39'),
 (12, 'Bưu cục Lũy Bán Bích', '1111 Lũy Bán Bích', 'Phường Tân Thành, Tân Phú, Hồ Chí Minh', 10.7848380, 106.6354480, '02838669977', '2025-05-15 18:39:39'),
-(13, 'Bưu cục Đinh Bộ Lĩnh', '156 Đinh Bộ Lĩnh', 'Phường 26, Bình Thạnh, Hồ Chí Minh', 10.8076430, 106.7091590, '02838994411', '2025-05-15 18:39:39');
+(13, 'Bưu cục Đinh Bộ Lĩnh', '156 Đinh Bộ Lĩnh', 'Phường 26, Bình Thạnh, Hồ Chí Minh', 10.8076430, 106.7091590, '02838994411', '2025-05-15 18:39:39'),
+(14, 'Bưu cục Mỹ Tho', 'Số 123, Đường Ấp Bắc', 'Phường 1, TP Mỹ Tho, tỉnh Tiền Giang', 10.3582300, 106.3548500, '02733881234', '2025-05-16 03:00:00'),
+(15, 'Bưu cục Gò Công Đông', 'Số 104, Đường Nguyễn Trãi', 'Xã Bình An, Huyện Gò Công Đông, tỉnh Tiền Giang', 10.3580561, 106.7375484, '02733661234', '2025-05-16 03:00:00'),
+(16, 'Bưu cục Tân Phước', 'Số 789, ĐT865', 'TT.Mỹ Phước, Huyện Tân Phước, tỉnh Tiền Giang', 10.4770255, 106.1953924, '02733771234', '2025-05-16 03:00:00'),
+(17, 'Bưu cục Chợ Gạo', 'Số 321, Đường 30 tháng 4', 'TT.Chợ Gạo, Huyện Chợ Gạo, tỉnh Tiền Giang', 10.3503430, 106.4641900, '02733441234', '2025-05-16 03:00:00'),
+(18, 'Bưu cục Cai Lậy', 'Số 12, Đường Thanh Tâm', 'TT.Cai Lậy, Thị xã Cai Lậy, tỉnh Tiền Giang', 10.4061585, 106.1193273, '02733551234', '2025-05-16 03:00:00');
 
 -- --------------------------------------------------------
 
@@ -96,7 +101,7 @@ CREATE TABLE `don_hang` (
 --
 
 INSERT INTO `don_hang` (`ma_don_hang`, `ten_don_hang`, `so_luong`, `trong_luong`, `ten_nguoi_gui`, `sdt_nguoi_gui`, `ma_khach_hang`, `ten_nguoi_nhan`, `sdt_nguoi_nhan`, `dia_chi_nguoi_gui`, `dia_chi_nguoi_gui_mac_dinh`, `lat_nguoi_gui`, `lng_nguoi_gui`, `dia_chi_nguoi_nhan`, `dia_chi_nguoi_nhan_mac_dinh`, `lat_nguoi_nhan`, `lng_nguoi_nhan`, `thu_ho`, `trang_thai`, `phi_van_chuyen`, `nguoi_tra_phi`, `ngay_tao`, `thoi_gian_hen_lay`, `ngay_giao_du_kien`, `ghi_chu`) VALUES
-('DH68261025c284f', 'Truyện Cười', 1, 10000, 'Bùi Anh Tài', '123', 1, 'Quốc Việt', '456', '10000', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520405408797245', '106.28664135932924', 'xyz', 'Phường Mỹ Xuyên, Thành phố Long Xuyên, Tỉnh An Giang', '10.378136653741322', '105.43715357780458', 10000, 'chờ xử lý', 73000, 'người nhận', '2025-05-15 23:02:45', 'Cả ngày', '18/5/2025', '10000');
+('DH682773fa3bdcd', 'Đắc Nhân Tâm', 1, 10000, 'Bùi Anh Tài', '123', 1, 'Quốc Việt', '456', 'Số 7 Hẻm 58', 'Phường 12, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.83987705756259', '106.64259101258725', 'Bến đò kinh năng (cũ), ĐT.865', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520312732242738', '106.28609150648118', 20000, 'chờ xử lý', 73000, 'người gửi', '2025-05-17 00:20:58', 'Cả ngày', '20/5/2025', 'Ghi chú');
 
 -- --------------------------------------------------------
 
@@ -114,6 +119,66 @@ CREATE TABLE `khach_hang` (
   `ngay_tao` datetime DEFAULT current_timestamp(),
   `trang_thai` enum('hoat_dong','khoa') DEFAULT 'hoat_dong'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipper`
+--
+
+CREATE TABLE `shipper` (
+  `id` int(11) NOT NULL,
+  `ho_ten` varchar(100) NOT NULL,
+  `so_dien_thoai` varchar(20) NOT NULL,
+  `id_buu_cuc` int(11) NOT NULL,
+  `vi_do` decimal(10,7) DEFAULT NULL,
+  `kinh_do` decimal(10,7) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `shipper`
+--
+
+INSERT INTO `shipper` (`id`, `ho_ten`, `so_dien_thoai`, `id_buu_cuc`, `vi_do`, `kinh_do`) VALUES
+(1, 'Nguyễn Văn A', '0901234567', 1, 10.8365000, 106.6805000),
+(2, 'Trần Thị B', '0902345678', 1, 10.8410000, 106.6860000),
+(3, 'Lê Văn C', '0903456789', 1, 10.8455000, 106.6915000),
+(4, 'Phạm Thị D', '0911234567', 2, 10.7731000, 106.6998000),
+(5, 'Ngô Văn E', '0912345678', 2, 10.7776000, 106.7053000),
+(6, 'Đinh Thị F', '0913456789', 2, 10.7821000, 106.7108000),
+(7, 'Trịnh Văn G', '0921234567', 3, 10.7875000, 106.6822000),
+(8, 'Hoàng Thị H', '0922345678', 3, 10.7920000, 106.6877000),
+(9, 'Phan Văn I', '0923456789', 3, 10.7965000, 106.6932000),
+(10, 'Bùi Thị K', '0931234567', 4, 10.7641000, 106.7040000),
+(11, 'Võ Văn L', '0932345678', 4, 10.7686000, 106.7095000),
+(12, 'Nguyễn Thị M', '0933456789', 4, 10.7731000, 106.7150000),
+(13, 'Trần Văn N', '0941234567', 5, 10.7541000, 106.6650000),
+(14, 'Lê Thị O', '0942345678', 5, 10.7586000, 106.6705000),
+(15, 'Phạm Văn P', '0943456789', 5, 10.7631000, 106.6760000),
+(16, 'Vũ Thị Q', '0951234567', 6, 10.7469000, 106.6308000),
+(17, 'Đặng Văn R', '0952345678', 6, 10.7514000, 106.6363000),
+(18, 'Nguyễn Thị S', '0953456789', 6, 10.7559000, 106.6418000),
+(19, 'Lý Văn T', '0961234567', 7, 10.7345000, 106.7142000),
+(20, 'Tô Thị U', '0962345678', 7, 10.7390000, 106.7197000),
+(21, 'Cao Văn V', '0963456789', 7, 10.7435000, 106.7252000),
+(22, 'Hồ Thị X', '0971234567', 8, 10.7396000, 106.6824000),
+(23, 'Châu Văn Y', '0972345678', 8, 10.7441000, 106.6879000),
+(24, 'Phùng Thị Z', '0973456789', 8, 10.7486000, 106.6934000),
+(25, 'Ngô Văn AA', '0981234567', 9, 10.7709000, 106.6675000),
+(26, 'Trịnh Thị BB', '0982345678', 9, 10.7754000, 106.6730000),
+(27, 'Lê Văn CC', '0983456789', 9, 10.7799000, 106.6785000),
+(28, 'Đào Thị DD', '0991234567', 10, 10.7622000, 106.6453000),
+(29, 'Nguyễn Văn EE', '0992345678', 10, 10.7667000, 106.6508000),
+(30, 'Trần Thị FF', '0993456789', 10, 10.7712000, 106.6563000),
+(31, 'Phạm Văn GG', '0909123456', 11, 10.8005000, 106.6198000),
+(32, 'Hoàng Thị HH', '0909234567', 11, 10.8050000, 106.6253000),
+(33, 'Vũ Văn II', '0909345678', 11, 10.8095000, 106.6308000),
+(34, 'Nguyễn Văn JJ', '0909456789', 12, 10.7849000, 106.6351000),
+(35, 'Trần Thị KK', '0909567890', 12, 10.7894000, 106.6406000),
+(36, 'Lê Văn LL', '0909678901', 12, 10.7939000, 106.6461000),
+(37, 'Phan Thị MM', '0909789012', 13, 10.8075000, 106.7090000),
+(38, 'Bùi Văn NN', '0909890123', 13, 10.8120000, 106.7145000),
+(39, 'Nguyễn Thị OO', '0909901234', 13, 10.8165000, 106.7200000);
 
 -- --------------------------------------------------------
 
@@ -152,6 +217,12 @@ ALTER TABLE `khach_hang`
   ADD PRIMARY KEY (`ma_khach_hang`);
 
 --
+-- Indexes for table `shipper`
+--
+ALTER TABLE `shipper`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `van_don`
 --
 ALTER TABLE `van_don`
@@ -166,13 +237,19 @@ ALTER TABLE `van_don`
 -- AUTO_INCREMENT for table `buu_cuc`
 --
 ALTER TABLE `buu_cuc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `khach_hang`
 --
 ALTER TABLE `khach_hang`
   MODIFY `ma_khach_hang` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `shipper`
+--
+ALTER TABLE `shipper`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `van_don`
