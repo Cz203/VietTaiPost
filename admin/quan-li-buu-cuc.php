@@ -119,10 +119,17 @@ if ($search !== '') {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
+    var Icon = L.icon({
+        iconUrl: '../asset/img/home.png', // thay bằng ảnh icon PNG thật sự
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+    });
+
     var markers = [];
 
     <?php foreach ($buuCucs as $row): ?>
-        var marker = L.marker([<?= $row['vi_do'] ?>, <?= $row['kinh_do'] ?>])
+        var marker = L.marker([<?= $row['vi_do'] ?>, <?= $row['kinh_do'] ?>], { icon: Icon })
             .bindPopup(`<strong><?= addslashes(htmlspecialchars($row['ten_buu_cuc'])) ?></strong><br>
                 <?= addslashes(htmlspecialchars($row['dia_chi'] . ', ' . $row['xa_huyen_tinh'])) ?><br>
                 📞 <?= addslashes(htmlspecialchars($row['so_dien_thoai'] ?? 'Không có')) ?>`);

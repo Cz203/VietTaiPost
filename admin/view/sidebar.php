@@ -17,15 +17,23 @@
           Quản lí đơn hàng
         </a>
       </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          Quản lí nhân viên
-        </a>
+      <hr>
+
+      <li class="nav-item">
+        <span class="nav-link text-white"><b>Shipper</b></span>
+        <ul style="list-style:none; padding-left: 1rem; margin-top: 0.5rem;">
+          <li>
+            <a class="nav-link text-white" href="vi-tri-shipper.php">Vị trí shipper</a>
+          </li>
+          <li>
+            <a class="nav-link text-white" href="#">Quản lí shipper</a>
+          </li>
+        </ul>
       </li>
       <hr>
+
       <li class="nav-item">
-        <span class="nav-link text-white">Bưu cục</span>
+        <span class="nav-link text-white"><b>Bưu cục</b></span>
         <ul style="list-style:none; padding-left: 1rem; margin-top: 0.5rem;">
           <li>
             <a class="nav-link text-white" href="them-buu-cuc.php">Thêm bưu cục</a>

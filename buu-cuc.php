@@ -72,11 +72,17 @@ if (!empty($search)) {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Tạo mảng lưu marker
+    var Icon = L.icon({
+        iconUrl: 'asset/img/home.png', // thay bằng ảnh icon PNG thật sự
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+    });
+
     var markers = [];
 
     <?php foreach($buuCucs as $row): ?>
-        var marker = L.marker([<?= $row['vi_do'] ?>, <?= $row['kinh_do'] ?>])
+        var marker = L.marker([<?= $row['vi_do'] ?>, <?= $row['kinh_do'] ?>],{ icon: Icon })
             .bindPopup(`<?= addslashes(htmlspecialchars($row['ten_buu_cuc'])) ?>`);
         marker.addTo(map);
         markers.push(marker);
@@ -89,7 +95,7 @@ if (!empty($search)) {
 
 <script>
 <?php foreach($buuCucs as $row): ?>
-    L.marker([<?= $row['vi_do'] ?>, <?= $row['kinh_do'] ?>]).addTo(map)
+    L.marker([<?= $row['vi_do'] ?>, <?= $row['kinh_do'] ?>],{ icon: Icon }).addTo(map)
         .bindPopup(`<?= addslashes('<strong>' . htmlspecialchars($row['ten_buu_cuc']) 
         . '</strong><hr>
         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>' . htmlspecialchars($row['dia_chi']) 

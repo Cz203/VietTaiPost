@@ -54,6 +54,25 @@ class clsAdmin extends ConnectDB
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //shipper
+    public function getTatCaShipper() 
+    {
+        $conn = $this->connect();
+        $sql = "SELECT s.*, b.ten_buu_cuc FROM shipper s
+            LEFT JOIN buu_cuc b ON s.id_buu_cuc = b.id";
+        return $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function timShipper($keyword) 
+    {
+        $conn = $this->connect();
+        $sql = "SELECT s.*, b.ten_buu_cuc FROM shipper s
+            LEFT JOIN buu_cuc b ON s.id_buu_cuc = b.id
+            WHERE s.ho_ten LIKE :kw OR b.ten_buu_cuc LIKE :kw";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['kw' => '%' . $keyword . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
 
