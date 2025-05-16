@@ -1,6 +1,7 @@
 <?php
 require_once '../controller/cls-admin.php';
 $admin = new clsAdmin();
+$thongBao = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ten = $_POST['ten_buu_cuc'];
@@ -10,9 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kinh_do = $_POST['kinh_do'];
     $sdt = $_POST['so_dien_thoai'];
 
-    $admin->themBuuCuc($ten, $dia_chi, $xa_huyen_tinh, $vi_do, $kinh_do, $sdt);
-    header("Location: quan-li-buu-cuc.php");
-    exit();
+    
+   if ($admin->themBuuCuc($ten, $dia_chi, $xa_huyen_tinh, $vi_do, $kinh_do, $sdt)) {
+        $thongBao = "Thêm bưu cục thành công!";
+    } else {
+        $thongBao = "Thêm thất bại. Vui lòng kiểm tra lại thông tin.";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -29,6 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="main-content">
 <?php require_once 'view/header.php'; ?>
+
+<?php if ($thongBao): ?>
+    <div class="alert alert-info alert-dismissible fade show mx-4 my-3" role="alert">
+        <?= htmlspecialchars($thongBao) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
 
 <div class="container py-4 card border rounded-4 p-3">
     <h3 class="mb-4">Thêm bưu cục mới</h3>
@@ -216,3 +227,4 @@ function selectOptionByText(selectId, text) {
 
 </body>
 </html>
+

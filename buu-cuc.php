@@ -68,7 +68,6 @@ if (!empty($search)) {
 <script>
     var map = L.map('map').setView([10.77584, 106.700806], 13); 
 
-    // Thêm tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
