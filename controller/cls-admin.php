@@ -74,6 +74,30 @@ class clsAdmin extends ConnectDB
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //don hang
+
+    public function layTatCaDonHang() {
+        $conn = $this->connect();
+        $sql = "SELECT * FROM don_hang"; 
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function layDonTheoTrangThai($trang_thai) {
+        $conn = $this->connect();
+        $sql = "SELECT * FROM don_hang WHERE trang_thai = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$trang_thai]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function capNhatTrangThaiDon($ma_don, $trang_thai_moi) {
+        $conn = $this->connect();
+        $sql = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute([$trang_thai_moi, $ma_don]);
+    }
 }
 
 ?>

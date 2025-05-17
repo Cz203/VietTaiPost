@@ -11,11 +11,16 @@
           Trang chủ
         </a>
       </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-          Quản lí đơn hàng
-        </a>
+       <li class="nav-item">
+        <span class="nav-link text-white"><b>Đơn hàng</b></span>
+        <ul style="list-style:none; padding-left: 1rem; margin-top: 0.5rem;">
+          <li>
+            <a class="nav-link text-white" href="duyet-don.php">Đợi duyệt</a>
+          </li>
+          <li>
+            <a class="nav-link text-white" href="don-hang.php">Danh sách đơn hàng</a>
+          </li>
+        </ul>
       </li>
       <hr>
 
