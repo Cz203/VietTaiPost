@@ -92,12 +92,61 @@ class clsAdmin extends ConnectDB
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // public function capNhatTrangThaiDon($ma_don, $trang_thai_moi) {
+    //     $conn = $this->connect();
+    //     $sql = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
+    //     $stmt = $conn->prepare($sql);
+    //     return $stmt->execute([$trang_thai_moi, $ma_don]);
+    // }
+
     public function capNhatTrangThaiDon($ma_don, $trang_thai_moi) {
-        $conn = $this->connect();
-        $sql = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
-        $stmt = $conn->prepare($sql);
+    $conn = $this->connect();
+
+    // Nếu là duyệt đơn, thì cần insert vào bảng vận đơn
+    if ($trang_thai_moi === 'duyệt') 
+    {
+        $stmt = $conn->prepare("SELECT * FROM don_hang WHERE ma_don_hang = ?");
+        $stmt->execute([$ma_don]);
+        $don = $stmt->fetch();
+
+        if (!$don) return false;
+
+        // Lấy vị trí người gửi
+        $lat = $don['lat_nguoi_gui'];
+        $lng = $don['lng_nguoi_gui'];
+
+        // Tìm shipper gần nhất
+        $stmt = $conn->prepare("SELECT id, id_buu_cuc, SQRT(POW(vi_do - ?, 2) + POW(kinh_do - ?, 2)) AS distance
+                                FROM shipper
+                                ORDER BY distance ASC LIMIT 1");
+        $stmt->execute([$lat, $lng]);
+        $shipper = $stmt->fetch();
+
+        if (!$shipper) return false;
+
+        $id_shipper = $shipper['id'];
+
+        // Giả sử admin đang đăng nhập có id_buu_cuc = 1
+        $id_buu_cuc = $shipper['id_buu_cuc'];
+
+        // Lịch sử vận đơn
+        $now = date("H:i d/m/Y");
+        $lich_su = "$now: Đơn hàng đã được duyệt, chờ shipper tới lấy";
+
+        // Tạo vận đơn
+        $stmt = $conn->prepare("INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat)
+                                VALUES (?, ?, ?, 'đợi lấy hàng', ?, NOW())");
+        $stmt->execute([$ma_don, $id_shipper, $id_buu_cuc, $lich_su]);
+
+        // Cập nhật trạng thái đơn hàng
+        $stmt = $conn->prepare("UPDATE don_hang SET trang_thai = 'chờ shipper tới lấy' WHERE ma_don_hang = ?");
+        return $stmt->execute([$ma_don]);
+    } else {
+        // Trường hợp khác: chỉ cập nhật trạng thái đơn hàng
+        $stmt = $conn->prepare("UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?");
         return $stmt->execute([$trang_thai_moi, $ma_don]);
     }
+}
 }
 
 ?>

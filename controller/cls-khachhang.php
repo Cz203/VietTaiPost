@@ -3,6 +3,7 @@ include(__DIR__ . '/../config/connectdb.php');
 
 class clsKhachhang extends ConnectDB
 {
+    //tao don
     public function themDonHang($data)
     {
         $conn = $this->connect(); 
@@ -60,6 +61,7 @@ class clsKhachhang extends ConnectDB
         }
     }
 
+    //buu cuc
     public function getTatCaBuuCuc()
     {
         $conn = $this->connect(); // PDO
@@ -75,17 +77,30 @@ class clsKhachhang extends ConnectDB
         $search = "%$search%";
         $sql = "SELECT * FROM buu_cuc WHERE dia_chi LIKE ? OR xa_huyen_tinh LIKE ?";
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$search, $search]);  // phải truyền 2 phần tử trong mảng
+        $stmt->execute([$search, $search]);  
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    //don hanghang
     public function layDonHangKhachHang($ma_khach_hang) 
     {
-        $conn = $this->connect(); // thêm dòng này để lấy kết nối
+        $conn = $this->connect(); 
         $sql = "SELECT * FROM don_hang WHERE ma_khach_hang = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$ma_khach_hang]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function layVanDonTheoMaDon($ma_don_hang) 
+    {
+        $conn = $this->connect();
+        $stmt = $conn->prepare("SELECT vd.*, s.ho_ten AS ten_shipper, s.so_dien_thoai AS sdt_shipper
+                                FROM van_don vd
+                                LEFT JOIN shipper s ON vd.id_shipper = s.id
+                                WHERE vd.ma_don_hang = ?
+                                ORDER BY vd.thoi_gian_cap_nhat ASC");
+        $stmt->execute([$ma_don_hang]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>

@@ -11,7 +11,7 @@
 <?php 
 require_once '../controller/cls-admin.php';
 $admin = new clsAdmin();
-$don_cho_xu_ly = $admin->layDonTheoTrangThai("Chờ xử lý"); // Cần hàm này trong cls-admin4
+$don_cho_xu_ly = $admin->layDonTheoTrangThai("chờ xử lý"); // Cần hàm này trong cls-admin4
 
 $thong_bao = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         $admin = new clsAdmin();
 
         if ($action === 'duyet') {
-            $admin->capNhatTrangThaiDon($ma_don, 'chờ shipper tới lấy');
+            $admin->capNhatTrangThaiDon($ma_don, 'duyệt');
             $thong_bao = 'Đã duyệt đơn hàng thành công.';
         } elseif ($action === 'huy') {
             $admin->capNhatTrangThaiDon($ma_don, 'hủy');
