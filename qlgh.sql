@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2025 at 01:10 PM
+-- Generation Time: May 20, 2025 at 07:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -88,7 +88,7 @@ CREATE TABLE `don_hang` (
   `lat_nguoi_nhan` text NOT NULL,
   `lng_nguoi_nhan` text DEFAULT NULL,
   `thu_ho` int(20) DEFAULT NULL,
-  `trang_thai` enum('chờ xử lý','chờ shipper tới lấy','đang giao','đã giao','hủy') DEFAULT 'chờ xử lý',
+  `trang_thai` enum('chờ xử lý','chờ shipper tới lấy','đã lấy hàng','đang giao','đã giao','hủy') DEFAULT 'chờ xử lý',
   `phi_van_chuyen` int(10) DEFAULT 0,
   `nguoi_tra_phi` varchar(100) DEFAULT NULL,
   `ngay_tao` datetime DEFAULT current_timestamp(),
@@ -102,7 +102,9 @@ CREATE TABLE `don_hang` (
 --
 
 INSERT INTO `don_hang` (`ma_don_hang`, `ten_don_hang`, `so_luong`, `trong_luong`, `ten_nguoi_gui`, `sdt_nguoi_gui`, `ma_khach_hang`, `ten_nguoi_nhan`, `sdt_nguoi_nhan`, `dia_chi_nguoi_gui`, `dia_chi_nguoi_gui_mac_dinh`, `lat_nguoi_gui`, `lng_nguoi_gui`, `dia_chi_nguoi_nhan`, `dia_chi_nguoi_nhan_mac_dinh`, `lat_nguoi_nhan`, `lng_nguoi_nhan`, `thu_ho`, `trang_thai`, `phi_van_chuyen`, `nguoi_tra_phi`, `ngay_tao`, `thoi_gian_hen_lay`, `ngay_giao_du_kien`, `ghi_chu`) VALUES
-('DH682773fa3bdcd', 'Đắc Nhân Tâm', 1, 10000, 'Bùi Anh Tài', '123', 1, 'Quốc Việt', '456', 'Số 7 Hẻm 58', 'Phường 12, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.83987705756259', '106.64259101258725', 'Bến đò kinh năng (cũ), ĐT.865', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520312732242738', '106.28609150648118', 20000, 'chờ shipper tới lấy', 73000, 'người gửi', '2025-05-17 00:20:58', 'Cả ngày', '20/5/2025', 'Ghi chú');
+('DH682773fa3bdcd', 'Đắc Nhân Tâm', 1, 10000, 'Bùi Anh Tài', '123', 1, 'Quốc Việt', '456', 'Số 7 Hẻm 58', 'Phường 12, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.83987705756259', '106.64259101258725', 'Bến đò kinh năng (cũ), ĐT.865', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520312732242738', '106.28609150648118', 20000, 'đã lấy hàng', 73000, 'người gửi', '2025-05-17 00:20:58', 'Cả ngày', '20/5/2025', 'Ghi chú'),
+('DH682ca0362a280', 'Cốc giữ nhiệt', 1, 200, 'Bùi Anh Tài Em', '123123123', 1, 'Đinh Quốc Kiệt', '321312321', '40 Đ. Trần Thái Tông ', 'Phường 15, Quận Tân Bình, Thành phố Hồ Chí Minh', '10.818346761214785', '106.63289040327074', 'Ủy ban nhân dân xã Hưng Thạnh', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.521277663055036', '106.28678351640703', 400000, 'đang giao', 21000, 'người nhận', '2025-05-20 22:31:02', 'Cả ngày', '23/5/2025', 'cốc'),
+('DH682cb7564930f', 'Tai nghe', 1, 1000, 'Bùi Văn Long', '4356121331', 1, 'Cao Mỹ Lệ', '567214967', '55 Đ. Phạm Văn Bạch', 'Phường 15, Quận Tân Bình, Thành phố Hồ Chí Minh', '10.815027097826146', '106.63443535566333', 'Tạp Hóa Dũng Thanh', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.52067635217251', '106.28718584775928', 0, 'chờ shipper tới lấy', 21000, 'người nhận', '2025-05-21 00:09:42', 'Cả ngày', '24/5/2025', '1');
 
 -- --------------------------------------------------------
 
@@ -204,7 +206,12 @@ CREATE TABLE `van_don` (
 --
 
 INSERT INTO `van_don` (`ma_van_don`, `ma_don_hang`, `id_shipper`, `id_buu_cuc`, `trang_thai`, `lich_su`, `thoi_gian_cap_nhat`, `ghi_chu`) VALUES
-(1, 'DH682773fa3bdcd', 33, 11, 'đợi lấy hàng', '13:31 17/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-17 18:31:45', NULL);
+(1, 'DH682773fa3bdcd', 33, 11, 'đợi lấy hàng', '13:31 17/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-17 18:31:45', NULL),
+(2, 'DH682ca0362a280', 33, 11, 'đợi lấy hàng', '17:31 20/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-20 22:31:19', NULL),
+(5, 'DH682ca0362a280', 33, 11, 'đã lấy hàng', '2025-05-20 18:24:27 - Đơn hàng đã được shipper lấy', '2025-05-20 23:24:27', NULL),
+(6, 'DH682ca0362a280', 33, 11, 'đang giao', '2025-05-20 18:53:31 - Đơn hàng của bạn đang ở bưu cục Bưu cục Trường Chinh', '2025-05-20 23:53:31', NULL),
+(10, 'DH682773fa3bdcd', 33, 11, 'đã lấy hàng', '2025-05-20 19:04:56 - Đơn hàng đã được shipper lấy', '2025-05-21 00:04:56', NULL),
+(11, 'DH682cb7564930f', 33, 11, 'đợi lấy hàng', '19:10 20/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-21 00:10:07', NULL);
 
 --
 -- Indexes for dumped tables
@@ -266,7 +273,7 @@ ALTER TABLE `shipper`
 -- AUTO_INCREMENT for table `van_don`
 --
 ALTER TABLE `van_don`
-  MODIFY `ma_van_don` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ma_van_don` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
