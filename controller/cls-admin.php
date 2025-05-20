@@ -84,6 +84,18 @@ class clsAdmin extends ConnectDB
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function layVanDonTheoMaDon($ma_don_hang) 
+    {
+        $conn = $this->connect();
+        $stmt = $conn->prepare("SELECT vd.*, s.ho_ten AS ten_shipper, s.so_dien_thoai AS sdt_shipper
+                                FROM van_don vd
+                                LEFT JOIN shipper s ON vd.id_shipper = s.id
+                                WHERE vd.ma_don_hang = ?
+                                ORDER BY vd.thoi_gian_cap_nhat ASC");
+        $stmt->execute([$ma_don_hang]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function layDonTheoTrangThai($trang_thai) {
         $conn = $this->connect();
         $sql = "SELECT * FROM don_hang WHERE trang_thai = ?";
@@ -92,12 +104,6 @@ class clsAdmin extends ConnectDB
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // public function capNhatTrangThaiDon($ma_don, $trang_thai_moi) {
-    //     $conn = $this->connect();
-    //     $sql = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
-    //     $stmt = $conn->prepare($sql);
-    //     return $stmt->execute([$trang_thai_moi, $ma_don]);
-    // }
 
     public function capNhatTrangThaiDon($ma_don, $trang_thai_moi) {
     $conn = $this->connect();

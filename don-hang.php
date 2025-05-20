@@ -104,15 +104,19 @@ $don_hangs = $kh->layDonHangKhachHang($ma_khach_hang);
                                                     break;
                                                 case 'đã lấy hàng':
                                                     $hasTracking = true;
-                                                    echo "<p><strong>✅ Đã lấy hàng:</strong><br>📌 {$vd['lich_su']}</p><hr>";
+                                                    echo "<p><strong>✅ Đã lấy hàng:</strong><br>📌 {$vd['lich_su']}<br>👤 Shipper: {$vd['ten_shipper']} ({$vd['sdt_shipper']})</p><hr>";
                                                     break;
                                                 case 'đang giao':
                                                     $hasTracking = true;
-                                                    echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br><small>{$vd['thoi_gian_cap_nhat']}</small></p><hr>";
+                                                    echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br></p><hr>";
                                                     break;
                                                 case 'đã giao':
                                                     $hasTracking = true;
                                                     echo "<p><strong>🎉 Đã giao thành công:</strong><br>📌 {$vd['lich_su']}</p>";
+                                                    break;
+                                                case 'hủy':
+                                                    $hasTracking = true;
+                                                    echo "<p><strong> Đơn hàng đã bị hủy:</strong><br>📌 {$vd['lich_su']}</p>";
                                                     break;
                                             }
                                         }

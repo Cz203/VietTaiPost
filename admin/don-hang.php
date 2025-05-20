@@ -59,24 +59,68 @@ $tat_ca_don_hang = $admin->layTatCaDonHang();
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
                             </div>
                             <div class="modal-body">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"><strong>Tên đơn hàng:</strong> <?= $don['ten_don_hang'] ?></li>
-                                    <li class="list-group-item"><strong>Số lượng:</strong> <?= $don['so_luong'] ?></li>
-                                    <li class="list-group-item"><strong>Trọng lượng:</strong> <?= $don['trong_luong'] ?> gram</li>
-                                    <li class="list-group-item"><strong>Người gửi:</strong> <?= $don['ten_nguoi_gui'] ?> (<?= $don['sdt_nguoi_gui'] ?>)</li>
-                                    <li class="list-group-item"><strong>Địa chỉ gửi:</strong> <?= $don['dia_chi_nguoi_gui'] ?> - <?= $don['dia_chi_nguoi_gui_mac_dinh'] ?></li>
-                                    <li class="list-group-item"><strong>Người nhận:</strong> <?= $don['ten_nguoi_nhan'] ?> (<?= $don['sdt_nguoi_nhan'] ?>)</li>
-                                    <li class="list-group-item"><strong>Địa chỉ nhận:</strong> <?= $don['dia_chi_nguoi_nhan'] ?> - <?= $don['dia_chi_nguoi_nhan_mac_dinh'] ?></li>
-                                    <li class="list-group-item"><strong>Thu hộ:</strong> <?= number_format($don['thu_ho']) ?>đ</li>
-                                    <li class="list-group-item"><strong>Phí vận chuyển:</strong> <?= number_format($don['phi_van_chuyen']) ?>đ</li>
-                                    <li class="list-group-item"><strong>Người trả phí:</strong> <?= $don['nguoi_tra_phi'] ?></li>
-                                    <li class="list-group-item"><strong>Trạng thái:</strong> <?= $don['trang_thai'] ?></li>
-                                    <li class="list-group-item"><strong>Ngày tạo:</strong> <?= $don['ngay_tao'] ?></li>
-                                    <li class="list-group-item"><strong>Thời gian hẹn lấy:</strong> <?= $don['thoi_gian_hen_lay'] ?></li>
-                                    <li class="list-group-item"><strong>Ngày giao dự kiến:</strong> <?= $don['ngay_giao_du_kien'] ?></li>
-                                    <li class="list-group-item"><strong>Ghi chú:</strong> <?= $don['ghi_chu'] ?></li>
-                                </ul>
+                                <div class="row">
+
+                                    <div class = "col-md-7">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><strong>Tên đơn hàng:</strong> <?= $don['ten_don_hang'] ?></li>
+                                        <li class="list-group-item"><strong>Số lượng:</strong> <?= $don['so_luong'] ?></li>
+                                        <li class="list-group-item"><strong>Trọng lượng:</strong> <?= $don['trong_luong'] ?> gram</li>
+                                        <li class="list-group-item"><strong>Người gửi:</strong> <?= $don['ten_nguoi_gui'] ?> (<?= $don['sdt_nguoi_gui'] ?>)</li>
+                                        <li class="list-group-item"><strong>Địa chỉ gửi:</strong> <?= $don['dia_chi_nguoi_gui'] ?> - <?= $don['dia_chi_nguoi_gui_mac_dinh'] ?></li>
+                                        <li class="list-group-item"><strong>Người nhận:</strong> <?= $don['ten_nguoi_nhan'] ?> (<?= $don['sdt_nguoi_nhan'] ?>)</li>
+                                        <li class="list-group-item"><strong>Địa chỉ nhận:</strong> <?= $don['dia_chi_nguoi_nhan'] ?> - <?= $don['dia_chi_nguoi_nhan_mac_dinh'] ?></li>
+                                        <li class="list-group-item"><strong>Thu hộ:</strong> <?= number_format($don['thu_ho']) ?>đ</li>
+                                        <li class="list-group-item"><strong>Phí vận chuyển:</strong> <?= number_format($don['phi_van_chuyen']) ?>đ</li>
+                                        <li class="list-group-item"><strong>Người trả phí:</strong> <?= $don['nguoi_tra_phi'] ?></li>
+                                        <li class="list-group-item"><strong>Trạng thái:</strong> <?= $don['trang_thai'] ?></li>
+                                        <li class="list-group-item"><strong>Ngày tạo:</strong> <?= $don['ngay_tao'] ?></li>
+                                        <li class="list-group-item"><strong>Thời gian hẹn lấy:</strong> <?= $don['thoi_gian_hen_lay'] ?></li>
+                                        <li class="list-group-item"><strong>Ngày giao dự kiến:</strong> <?= $don['ngay_giao_du_kien'] ?></li>
+                                        <li class="list-group-item"><strong>Ghi chú:</strong> <?= $don['ghi_chu'] ?></li>
+                                    </ul>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="card border shadow-sm">
+                                            <div class="card-header bg-primary text-white">Theo dõi kiện hàng</div>
+                                            <div class="card-body">
+                                                <?php
+                                                $van_dons = $admin->layVanDonTheoMaDon($don['ma_don_hang']);
+                                                $hasTracking = false;
+
+                                                foreach ($van_dons as $vd) {
+                                                    switch ($vd['trang_thai']) {
+                                                        case 'đợi lấy hàng':
+                                                            $hasTracking = true;
+                                                            echo "<p><strong>🕐 Đợi lấy hàng:</strong><br>📌 {$vd['lich_su']}<br>👤 Shipper: {$vd['ten_shipper']} ({$vd['sdt_shipper']})</p><hr>";
+                                                            break;
+                                                        case 'đã lấy hàng':
+                                                            $hasTracking = true;
+                                                            echo "<p><strong>✅ Đã lấy hàng:</strong><br>📌 {$vd['lich_su']}</p><hr>";
+                                                            break;
+                                                        case 'đang giao':
+                                                            $hasTracking = true;
+                                                            echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br><small>{$vd['thoi_gian_cap_nhat']}</small></p><hr>";
+                                                            break;
+                                                        case 'đã giao':
+                                                            $hasTracking = true;
+                                                            echo "<p><strong>🎉 Đã giao thành công:</strong><br>📌 {$vd['lich_su']}</p>";
+                                                            break;
+                                                    }
+                                                }
+
+                                                if (!$hasTracking) {
+                                                    echo "<p class='text-muted'>Chưa có thông tin theo dõi.</p>";
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
                             </div>
+
+                            
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             </div>
@@ -86,7 +130,8 @@ $tat_ca_don_hang = $admin->layTatCaDonHang();
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
+</div>
+
 
 
 </body>

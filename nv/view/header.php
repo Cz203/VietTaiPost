@@ -1,5 +1,8 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (!isset($_SESSION['shipper'])) {
     header("Location: login.php");
     exit();
@@ -7,6 +10,7 @@ if (!isset($_SESSION['shipper'])) {
 
 $shipper = $_SESSION['shipper'];
 ?>
+
 <div class="px-3 py-2 border-bottom mb-3 shadow-sm bg-white">
       <div class="container d-flex flex-wrap justify-content-end">
         <div class="text-end">

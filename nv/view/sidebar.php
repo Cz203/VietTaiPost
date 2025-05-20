@@ -17,11 +17,32 @@
           <li>
             <a class="nav-link text-white" href="don-hang-trong-bc.php">Đơn hàng trong bưu cục</a>
           </li>
+          <!-- <li>
+            <a class="nav-link text-white" href="don-hang-can-lay.php">Đơn hàng cần lấy</a>
+          </li> -->
+         
+          <?php 
+          if (session_status() == PHP_SESSION_NONE) {
+              session_start();
+          }
+          $shipper = $_SESSION['shipper'] ?? null;
+          require_once '../controller/cls-shipper.php';
+          $donhang = new clsShipper();
+          $tat_ca_don_hang = $donhang->layTatCaDonHang();
+          $so_don = $donhang->demDonHangCanLay($shipper['id']);
+          ?>
+
           <li>
-            <a class="nav-link text-white" href="don-hang.php">Đơn hàng cần lấy</a>
+            <a class="nav-link text-white d-flex align-items-center justify-content-between" href="don-hang-can-lay.php">
+              Đơn hàng cần lấy
+              <?php if ($so_don > 0): ?>
+                <span class="badge bg-danger ms-2"><?= $so_don ?></span>
+              <?php endif; ?>
+            </a>
           </li>
+
            <li>
-            <a class="nav-link text-white" href="don-hang.php">Đơn hàng cần giao</a>
+            <a class="nav-link text-white" href="don-hang-can-giao.php">Đơn hàng cần giao</a>
           </li>
         </ul>
       </li>
