@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2025 at 07:20 PM
+-- Generation Time: May 22, 2025 at 09:37 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `qlgh`
+-- Database: `qlgh1`
 --
 
 -- --------------------------------------------------------
@@ -43,25 +43,25 @@ CREATE TABLE `buu_cuc` (
 --
 
 INSERT INTO `buu_cuc` (`id`, `ten_buu_cuc`, `dia_chi`, `xa_huyen_tinh`, `vi_do`, `kinh_do`, `so_dien_thoai`, `thoi_gian_tao`) VALUES
-(1, 'Bưu cục Lê Đức Thọ', '170 Đường Lê Đức Thọ', 'Phường 5, Gò Vấp, Hồ Chí Minh', 10.8361360, 106.6811300, '028388822223', '2025-05-15 18:39:39'),
-(2, 'Bưu cục Nguyễn Thái Bình', '20 Nguyễn Thái Bình', 'Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh', 10.7731940, 106.6997240, '02838212345', '2025-05-15 18:39:39'),
-(3, 'Bưu cục Lý Chính Thắng', '168 Lý Chính Thắn', 'Phường 7, Quận 3, Hồ Chí Minh', 10.7872910, 106.6825390, '02839393939', '2025-05-15 18:39:39'),
-(4, 'Bưu cục Tôn Đản', '180 Tôn Đản', 'Phường 8, Quận 4, Hồ Chí Minh', 10.7644410, 106.7041140, '02838209191', '2025-05-15 18:39:39'),
-(5, 'Bưu cục Trần Hưng Đạo', '523 Trần Hưng Đạo', 'Phường 14, Quận 5, Hồ Chí Minh', 10.7540650, 106.6652340, '02838545678', '2025-05-15 18:39:39'),
-(6, 'Bưu cục Hậu Giang', '85 Hậu Giang', 'Phường 5, Quận 6, Hồ Chí Minh', 10.7468990, 106.6305810, '02839660000', '2025-05-15 18:39:39'),
-(7, 'Bưu cục Nguyễn Thị Thập', '801 Nguyễn Thị Thập', 'Phường Tân Phú, Quận 7, Hồ Chí Minh', 10.7344010, 106.7140820, '02837778888', '2025-05-15 18:39:39'),
-(8, 'Bưu cục Dương Bá Trạc', '300 Dương Bá Trạc', 'Phường 1, Quận 8, Hồ Chí Minh', 10.7394960, 106.6823880, '02838588588', '2025-05-15 18:39:39'),
-(9, 'Bưu cục Thành Thái', '313 Thành Thái', 'Phường 14, Quận 10, Hồ Chí Minh', 10.7708720, 106.6678280, '02838686666', '2025-05-15 18:39:39'),
-(10, 'Bưu cục Minh Phụng', '202 Minh Phụng', 'Phường 6, Quận 11, Hồ Chí Minh', 10.7621640, 106.6451920, '02839696666', '2025-05-15 18:39:39'),
-(11, 'Bưu cục Trường Chinh', '783 Trường Chinh', 'Phường Tây Thạnh, Tân Bình, Hồ Chí Minh', 10.8006910, 106.6200010, '02838446688', '2025-05-15 18:39:39'),
-(12, 'Bưu cục Lũy Bán Bích', '1111 Lũy Bán Bích', 'Phường Tân Thành, Tân Phú, Hồ Chí Minh', 10.7848380, 106.6354480, '02838669977', '2025-05-15 18:39:39'),
-(13, 'Bưu cục Đinh Bộ Lĩnh', '156 Đinh Bộ Lĩnh', 'Phường 26, Bình Thạnh, Hồ Chí Minh', 10.8076430, 106.7091590, '02838994411', '2025-05-15 18:39:39'),
-(14, 'Bưu cục Mỹ Tho', 'Số 123, Đường Ấp Bắc', 'Phường 1, TP Mỹ Tho, tỉnh Tiền Giang', 10.3582300, 106.3548500, '02733881234', '2025-05-16 03:00:00'),
-(15, 'Bưu cục Gò Công Đông', 'Số 104, Đường Nguyễn Trãi', 'Xã Bình An, Huyện Gò Công Đông, tỉnh Tiền Giang', 10.3580561, 106.7375484, '02733661234', '2025-05-16 03:00:00'),
-(16, 'Bưu cục Tân Phước', 'Số 789, ĐT865', 'TT.Mỹ Phước, Huyện Tân Phước, tỉnh Tiền Giang', 10.4770255, 106.1953924, '02733771234', '2025-05-16 03:00:00'),
-(17, 'Bưu cục Chợ Gạo', 'Số 321, Đường 30 tháng 4', 'TT.Chợ Gạo, Huyện Chợ Gạo, tỉnh Tiền Giang', 10.3503430, 106.4641900, '02733441234', '2025-05-16 03:00:00'),
-(18, 'Bưu cục Cai Lậy', 'Số 12, Đường Thanh Tâm', 'TT.Cai Lậy, Thị xã Cai Lậy, tỉnh Tiền Giang', 10.4061585, 106.1193273, '02733551234', '2025-05-16 03:00:00'),
-(21, 'Bưu cục An Phú Đông', '37 đường An Phú Đông 3', 'Phường An Phú Đông, Quận 12, Thành phố Hồ Chí Minh', 10.8540525, 106.7005464, '04321432123', '2025-05-17 11:21:14');
+(1, 'Bưu cục Lê Đức Thọ', '170 Đường Lê Đức Thọ', 'Phường 5, Quận Gò Vấp, Thành phố Hồ Chí Minh', 10.8361360, 106.6811300, '028388822223', '2025-05-15 11:39:39'),
+(2, 'Bưu cục Nguyễn Thái Bình', '20 Nguyễn Thái Bình', 'Phường Nguyễn Thái Bình, Quận 1, Thành phố Hồ Chí Minh', 10.7731940, 106.6997240, '02838212345', '2025-05-15 11:39:39'),
+(3, 'Bưu cục Lý Chính Thắng', '168 Lý Chính Thắn', 'Phường 7, Quận 3, Thành phố Hồ Chí Minh', 10.7872910, 106.6825390, '02839393939', '2025-05-15 11:39:39'),
+(4, 'Bưu cục Tôn Đản', '180 Tôn Đản', 'Phường 8, Quận 4, Thành phố Hồ Chí Minh', 10.7644410, 106.7041140, '02838209191', '2025-05-15 11:39:39'),
+(5, 'Bưu cục Trần Hưng Đạo', '523 Trần Hưng Đạo', 'Phường 14, Quận 5, Thành phố Hồ Chí Minh', 10.7540650, 106.6652340, '02838545678', '2025-05-15 11:39:39'),
+(6, 'Bưu cục Hậu Giang', '85 Hậu Giang', 'Phường 5, Quận 6, Thành phố Hồ Chí Minh', 10.7468990, 106.6305810, '02839660000', '2025-05-15 11:39:39'),
+(7, 'Bưu cục Nguyễn Thị Thập', '801 Nguyễn Thị Thập', 'Phường Tân Phú, Quận 7, Thành phố Hồ Chí Minh', 10.7344010, 106.7140820, '02837778888', '2025-05-15 11:39:39'),
+(8, 'Bưu cục Dương Bá Trạc', '300 Dương Bá Trạc', 'Phường 1, Quận 8, Thành phố Hồ Chí Minh', 10.7394960, 106.6823880, '02838588588', '2025-05-15 11:39:39'),
+(9, 'Bưu cục Thành Thái', '313 Thành Thái', 'Phường 14, Quận 10, Thành phố Hồ Chí Minh', 10.7708720, 106.6678280, '02838686666', '2025-05-15 11:39:39'),
+(10, 'Bưu cục Minh Phụng', '202 Minh Phụng', 'Phường 6, Quận 11, Thành phố Hồ Chí Minh', 10.7621640, 106.6451920, '02839696666', '2025-05-15 11:39:39'),
+(11, 'Bưu cục Trường Chinh', '783 Trường Chinh', 'Phường Tây Thạnh, Quận  Tân Bình, Thành phố Hồ Chí Minh', 10.8006910, 106.6200010, '02838446688', '2025-05-15 11:39:39'),
+(12, 'Bưu cục Lũy Bán Bích', '1111 Lũy Bán Bích', 'Phường Tân Thành, Quận  Tân Phú, Thành phố Hồ Chí Minh', 10.7848380, 106.6354480, '02838669977', '2025-05-15 11:39:39'),
+(13, 'Bưu cục Đinh Bộ Lĩnh', '156 Đinh Bộ Lĩnh', 'Phường 26, Quận  Bình Thạnh, Thành phố Hồ Chí Minh', 10.8076430, 106.7091590, '02838994411', '2025-05-15 11:39:39'),
+(14, 'Bưu cục Mỹ Tho', 'Số 123, Đường Ấp Bắc', 'Phường 1, TP Mỹ Tho, Tỉnh Tiền Giang', 10.3582300, 106.3548500, '02733881234', '2025-05-15 20:00:00'),
+(15, 'Bưu cục Gò Công Đông', 'Số 104, Đường Nguyễn Trãi', 'Xã Bình An, Huyện Gò Công Đông, Tỉnh Tiền Giang', 10.3580561, 106.7375484, '02733661234', '2025-05-15 20:00:00'),
+(16, 'Bưu cục Tân Phước', 'Số 789, ĐT865', 'TT.Mỹ Phước, Huyện Tân Phước, Tỉnh Tiền Giang', 10.4770255, 106.1953924, '02733771234', '2025-05-15 20:00:00'),
+(17, 'Bưu cục Chợ Gạo', 'Số 321, Đường 30 tháng 4', 'TT.Chợ Gạo, Huyện Chợ Gạo, Tỉnh Tiền Giang', 10.3503430, 106.4641900, '02733441234', '2025-05-15 20:00:00'),
+(18, 'Bưu cục Cai Lậy', 'Số 12, Đường Thanh Tâm', 'TT.Cai Lậy, Thị xã Cai Lậy, Tỉnh Tiền Giang', 10.4061585, 106.1193273, '02733551234', '2025-05-15 20:00:00'),
+(21, 'Bưu cục An Phú Đông', '37 đường An Phú Đông 3', 'Phường An Phú Đông, Quận 12, Thành phố Thành phố Hồ Chí Minh', 10.8540525, 106.7005464, '04321432123', '2025-05-17 04:21:14');
 
 -- --------------------------------------------------------
 
@@ -109,19 +109,25 @@ INSERT INTO `don_hang` (`ma_don_hang`, `ten_don_hang`, `so_luong`, `trong_luong`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khach_hang`
+-- Table structure for table `khachhang`
 --
 
-CREATE TABLE `khach_hang` (
-  `ma_khach_hang` int(11) NOT NULL,
-  `ten_khach_hang` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
+CREATE TABLE `khachhang` (
+  `id_khachhang` int(10) UNSIGNED NOT NULL,
+  `ho_ten` varchar(100) NOT NULL,
+  `so_dien_thoai` varchar(15) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `mat_khau` varchar(255) NOT NULL,
-  `so_dien_thoai` varchar(20) DEFAULT NULL,
-  `dia_chi` text DEFAULT NULL,
-  `ngay_tao` datetime DEFAULT current_timestamp(),
-  `trang_thai` enum('hoat_dong','khoa') DEFAULT 'hoat_dong'
+  `ngay_tao` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ngay_cap_nhat` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `khachhang`
+--
+
+INSERT INTO `khachhang` (`id_khachhang`, `ho_ten`, `so_dien_thoai`, `email`, `mat_khau`, `ngay_tao`, `ngay_cap_nhat`) VALUES
+(1, 'Bùi Anh Tài', '0385485869', 'buianhtai4903@gmail.com', '$2y$10$OaUOsA.AnqzgaJ9fa45on.Ullkc8SUQ/mNZjRG28pII2udkcHm/EK', '2025-05-22 17:07:30', '2025-05-22 18:46:20');
 
 -- --------------------------------------------------------
 
@@ -230,10 +236,10 @@ ALTER TABLE `don_hang`
   ADD PRIMARY KEY (`ma_don_hang`);
 
 --
--- Indexes for table `khach_hang`
+-- Indexes for table `khachhang`
 --
-ALTER TABLE `khach_hang`
-  ADD PRIMARY KEY (`ma_khach_hang`);
+ALTER TABLE `khachhang`
+  ADD PRIMARY KEY (`id_khachhang`);
 
 --
 -- Indexes for table `shipper`
@@ -258,10 +264,10 @@ ALTER TABLE `buu_cuc`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `khach_hang`
+-- AUTO_INCREMENT for table `khachhang`
 --
-ALTER TABLE `khach_hang`
-  MODIFY `ma_khach_hang` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `khachhang`
+  MODIFY `id_khachhang` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `shipper`

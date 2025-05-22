@@ -12,8 +12,8 @@
 
 require_once 'controller/cls-khachhang.php';
 $kh = new clsKhachhang();
-$ma_khach_hang = 1;
-// $ma_khach_hang = $_SESSION['ma_khach_hang']; // test 11
+session_start();
+$ma_khach_hang = $_SESSION['id']; // test 11
 $don_hangs = $kh->layDonHangKhachHang($ma_khach_hang);
 
 ?>

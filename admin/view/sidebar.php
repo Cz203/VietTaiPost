@@ -31,7 +31,7 @@
             <a class="nav-link text-white" href="vi-tri-shipper.php">Vị trí shipper</a>
           </li>
           <li>
-            <a class="nav-link text-white" href="#">Quản lí shipper</a>
+            <a class="nav-link text-white" href="quan-li-shipper.php">Quản lí shipper</a>
           </li>
         </ul>
       </li>

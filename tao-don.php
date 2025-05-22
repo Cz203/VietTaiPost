@@ -1,3 +1,8 @@
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -150,7 +155,7 @@ loadData();
 
                     <!-- Nút submit -->
                     <div class="mb-0">
-                        <input type="hidden" name="ma_khach_hang" value="1"> <!-- Gán cứng demo -->
+                        <input type="hidden" name="ma_khach_hang" value="<?php echo $_SESSION['id']?>">
                         <button type="submit" class="btn btn-primary px-4" name="tao_don">Tạo đơn hàng</button>
                     </div>
                 </div>
