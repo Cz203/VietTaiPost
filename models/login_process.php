@@ -12,7 +12,7 @@ function getUserByEmailOrPhone($conn, $input)
 
     $stmt = $conn->prepare($query);
     // $stmt->bind_param("ssssss", $input, $input, $input, $input, $input, $input);
-     $stmt->bind_param("ss", $input, $input);
+    $stmt->bind_param("ss", $input, $input);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -80,14 +80,14 @@ function handleLogin($conn, $emailorsdt, $mat_khau)
         //     header("Location: /Transport_Management/view/admin/dashboard.php");
         //     break;
         case "khachhang":
-            header("Location:http://localhost/viettaipost1/");
+            header("Location:http://localhost/viettaipost/");
             break;
         // case "nhanvien":
         //     header("Location: /Transport_Management/view/employees/dashboard.php");
         //     break;
         default:
             $_SESSION["error_message"] = "Vai trò không hợp lệ!";
-            header("Location:http://localhost/viettaipost1/");
+            header("Location:http://localhost/viettaipost/");
             break;
     }
     exit();

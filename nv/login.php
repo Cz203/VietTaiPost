@@ -1,6 +1,5 @@
 <?php
-session_start();
-include(__DIR__ . '../../controller/cls-shipper.php');
+require_once '../controller/cls-shipper.php';
 
 $thong_bao = '';
 
@@ -8,31 +7,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $so_dien_thoai = $_POST['so_dien_thoai'] ?? '';
     $mat_khau = $_POST['mat_khau'] ?? '';
 
-    $login = new clsShipper();
-    $shipper = $login->login($so_dien_thoai, $mat_khau);
+    $shipper = new clsShipper();
+    $result = $shipper->login($so_dien_thoai, $mat_khau);
 
-    if ($shipper) {
-        $_SESSION['shipper'] = $shipper;
-        header("Location: home.php");
-        exit();
+    if ($result) {
+        // Lưu thông tin shipper vào session
+        session_start();
+        $_SESSION['shipper'] = $result;
+        header('Location: home.php');
+        exit;
     } else {
-        $thong_bao = "Số điện thoại hoặc mật khẩu không đúng!";
+        $thong_bao = 'Số điện thoại hoặc mật khẩu không đúng';
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <title>Đăng nhập Shipper</title>
     <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
 </head>
+
 <body class="d-flex justify-content-center align-items-center bg-light" style="height: 100vh;">
     <div class="card p-4 shadow" style="min-width: 350px;">
         <h4 class="mb-4 text-center">Đăng nhập Shipper</h4>
         <?php if ($thong_bao): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($thong_bao) ?></div>
+        <div class="alert alert-danger"><?= htmlspecialchars($thong_bao) ?></div>
         <?php endif; ?>
         <form method="post" action="">
             <div class="mb-3">
@@ -47,4 +50,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 </body>
+
 </html>
