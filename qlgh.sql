@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 22, 2025 at 09:37 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th5 23, 2025 lúc 12:06 AM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `qlgh1`
+-- Cơ sở dữ liệu: `qlgh`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `buu_cuc`
+-- Cấu trúc bảng cho bảng `buu_cuc`
 --
 
 CREATE TABLE `buu_cuc` (
@@ -39,7 +39,7 @@ CREATE TABLE `buu_cuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `buu_cuc`
+-- Đang đổ dữ liệu cho bảng `buu_cuc`
 --
 
 INSERT INTO `buu_cuc` (`id`, `ten_buu_cuc`, `dia_chi`, `xa_huyen_tinh`, `vi_do`, `kinh_do`, `so_dien_thoai`, `thoi_gian_tao`) VALUES
@@ -66,7 +66,7 @@ INSERT INTO `buu_cuc` (`id`, `ten_buu_cuc`, `dia_chi`, `xa_huyen_tinh`, `vi_do`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `don_hang`
+-- Cấu trúc bảng cho bảng `don_hang`
 --
 
 CREATE TABLE `don_hang` (
@@ -98,7 +98,7 @@ CREATE TABLE `don_hang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `don_hang`
+-- Đang đổ dữ liệu cho bảng `don_hang`
 --
 
 INSERT INTO `don_hang` (`ma_don_hang`, `ten_don_hang`, `so_luong`, `trong_luong`, `ten_nguoi_gui`, `sdt_nguoi_gui`, `ma_khach_hang`, `ten_nguoi_nhan`, `sdt_nguoi_nhan`, `dia_chi_nguoi_gui`, `dia_chi_nguoi_gui_mac_dinh`, `lat_nguoi_gui`, `lng_nguoi_gui`, `dia_chi_nguoi_nhan`, `dia_chi_nguoi_nhan_mac_dinh`, `lat_nguoi_nhan`, `lng_nguoi_nhan`, `thu_ho`, `trang_thai`, `phi_van_chuyen`, `nguoi_tra_phi`, `ngay_tao`, `thoi_gian_hen_lay`, `ngay_giao_du_kien`, `ghi_chu`) VALUES
@@ -109,7 +109,7 @@ INSERT INTO `don_hang` (`ma_don_hang`, `ten_don_hang`, `so_luong`, `trong_luong`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khachhang`
+-- Cấu trúc bảng cho bảng `khachhang`
 --
 
 CREATE TABLE `khachhang` (
@@ -123,16 +123,17 @@ CREATE TABLE `khachhang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `khachhang`
+-- Đang đổ dữ liệu cho bảng `khachhang`
 --
 
 INSERT INTO `khachhang` (`id_khachhang`, `ho_ten`, `so_dien_thoai`, `email`, `mat_khau`, `ngay_tao`, `ngay_cap_nhat`) VALUES
-(1, 'Bùi Anh Tài', '0385485869', 'buianhtai4903@gmail.com', '$2y$10$OaUOsA.AnqzgaJ9fa45on.Ullkc8SUQ/mNZjRG28pII2udkcHm/EK', '2025-05-22 17:07:30', '2025-05-22 18:46:20');
+(1, 'Bùi Anh Tài', '0385485869', 'buianhtai4903@gmail.com', '$2y$10$OaUOsA.AnqzgaJ9fa45on.Ullkc8SUQ/mNZjRG28pII2udkcHm/EK', '2025-05-22 17:07:30', '2025-05-22 18:46:20'),
+(2, 'Cao Dương Quốc Việt', NULL, 'caoduongvietquoc@gmail.com', '$2y$10$0G.g4g0gHoQfbRSt7PTER.CSMWJbIisSCgX95ZBVdJkoq62V3NbMG', '2025-05-22 21:48:53', '2025-05-22 21:48:53');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shipper`
+-- Cấu trúc bảng cho bảng `shipper`
 --
 
 CREATE TABLE `shipper` (
@@ -142,58 +143,34 @@ CREATE TABLE `shipper` (
   `mat_khau` text NOT NULL,
   `id_buu_cuc` int(11) NOT NULL,
   `vi_do` decimal(10,7) DEFAULT NULL,
-  `kinh_do` decimal(10,7) DEFAULT NULL
+  `kinh_do` decimal(10,7) DEFAULT NULL,
+  `ngay_tao` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ngay_cap_nhat` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `trang_thai` enum('Đang hoạt động','Không hoạt động','Đã nghỉ việc','Khóa tài khoản') NOT NULL DEFAULT 'Không hoạt động',
+  `cccd_truoc` varchar(255) DEFAULT NULL,
+  `cccd_sau` varchar(255) DEFAULT NULL,
+  `bang_lai_xe` varchar(255) DEFAULT NULL,
+  `giay_dk_xe` varchar(255) DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `shipper`
+-- Đang đổ dữ liệu cho bảng `shipper`
 --
 
-INSERT INTO `shipper` (`id`, `ho_ten`, `so_dien_thoai`, `mat_khau`, `id_buu_cuc`, `vi_do`, `kinh_do`) VALUES
-(1, 'Nguyễn Văn A', '0901234567', '123', 1, 10.8365000, 106.6805000),
-(2, 'Trần Thị B', '0902345678', '123', 1, 10.8410000, 106.6860000),
-(3, 'Lê Văn C', '0903456789', '123', 1, 10.8455000, 106.6915000),
-(4, 'Phạm Thị D', '0911234567', '123', 2, 10.7731000, 106.6998000),
-(5, 'Ngô Văn E', '0912345678', '123', 2, 10.7776000, 106.7053000),
-(6, 'Đinh Thị F', '0913456789', '123', 2, 10.7821000, 106.7108000),
-(7, 'Trịnh Văn G', '0921234567', '123', 3, 10.7875000, 106.6822000),
-(8, 'Hoàng Thị H', '0922345678', '123', 3, 10.7920000, 106.6877000),
-(9, 'Phan Văn I', '0923456789', '123', 3, 10.7965000, 106.6932000),
-(10, 'Bùi Thị K', '0931234567', '123', 4, 10.7641000, 106.7040000),
-(11, 'Võ Văn L', '0932345678', '123', 4, 10.7686000, 106.7095000),
-(12, 'Nguyễn Thị M', '0933456789', '123', 4, 10.7731000, 106.7150000),
-(13, 'Trần Văn N', '0941234567', '123', 5, 10.7541000, 106.6650000),
-(14, 'Lê Thị O', '0942345678', '123', 5, 10.7586000, 106.6705000),
-(15, 'Phạm Văn P', '0943456789', '123', 5, 10.7631000, 106.6760000),
-(16, 'Vũ Thị Q', '0951234567', '123', 6, 10.7469000, 106.6308000),
-(17, 'Đặng Văn R', '0952345678', '123', 6, 10.7514000, 106.6363000),
-(18, 'Nguyễn Thị S', '0953456789', '123', 6, 10.7559000, 106.6418000),
-(19, 'Lý Văn T', '0961234567', '123', 7, 10.7345000, 106.7142000),
-(20, 'Tô Thị U', '0962345678', '123', 7, 10.7390000, 106.7197000),
-(21, 'Cao Văn V', '0963456789', '123', 7, 10.7435000, 106.7252000),
-(22, 'Hồ Thị X', '0971234567', '123', 8, 10.7396000, 106.6824000),
-(23, 'Châu Văn Y', '0972345678', '123', 8, 10.7441000, 106.6879000),
-(24, 'Phùng Thị Z', '0973456789', '123', 8, 10.7486000, 106.6934000),
-(25, 'Ngô Văn AA', '0981234567', '123', 9, 10.7709000, 106.6675000),
-(26, 'Trịnh Thị BB', '0982345678', '123', 9, 10.7754000, 106.6730000),
-(27, 'Lê Văn CC', '0983456789', '123', 9, 10.7799000, 106.6785000),
-(28, 'Đào Thị DD', '0991234567', '123', 10, 10.7622000, 106.6453000),
-(29, 'Nguyễn Văn EE', '0992345678', '123', 10, 10.7667000, 106.6508000),
-(30, 'Trần Thị FF', '0993456789', '123', 10, 10.7712000, 106.6563000),
-(31, 'Phạm Văn GG', '0909123456', '123', 11, 10.8005000, 106.6198000),
-(32, 'Hoàng Thị HH', '0909234567', '123', 11, 10.8050000, 106.6253000),
-(33, 'Vũ Văn II', '0909345678', '123', 11, 10.8095000, 106.6308000),
-(34, 'Nguyễn Văn JJ', '0909456789', '123', 12, 10.7849000, 106.6351000),
-(35, 'Trần Thị KK', '0909567890', '123', 12, 10.7894000, 106.6406000),
-(36, 'Lê Văn LL', '0909678901', '123', 12, 10.7939000, 106.6461000),
-(37, 'Phan Thị MM', '0909789012', '123', 13, 10.8075000, 106.7090000),
-(38, 'Bùi Văn NN', '0909890123', '123', 13, 10.8120000, 106.7145000),
-(39, 'Nguyễn Thị OO', '0909901234', '123', 13, 10.8165000, 106.7200000);
+INSERT INTO `shipper` (`id`, `ho_ten`, `so_dien_thoai`, `mat_khau`, `id_buu_cuc`, `vi_do`, `kinh_do`, `ngay_tao`, `ngay_cap_nhat`, `trang_thai`, `cccd_truoc`, `cccd_sau`, `bang_lai_xe`, `giay_dk_xe`, `last_login`) VALUES
+(10, 'Bùi Thị K', '0931234567', '123', 4, 10.7641000, 106.7040000, '2025-05-15 11:39:39', '2025-05-15 11:39:39', 'Đang hoạt động', 'CCCD_truoc_K', 'CCCD_sau_K', 'Bang_lai_xe_K', 'Giay_dk_xe_K', NULL),
+(18, 'Nguyễn Thị S', '0953456789', '123', 6, 10.7559000, 106.6418000, '2025-05-15 11:39:39', '2025-05-15 11:39:39', 'Đang hoạt động', 'CCCD_truoc_S', 'CCCD_sau_S', 'Bang_lai_xe_S', 'Giay_dk_xe_S', NULL),
+(26, 'Trịnh Thị BB', '0982345678', '123', 9, 10.7754000, 106.6730000, '2025-05-15 11:39:39', '2025-05-15 11:39:39', 'Đang hoạt động', 'CCCD_truoc_BB', 'CCCD_sau_BB', 'Bang_lai_xe_BB', 'Giay_dk_xe_BB', NULL),
+(27, 'Lê Văn CC', '0983456789', '123', 9, 10.7799000, 106.6785000, '2025-05-15 11:39:39', '2025-05-15 11:39:39', 'Đang hoạt động', 'CCCD_truoc_CC', 'CCCD_sau_CC', 'Bang_lai_xe_CC', 'Giay_dk_xe_CC', NULL),
+(40, 'Cao việt', '0913998110', '$2y$10$x/9GutMrkO62tEPnh23g.uzKMlA77vOymi4sVtI84kn5U2labHA.y', 15, NULL, NULL, '2025-05-22 21:20:57', '2025-05-22 21:20:57', 'Không hoạt động', 'uploads/shipper/1747948857_5b936c6b88733d2d6462.jpg', 'uploads/shipper/1747948857_vkiu.jpg', 'uploads/shipper/1747948857_!.png', 'uploads/shipper/1747948857_Anh tặng em.png', NULL),
+(42, 'Cao Dương Quốc Việt', '0918726466', '$2y$10$5sLV7oUIb9H9RlhdG59aGe7lmBPoHtpWIC6awjpXQcTqY9xU6vVwu', 6, NULL, NULL, '2025-05-22 21:32:31', '2025-05-22 21:32:31', 'Không hoạt động', 'uploads/shipper/1747949551_vkiu.jpg', 'uploads/shipper/1747949551_Bản vẽ (1).png', 'uploads/shipper/1747949551_Bản vẽ (3).png', 'uploads/shipper/1747949551_z6525566953643_b853fc908af6accca86c594af6fe41e7.jpg', NULL),
+(43, 'Bình gà', '0123456789', '$2y$10$bhy0pPG6G.ullXz435mt8eqNqwm3bgmhvYy7TxT0s8utYnPeBihR2', 4, NULL, NULL, '2025-05-22 22:03:29', '2025-05-22 22:03:29', 'Không hoạt động', 'uploads/shipper/1747951409_trước.jpg', 'uploads/shipper/1747951409_sau.jpg', 'uploads/shipper/1747951409_giáy phép.jpg', 'uploads/shipper/1747951409_xe.jpg', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `van_don`
+-- Cấu trúc bảng cho bảng `van_don`
 --
 
 CREATE TABLE `van_don` (
@@ -208,7 +185,7 @@ CREATE TABLE `van_don` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `van_don`
+-- Đang đổ dữ liệu cho bảng `van_don`
 --
 
 INSERT INTO `van_don` (`ma_van_don`, `ma_don_hang`, `id_shipper`, `id_buu_cuc`, `trang_thai`, `lich_su`, `thoi_gian_cap_nhat`, `ghi_chu`) VALUES
@@ -220,63 +197,63 @@ INSERT INTO `van_don` (`ma_van_don`, `ma_don_hang`, `id_shipper`, `id_buu_cuc`, 
 (11, 'DH682cb7564930f', 33, 11, 'đợi lấy hàng', '19:10 20/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-21 00:10:07', NULL);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `buu_cuc`
+-- Chỉ mục cho bảng `buu_cuc`
 --
 ALTER TABLE `buu_cuc`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `don_hang`
+-- Chỉ mục cho bảng `don_hang`
 --
 ALTER TABLE `don_hang`
   ADD PRIMARY KEY (`ma_don_hang`);
 
 --
--- Indexes for table `khachhang`
+-- Chỉ mục cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`id_khachhang`);
 
 --
--- Indexes for table `shipper`
+-- Chỉ mục cho bảng `shipper`
 --
 ALTER TABLE `shipper`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `van_don`
+-- Chỉ mục cho bảng `van_don`
 --
 ALTER TABLE `van_don`
   ADD PRIMARY KEY (`ma_van_don`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `buu_cuc`
+-- AUTO_INCREMENT cho bảng `buu_cuc`
 --
 ALTER TABLE `buu_cuc`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `khachhang`
+-- AUTO_INCREMENT cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `id_khachhang` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_khachhang` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `shipper`
+-- AUTO_INCREMENT cho bảng `shipper`
 --
 ALTER TABLE `shipper`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
--- AUTO_INCREMENT for table `van_don`
+-- AUTO_INCREMENT cho bảng `van_don`
 --
 ALTER TABLE `van_don`
   MODIFY `ma_van_don` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;

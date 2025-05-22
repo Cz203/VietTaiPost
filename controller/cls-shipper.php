@@ -4,7 +4,8 @@ include(__DIR__ . '/../config/connectdb.php');
 class clsShipper extends ConnectDB
 {
     //dang nhap
-     public function login($so_dien_thoai, $mat_khau) {
+    public function login($so_dien_thoai, $mat_khau)
+    {
         $conn = $this->connect();
 
         $sql = "SELECT * FROM shipper WHERE so_dien_thoai = ?";
@@ -13,8 +14,8 @@ class clsShipper extends ConnectDB
 
         if ($stmt->rowCount() === 1) {
             $shipper = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            if ($shipper['mat_khau'] === $mat_khau) {
+
+            if (password_verify($mat_khau, $shipper['mat_khau'])) {
                 return $shipper;
             }
         }
@@ -23,7 +24,8 @@ class clsShipper extends ConnectDB
     }
 
     //vi tri buu cuc 
-     public function buuCuc($id_buu_cuc) {   
+    public function buuCuc($id_buu_cuc)
+    {
         $conn = $this->connect();
         $stmt = $conn->prepare("SELECT * FROM buu_cuc where id = ? ");
         $stmt->execute([$id_buu_cuc]);
@@ -32,23 +34,25 @@ class clsShipper extends ConnectDB
 
 
     //don hang
-     public function layTatCaDonHang() {
+    public function layTatCaDonHang()
+    {
         $conn = $this->connect();
-        $sql = "SELECT * FROM don_hang where trang_thai = 'chờ shipper tới lấy'"; 
+        $sql = "SELECT * FROM don_hang where trang_thai = 'chờ shipper tới lấy'";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function layTatCaDonHangVeBuuCuc() {
+    public function layTatCaDonHangVeBuuCuc()
+    {
         $conn = $this->connect();
-        $sql = "SELECT * FROM don_hang where trang_thai = 'đã lấy hàng'"; 
+        $sql = "SELECT * FROM don_hang where trang_thai = 'đã lấy hàng'";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function layVanDonTheoMaDon($ma_don_hang) 
+    public function layVanDonTheoMaDon($ma_don_hang)
     {
         $conn = $this->connect();
         $stmt = $conn->prepare("SELECT vd.*, s.ho_ten AS ten_shipper, s.so_dien_thoai AS sdt_shipper
@@ -60,7 +64,8 @@ class clsShipper extends ConnectDB
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function layDonTheoTrangThai($trang_thai) {
+    public function layDonTheoTrangThai($trang_thai)
+    {
         $conn = $this->connect();
         $sql = "SELECT * FROM don_hang WHERE trang_thai = ?";
         $stmt = $conn->prepare($sql);
@@ -68,7 +73,8 @@ class clsShipper extends ConnectDB
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     // sidebar
-    public function demDonHangCanLay($id_shipper) {
+    public function demDonHangCanLay($id_shipper)
+    {
         $conn = $this->connect();
         $sql = "SELECT COUNT(*) as so_don 
                 FROM don_hang dh
@@ -83,12 +89,11 @@ class clsShipper extends ConnectDB
     }
 
     //thao tác đơn hàng
-    public function capNhatTrangThaiDon($ma_don, $trang_thai_moi, $id_shipper, $id_buu_cuc, $ghi_chu_lich_su) 
+    public function capNhatTrangThaiDon($ma_don, $trang_thai_moi, $id_shipper, $id_buu_cuc, $ghi_chu_lich_su)
     {
         $conn = $this->connect();
 
-        if($trang_thai_moi == 'đang giao')
-        {
+        if ($trang_thai_moi == 'đang giao') {
             $sqlUpdateDon = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
             $stmt = $conn->prepare($sqlUpdateDon);
             $stmt->execute([$trang_thai_moi, $ma_don]);
@@ -101,13 +106,11 @@ class clsShipper extends ConnectDB
 
             $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
                                 VALUES (?, ?, ?, ?, ?, NOW(), ?)";
-            $lich_su = date('Y-m-d H:i:s') . ' - ' . $ghi_chu_lich_su.$ten_buu_cuc;
+            $lich_su = date('Y-m-d H:i:s') . ' - ' . $ghi_chu_lich_su . $ten_buu_cuc;
 
             $stmt2 = $conn->prepare($sqlInsertVanDon);
             $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai_moi, $lich_su, null]);
-        }
-        else 
-        {
+        } else {
             $sqlUpdateDon = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
             $stmt = $conn->prepare($sqlUpdateDon);
             $stmt->execute([$trang_thai_moi, $ma_don]);
@@ -119,8 +122,5 @@ class clsShipper extends ConnectDB
             $stmt2 = $conn->prepare($sqlInsertVanDon);
             $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai_moi, $lich_su, null]);
         }
-        
     }
-
-
 }
