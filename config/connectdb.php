@@ -3,7 +3,7 @@ require_once 'config.php';
 class ConnectDB
 {
     private $host = 'localhost';
-    private $dbname = 'qlgh1';
+    private $dbname = 'qlgh';
     private $username = 'root';
     private $password = '';
     public $conn;
