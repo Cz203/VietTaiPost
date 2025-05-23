@@ -1,11 +1,11 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-  session_start();
+    session_start();
 }
 
 if (!isset($_SESSION['shipper'])) {
-  header('Location: /viettaipost/nv/login.php');
-  exit;
+    header('Location: /viettaipost/nv/login.php');
+    exit;
 }
 
 $shipper = $_SESSION['shipper'];
