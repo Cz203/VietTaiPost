@@ -133,7 +133,7 @@ showToast();
             <?php require_once 'view/header.php'; ?>
 
             <!-- Content Area -->
-            <div class="content-area">
+            <div class="container py-4 card border rounded-4 p-3">
                 <div class="text-center mb-4">
                     <h2>Danh sách Shipper</h2>
                 </div>
