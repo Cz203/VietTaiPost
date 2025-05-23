@@ -46,7 +46,7 @@ class clsShipper extends ConnectDB
             FROM don_hang dh
             INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
             WHERE dh.trang_thai = 'chờ shipper tới lấy'
-            AND vd.id_shipper = ? ORDER BY vd.thoi_gian_cap_nhat DESC LIMIT 1
+            AND vd.id_shipper = ? ORDER BY vd.thoi_gian_cap_nhat DESC 
         ");
         $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -56,12 +56,22 @@ class clsShipper extends ConnectDB
     {
         $conn = $this->connect();
         // $sql = "SELECT * FROM don_hang where trang_thai = 'đã lấy hàng'";
-         $stmt = $conn->prepare(" SELECT dh.*
+         $stmt = $conn->prepare("SELECT dh.*
             FROM don_hang dh
-            INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
+            INNER JOIN (
+                SELECT vd1.*
+                FROM van_don vd1
+                INNER JOIN (
+                    SELECT ma_don_hang, MAX(thoi_gian_cap_nhat) AS latest_time
+                    FROM van_don
+                    GROUP BY ma_don_hang
+                ) latest_vd ON vd1.ma_don_hang = latest_vd.ma_don_hang AND vd1.thoi_gian_cap_nhat = latest_vd.latest_time
+            ) vd ON dh.ma_don_hang = vd.ma_don_hang
             WHERE dh.trang_thai = 'đã lấy hàng'
-            AND vd.id_shipper = ?  ORDER BY vd.thoi_gian_cap_nhat DESC LIMIT 1
-        ");
+            AND vd.id_shipper = ?
+            ORDER BY vd.thoi_gian_cap_nhat DESC
+        "); 
+
         $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -220,5 +230,18 @@ class clsShipper extends ConnectDB
             $stmt2 = $conn->prepare($sqlInsertVanDon);
             $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai_moi, $lich_su, null]);
         }
+    }
+    //shipper lay hang di giao
+    public function layTatCaDonHangTrongBuuCuu($id_buu_cuc)
+    {
+        $conn = $this->connect();
+        $stmt = $conn->prepare("SELECT dh.*
+            FROM don_hang dh
+            INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
+            WHERE vd.trang_thai = 'ở bưu cục' and vd.id_buu_cuc = ?
+            ORDER BY vd.thoi_gian_cap_nhat DESC 
+        ");
+        $stmt->execute([$id_buu_cuc]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

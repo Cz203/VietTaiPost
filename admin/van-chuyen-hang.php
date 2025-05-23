@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="col-md-6 card border rounded-4">
             <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
-                <h3 class="mb-0">Hàng ở bưu cục</h3>
+                <h3 class="mb-0">Hàng ở bưu cục cần di chuyển</h3>
                 <form method="GET" action="" class="d-flex align-items-center">
                     <select name="buu_cuc" class="form-select form-select-sm me-2"  onchange="this.form.submit()">
                         <option value="">-- Chọn bưu cục --</option>
