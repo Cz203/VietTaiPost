@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 23, 2025 lúc 12:06 AM
+-- Thời gian đã tạo: Th5 23, 2025 lúc 01:05 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -102,9 +102,7 @@ CREATE TABLE `don_hang` (
 --
 
 INSERT INTO `don_hang` (`ma_don_hang`, `ten_don_hang`, `so_luong`, `trong_luong`, `ten_nguoi_gui`, `sdt_nguoi_gui`, `ma_khach_hang`, `ten_nguoi_nhan`, `sdt_nguoi_nhan`, `dia_chi_nguoi_gui`, `dia_chi_nguoi_gui_mac_dinh`, `lat_nguoi_gui`, `lng_nguoi_gui`, `dia_chi_nguoi_nhan`, `dia_chi_nguoi_nhan_mac_dinh`, `lat_nguoi_nhan`, `lng_nguoi_nhan`, `thu_ho`, `trang_thai`, `phi_van_chuyen`, `nguoi_tra_phi`, `ngay_tao`, `thoi_gian_hen_lay`, `ngay_giao_du_kien`, `ghi_chu`) VALUES
-('DH682773fa3bdcd', 'Đắc Nhân Tâm', 1, 10000, 'Bùi Anh Tài', '123', 1, 'Quốc Việt', '456', 'Số 7 Hẻm 58', 'Phường 12, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.83987705756259', '106.64259101258725', 'Bến đò kinh năng (cũ), ĐT.865', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520312732242738', '106.28609150648118', 20000, 'đã lấy hàng', 73000, 'người gửi', '2025-05-17 00:20:58', 'Cả ngày', '20/5/2025', 'Ghi chú'),
-('DH682ca0362a280', 'Cốc giữ nhiệt', 1, 200, 'Bùi Anh Tài Em', '123123123', 1, 'Đinh Quốc Kiệt', '321312321', '40 Đ. Trần Thái Tông ', 'Phường 15, Quận Tân Bình, Thành phố Hồ Chí Minh', '10.818346761214785', '106.63289040327074', 'Ủy ban nhân dân xã Hưng Thạnh', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.521277663055036', '106.28678351640703', 400000, 'đang giao', 21000, 'người nhận', '2025-05-20 22:31:02', 'Cả ngày', '23/5/2025', 'cốc'),
-('DH682cb7564930f', 'Tai nghe', 1, 1000, 'Bùi Văn Long', '4356121331', 1, 'Cao Mỹ Lệ', '567214967', '55 Đ. Phạm Văn Bạch', 'Phường 15, Quận Tân Bình, Thành phố Hồ Chí Minh', '10.815027097826146', '106.63443535566333', 'Tạp Hóa Dũng Thanh', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.52067635217251', '106.28718584775928', 0, 'chờ shipper tới lấy', 21000, 'người nhận', '2025-05-21 00:09:42', 'Cả ngày', '24/5/2025', '1');
+('DH68305000a7e9b', 'Iphone 16 Promax', 2, 500, 'Việt', '0913998110', 2, 'Tài buồi ', '09139981101', '133, Nguyễn Văn Lượng', 'Phường 17, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.838469624030708', '106.66995558634784', '133, bến đò King Răng', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520240135176973', '106.28569712962617', 40, 'đã lấy hàng', 21000, 'người gửi', '2025-05-23 17:37:52', 'Cả ngày', '26/5/2025', 'hàng dễ vỡ');
 
 -- --------------------------------------------------------
 
@@ -159,13 +157,8 @@ CREATE TABLE `shipper` (
 --
 
 INSERT INTO `shipper` (`id`, `ho_ten`, `so_dien_thoai`, `mat_khau`, `id_buu_cuc`, `vi_do`, `kinh_do`, `ngay_tao`, `ngay_cap_nhat`, `trang_thai`, `cccd_truoc`, `cccd_sau`, `bang_lai_xe`, `giay_dk_xe`, `last_login`) VALUES
-(10, 'Bùi Thị K', '0931234567', '123', 4, 10.7641000, 106.7040000, '2025-05-15 11:39:39', '2025-05-15 11:39:39', 'Đang hoạt động', 'CCCD_truoc_K', 'CCCD_sau_K', 'Bang_lai_xe_K', 'Giay_dk_xe_K', NULL),
-(18, 'Nguyễn Thị S', '0953456789', '123', 6, 10.7559000, 106.6418000, '2025-05-15 11:39:39', '2025-05-15 11:39:39', 'Đang hoạt động', 'CCCD_truoc_S', 'CCCD_sau_S', 'Bang_lai_xe_S', 'Giay_dk_xe_S', NULL),
-(26, 'Trịnh Thị BB', '0982345678', '123', 9, 10.7754000, 106.6730000, '2025-05-15 11:39:39', '2025-05-15 11:39:39', 'Đang hoạt động', 'CCCD_truoc_BB', 'CCCD_sau_BB', 'Bang_lai_xe_BB', 'Giay_dk_xe_BB', NULL),
-(27, 'Lê Văn CC', '0983456789', '123', 9, 10.7799000, 106.6785000, '2025-05-15 11:39:39', '2025-05-15 11:39:39', 'Đang hoạt động', 'CCCD_truoc_CC', 'CCCD_sau_CC', 'Bang_lai_xe_CC', 'Giay_dk_xe_CC', NULL),
-(40, 'Cao việt', '0913998110', '$2y$10$x/9GutMrkO62tEPnh23g.uzKMlA77vOymi4sVtI84kn5U2labHA.y', 15, NULL, NULL, '2025-05-22 21:20:57', '2025-05-22 21:20:57', 'Không hoạt động', 'uploads/shipper/1747948857_5b936c6b88733d2d6462.jpg', 'uploads/shipper/1747948857_vkiu.jpg', 'uploads/shipper/1747948857_!.png', 'uploads/shipper/1747948857_Anh tặng em.png', NULL),
-(42, 'Cao Dương Quốc Việt', '0918726466', '$2y$10$5sLV7oUIb9H9RlhdG59aGe7lmBPoHtpWIC6awjpXQcTqY9xU6vVwu', 6, NULL, NULL, '2025-05-22 21:32:31', '2025-05-22 21:32:31', 'Không hoạt động', 'uploads/shipper/1747949551_vkiu.jpg', 'uploads/shipper/1747949551_Bản vẽ (1).png', 'uploads/shipper/1747949551_Bản vẽ (3).png', 'uploads/shipper/1747949551_z6525566953643_b853fc908af6accca86c594af6fe41e7.jpg', NULL),
-(43, 'Bình gà', '0123456789', '$2y$10$bhy0pPG6G.ullXz435mt8eqNqwm3bgmhvYy7TxT0s8utYnPeBihR2', 4, NULL, NULL, '2025-05-22 22:03:29', '2025-05-22 22:03:29', 'Không hoạt động', 'uploads/shipper/1747951409_trước.jpg', 'uploads/shipper/1747951409_sau.jpg', 'uploads/shipper/1747951409_giáy phép.jpg', 'uploads/shipper/1747951409_xe.jpg', NULL);
+(44, 'Cao Việt', '0913998110', '$2y$10$P2rGitLYF4.ESrWqjLM5NOBXZNliL.cT6Tote8O.ctvNlMCas.gMi', 1, 10.8375080, 106.6806626, '2025-05-23 10:22:09', '2025-05-23 10:31:17', 'Không hoạt động', 'uploads/shipper/1747995729_trước.jpg', 'uploads/shipper/1747995729_sau.jpg', 'uploads/shipper/1747995729_xe.jpg', 'uploads/shipper/1747995729_giáy phép.jpg', NULL),
+(45, 'Tài ngu', '1234567901', '$2y$10$t6R6hulxCKnM0u9u7w.wkOglRx4d7yDrQMkS3hbq5DVoOHpIpIpee', 1, 10.8387210, 106.6652630, '2025-05-23 10:32:24', '2025-05-23 10:34:09', 'Không hoạt động', 'uploads/shipper/1747996344_giáy phép.jpg', 'uploads/shipper/1747996344_giáy phép.jpg', 'uploads/shipper/1747996344_giáy phép.jpg', 'uploads/shipper/1747996344_sau.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -189,12 +182,8 @@ CREATE TABLE `van_don` (
 --
 
 INSERT INTO `van_don` (`ma_van_don`, `ma_don_hang`, `id_shipper`, `id_buu_cuc`, `trang_thai`, `lich_su`, `thoi_gian_cap_nhat`, `ghi_chu`) VALUES
-(1, 'DH682773fa3bdcd', 33, 11, 'đợi lấy hàng', '13:31 17/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-17 18:31:45', NULL),
-(2, 'DH682ca0362a280', 33, 11, 'đợi lấy hàng', '17:31 20/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-20 22:31:19', NULL),
-(5, 'DH682ca0362a280', 33, 11, 'đã lấy hàng', '2025-05-20 18:24:27 - Đơn hàng đã được shipper lấy', '2025-05-20 23:24:27', NULL),
-(6, 'DH682ca0362a280', 33, 11, 'đang giao', '2025-05-20 18:53:31 - Đơn hàng của bạn đang ở bưu cục Bưu cục Trường Chinh', '2025-05-20 23:53:31', NULL),
-(10, 'DH682773fa3bdcd', 33, 11, 'đã lấy hàng', '2025-05-20 19:04:56 - Đơn hàng đã được shipper lấy', '2025-05-21 00:04:56', NULL),
-(11, 'DH682cb7564930f', 33, 11, 'đợi lấy hàng', '19:10 20/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-21 00:10:07', NULL);
+(14, 'DH68305000a7e9b', 45, 1, 'đợi lấy hàng', '17:38 23/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-23 17:38:05', NULL),
+(15, 'DH68305000a7e9b', 45, 1, 'đã lấy hàng', '2025-05-23 17:43:09 - Đơn hàng đã được shipper lấy', '2025-05-23 17:43:09', NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -250,13 +239,13 @@ ALTER TABLE `khachhang`
 -- AUTO_INCREMENT cho bảng `shipper`
 --
 ALTER TABLE `shipper`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT cho bảng `van_don`
 --
 ALTER TABLE `van_don`
-  MODIFY `ma_van_don` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ma_van_don` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
