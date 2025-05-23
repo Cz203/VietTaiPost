@@ -21,3 +21,28 @@ $shipper = $_SESSION['shipper'];
         </div>
     </div>
 </div>
+
+<script>
+    const idShipper = <?php echo $shipper['id']; ?>;
+    const socket = new WebSocket('ws://localhost:8080'); // đổi port nếu khác
+
+    socket.onopen = () => {
+        console.log('Đã kết nối WebSocket');
+
+        // Cập nhật vị trí mỗi 5 giây
+        setInterval(() => {
+            navigator.geolocation.getCurrentPosition(position => {
+                const data = {
+                    id: idShipper,
+                    vi_do: position.coords.latitude,
+                    kinh_do: position.coords.longitude
+                };
+                socket.send(JSON.stringify(data));
+            });
+        }, 5000);
+    };
+
+    socket.onerror = (err) => {
+        console.error('Lỗi WebSocket:', err);
+    };
+</script>
