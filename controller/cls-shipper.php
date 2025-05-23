@@ -34,21 +34,37 @@ class clsShipper extends ConnectDB
 
 
     //don hang
-    public function layTatCaDonHang()
+    public function layTatCaDonHang($id_shipper)
     {
+        // $conn = $this->connect();
+        // $sql = "SELECT * FROM don_hang where trang_thai = 'chờ shipper tới lấy' ";
+        // $stmt = $conn->prepare($sql);
+        // $stmt->execute();
+        // return $stmt->fetchAll(PDO::FETCH_ASSOC);
         $conn = $this->connect();
-        $sql = "SELECT * FROM don_hang where trang_thai = 'chờ shipper tới lấy'";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
+        $stmt = $conn->prepare("
+            SELECT dh.*
+            FROM don_hang dh
+            INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
+            WHERE dh.trang_thai = 'chờ shipper tới lấy'
+            AND vd.id_shipper = ?
+        ");
+        $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function layTatCaDonHangVeBuuCuc()
+    public function layTatCaDonHangVeBuuCuc($id_shipper)
     {
         $conn = $this->connect();
-        $sql = "SELECT * FROM don_hang where trang_thai = 'đã lấy hàng'";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
+        // $sql = "SELECT * FROM don_hang where trang_thai = 'đã lấy hàng'";
+         $stmt = $conn->prepare("
+            SELECT dh.*
+            FROM don_hang dh
+            INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
+            WHERE dh.trang_thai = 'đã lấy hàng'
+            AND vd.id_shipper = ?
+        ");
+        $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
