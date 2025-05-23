@@ -29,7 +29,7 @@ $shipper = $_SESSION['shipper'];
 
 require_once '../controller/cls-shipper.php';
 $donhang = new clsShipper();
-$tat_ca_don_hang = $donhang->layTatCaDonHang();
+$tat_ca_don_hang = $donhang->layTatCaDonHang($shipper['id']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['ma_don'])) 
 {
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
             </thead>
             <tbody>
                 <?php foreach ($tat_ca_don_hang as $don): ?>
-                    <?php $van_dons = $donhang->layVanDonTheoMaDon($don['ma_don_hang']);
+                    <?php $van_dons = $donhang->layVanDonTheoMaDon($don['ma_don_hang'],);
                     foreach ($van_dons as $vd):?>
 
                 <?php
@@ -216,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
             </thead>
             <tbody>
                 <?php 
-                    $tat_ca_don_hang_ve_bc = $donhang->layTatCaDonHangVeBuuCuc();
+                    $tat_ca_don_hang_ve_bc = $donhang->layTatCaDonHangVeBuuCuc($shipper['id']);
                     foreach ($tat_ca_don_hang_ve_bc as $don): ?>
                 <?php $van_dons = $donhang->layVanDonTheoMaDon($don['ma_don_hang']);
                     foreach ($van_dons as $vd):?>

@@ -28,7 +28,7 @@
           $shipper = $_SESSION['shipper'] ?? null;
           require_once '../controller/cls-shipper.php';
           $donhang = new clsShipper();
-          $tat_ca_don_hang = $donhang->layTatCaDonHang();
+          $tat_ca_don_hang = $donhang->layTatCaDonHang($shipper['id']);
           $so_don = $donhang->demDonHangCanLay($shipper['id']);
           ?>
 
