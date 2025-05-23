@@ -98,6 +98,14 @@ $tat_ca_don_hang = $admin->layTatCaDonHang();
                                                             $hasTracking = true;
                                                             echo "<p><strong>✅ Đã lấy hàng:</strong><br>📌 {$vd['lich_su']}</p><hr>";
                                                             break;
+                                                        case 'ở bưu cục':
+                                                            $hasTracking = true;
+                                                            echo "<p><strong>🏢 Đang ở bưu cục:</strong><br>📌 {$vd['lich_su']}<br></p><hr>";
+                                                            break;
+                                                         case 'trong xe':
+                                                            $hasTracking = true;
+                                                            echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br></p><hr>";
+                                                            break;
                                                         case 'đang giao':
                                                             $hasTracking = true;
                                                             echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br><small>{$vd['thoi_gian_cap_nhat']}</small></p><hr>";
