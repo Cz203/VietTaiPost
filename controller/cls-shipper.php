@@ -42,12 +42,11 @@ class clsShipper extends ConnectDB
         // $stmt->execute();
         // return $stmt->fetchAll(PDO::FETCH_ASSOC);
         $conn = $this->connect();
-        $stmt = $conn->prepare("
-            SELECT dh.*
+        $stmt = $conn->prepare("SELECT dh.*
             FROM don_hang dh
             INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
             WHERE dh.trang_thai = 'chờ shipper tới lấy'
-            AND vd.id_shipper = ?
+            AND vd.id_shipper = ? ORDER BY vd.thoi_gian_cap_nhat DESC LIMIT 1
         ");
         $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -57,12 +56,11 @@ class clsShipper extends ConnectDB
     {
         $conn = $this->connect();
         // $sql = "SELECT * FROM don_hang where trang_thai = 'đã lấy hàng'";
-         $stmt = $conn->prepare("
-            SELECT dh.*
+         $stmt = $conn->prepare(" SELECT dh.*
             FROM don_hang dh
             INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
             WHERE dh.trang_thai = 'đã lấy hàng'
-            AND vd.id_shipper = ?
+            AND vd.id_shipper = ?  ORDER BY vd.thoi_gian_cap_nhat DESC LIMIT 1
         ");
         $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
