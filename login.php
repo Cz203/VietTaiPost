@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="vi">
 
-<head>
+<>
     <meta charset="utf-8">
     <title>Đăng nhập</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,10 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="asset/css/style.css">
     <script src="asset/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+
+</>
 
 <body>
-    
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
@@ -66,7 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="input-group">
                                     <input type="password" class="form-control" id="mat_khau" name="mat_khau"
                                         placeholder="Nhập mật khẩu">
-                                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword('mat_khau')">
+                                    <button type="button" class="btn btn-outline-secondary"
+                                        onclick="togglePassword('mat_khau')">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                 </div>
@@ -102,20 +104,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script src="asset/js/bootstrap.bundle.min.js"></script>
     <script>
-        function togglePassword(inputId) {
-            var input = document.getElementById(inputId);
-            var icon = event.currentTarget.querySelector('i');
+    function togglePassword(inputId) {
+        var input = document.getElementById(inputId);
+        var icon = event.currentTarget.querySelector('i');
 
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
-            } else {
-                input.type = "password";
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
-            }
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
         }
+    }
     </script>
     <script src="asset/js/login_process.js"></script>
 </body>
