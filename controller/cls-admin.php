@@ -408,4 +408,25 @@ class clsAdmin extends ConnectDB
 
         return $ket_qua;
     }
+
+    public function capNhatTrangThaiShipper($id, $trang_thai)
+    {
+        try {
+            $conn = $this->connect();
+            $sql = "UPDATE shipper SET trang_thai = ? WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $result = $stmt->execute([$trang_thai, $id]);
+
+            if ($result) {
+                error_log("Cập nhật trạng thái shipper thành công: ID=$id, Trạng thái=$trang_thai");
+            } else {
+                error_log("Cập nhật trạng thái shipper thất bại: ID=$id, Trạng thái=$trang_thai");
+            }
+
+            return $result;
+        } catch (PDOException $e) {
+            error_log("Lỗi cập nhật trạng thái shipper: " . $e->getMessage());
+            return false;
+        }
+    }
 }
