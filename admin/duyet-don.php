@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -10,20 +11,74 @@
 
 <?php 
 require_once '../controller/cls-admin.php';
+
+require_once __DIR__ . '/../config/congifmail.php';
+                                
+
+
 $admin = new clsAdmin();
 $don_cho_xu_ly = $admin->layDonTheoTrangThai("chờ xử lý"); // Cần hàm này trong cls-admin4
+
+
+$toName = 'Khách hàng';
+$subject = 'Xác nhận đơn hàng';
 
 $thong_bao = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
     $ma_don = $_POST['ma_don_hang'] ?? null;
     $action = $_POST['action'] ?? null;
+    $toEmail = $admin->layEmailKhachHangTheoMaDon($ma_don);
+    $body = '<!DOCTYPE html>
+        <html lang="vi">
+        <head>
+        <meta charset="UTF-8" />
+        <title>Xác nhận đơn hàng</title>
+        </head>
+        <body style="margin:0; padding:0; font-family: Arial, sans-serif; background:#f4f4f4;">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f4f4; padding: 20px 0;">
+            <tr>
+            <td align="center">
+                <table cellpadding="0" cellspacing="0" border="0" width="600" style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+                
+                <!-- Header -->
+                <tr>
+                    <td style="background:#007bff; color:#ffffff; padding:20px; text-align:center; font-size:24px; font-weight:bold;">
+                    Viettaipost
+                    </td>
+                </tr>
+                
+                <!-- Body -->
+                <tr>
+                    <td style="padding: 30px; color:#333333; font-size:16px; line-height:1.5;">
+                    <h2 style="color:#007bff;">Đơn hàng '.$ma_don.' của bạn đã được duyệt!</h2>
+                    <p>Cảm ơn bạn đã đặt hàng tại Viettaipost. Đơn hàng của bạn đã được duyệt!</p>
+                    <p>Shipper sẽ đến lấy hàng trong thời gian sớm nhất.</p>
+                    <p>Nếu bạn có bất kỳ thắc mắc nào, vui lòng liên hệ với chúng tôi qua email hoặc số điện thoại.</p>
+                    <br />
+                    <p>Trân trọng,<br />Đội ngũ Viettaipost</p>
+                    </td>
+                </tr>
+                
+                <!-- Footer -->
+                <tr>
+                    <td style="background:#f1f1f1; color:#777777; font-size:12px; text-align:center; padding:15px;">
+                    © 2025 Viettaipost. All rights reserved.<br />
+                    Email này được gửi tự động, vui lòng không trả lời.
+                    </td>
+                </tr>
+                </table>
+            </td>
+            </tr>
+        </table>
+        </body>
+        </html>';
 
     if ($ma_don && $action) {
-        $admin = new clsAdmin();
 
         if ($action === 'duyet') {
             $admin->capNhatTrangThaiDon($ma_don, 'duyệt');
+            sendMail($toEmail, $toName, $subject, $body);
             $thong_bao = 'Đã duyệt đơn hàng thành công.';
         } elseif ($action === 'huy') {
             $admin->capNhatTrangThaiDon($ma_don, 'hủy');
