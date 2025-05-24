@@ -39,13 +39,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
     if ($hanh_dong === 'xac_nhan_lay') {
         $donhang->capNhatTrangThaiDon($ma_don, 'đã lấy hàng', $shipper['id'], $shipper['id_buu_cuc'], 'Đơn hàng đã được shipper lấy');
         echo "<script>alert('Đã xác nhận lấy đơn hàng.');</script>";
+        header("Location: don-hang-can-lay.php");
+        exit();
     } elseif ($hanh_dong === 'huy' && !empty($_POST['ly_do'])) {
         $ly_do = $_POST['ly_do'];
         $donhang->capNhatTrangThaiDon($ma_don, 'hủy', $shipper['id'], $shipper['id_buu_cuc'], 'Đơn hàng đã bị hủy vì: ' . $ly_do);
         echo "<script>alert('Đã hủy đơn hàng.');</script>";
+         header("Location: don-hang-can-lay.php");
+        exit();     
     } elseif ($hanh_dong === 'xac_nhan_dem_ve') {
         $donhang->capNhatTrangThaiDon($ma_don, 'đang giao', $shipper['id'], $shipper['id_buu_cuc'], 'Đơn hàng của bạn đang ở bưu cục ');
         echo "<script>alert('Đã xác nhận lấy đơn hàng.');</script>";
+        header("Location: don-hang-can-lay.php");
+        exit();
     }
 }
 
