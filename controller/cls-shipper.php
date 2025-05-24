@@ -285,6 +285,23 @@ class clsShipper extends ConnectDB
             // Kiểm tra xem shipper có đang trong quá trình giao hàng không
             $sql_check = "SELECT COUNT(*) as count FROM van_don 
                          WHERE id_shipper = ? AND trang_thai = 'đang đi giao'";
+                          $sql = "SELECT dh.*, vd.trang_thai, vd.ghi_chu, vd.thoi_gian_cap_nhat
+                FROM don_hang dh
+                INNER JOIN (
+                    SELECT vd1.*
+                    FROM van_don vd1
+                    INNER JOIN (
+                        SELECT ma_don_hang, MAX(thoi_gian_cap_nhat) AS latest_time
+                        FROM van_don
+                        GROUP BY ma_don_hang
+                    ) latest_vd 
+                    ON vd1.ma_don_hang = latest_vd.ma_don_hang AND vd1.thoi_gian_cap_nhat = latest_vd.latest_time
+                ) vd 
+                ON dh.ma_don_hang = vd.ma_don_hang
+                WHERE dh.trang_thai = 'đang giao'
+                AND vd.id_shipper = ? AND vd.ghi_chu = in('đang đi giao')
+                ORDER BY vd.thoi_gian_cap_nhat DESC;
+                ";
             $stmt_check = $conn->prepare($sql_check);
             $stmt_check->execute([$id]);
             $result = $stmt_check->fetch(PDO::FETCH_ASSOC);
