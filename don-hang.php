@@ -245,11 +245,11 @@ $don_hangs = $kh->layDonHangKhachHang($ma_khach_hang);
                                                                     $hasTracking = true;
                                                                     echo "<p><strong>❌ Đã bị hủy:</strong><br>📌 {$vd['lich_su']}</p>";
                                                                     break;
-                                                                case 'đã giao':
+                                                                 case 'giao thành công':
                                                                     $hasTracking = true;
-                                                                    echo "<p><strong>🎉 Đã giao thành công:</strong><br>📌 {$vd['lich_su']}</p>";
+                                                                    echo "<p><strong>🎉 Đã giao thành công:</strong><br>📌 {$vd['lich_su']}<br>👤 Shipper: {$vd['ten_shipper']} ({$vd['sdt_shipper']})</p>";
                                                                     break;
-                                                            }
+                                                                    }
                                                         }
 
                                                         if (!$hasTracking) {

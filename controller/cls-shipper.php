@@ -130,6 +130,50 @@ class clsShipper extends ConnectDB
             return;
         }
 
+        if ($trang_thai_moi == 'trả về bưu cục') 
+        {
+            $sqlBuuCuc = "SELECT ten_buu_cuc FROM buu_cuc WHERE id = ?";
+            $stmtBuuCuc = $conn->prepare($sqlBuuCuc);
+            $stmtBuuCuc->execute([$id_buu_cuc]);
+            $row = $stmtBuuCuc->fetch(PDO::FETCH_ASSOC);
+            $ten_buu_cuc = $row ? $row['ten_buu_cuc'] : 'Không rõ bưu cục';
+
+            $ghi_chu_lich_su = "Đơn hàng của bạn đã đến ";
+            $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su . $ten_buu_cuc;
+
+            $trang_thai_moi = 'ở bưu cục';
+            $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
+                                VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+                                
+            $trang_thai = 'ở bưu cục';
+            $ghi_chu = 'có thể giao';
+
+            $stmt2 = $conn->prepare($sqlInsertVanDon);
+            $stmt2->execute([$ma_don, null, $id_buu_cuc, $trang_thai, $lich_su, $ghi_chu]);
+            return;
+        }
+
+        if ($trang_thai_moi == 'giao thành công') //rsdfd
+        {
+            // 1. Cập nhật trạng thái đơn hàng thành 'giao thành công'
+            $sqlUpdateDon = "UPDATE don_hang SET trang_thai = 'đã giao' WHERE ma_don_hang = ?";
+            $stmt = $conn->prepare($sqlUpdateDon);
+            $stmt->execute([$ma_don]);
+
+            $ghi_chu_lich_su = "Đơn hàng của bạn đã được giao thành công";
+            $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su;
+
+            // 4. Thêm bản ghi vận đơn mới với trạng thái 'ở bưu cục'
+            
+            $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
+                                VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+            $ghi_chu = 'đã giao hàng';
+            $stmt2 = $conn->prepare($sqlInsertVanDon);
+            $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai_moi, $lich_su, $ghi_chu]);
+
+            return;
+        }
+
         if ($trang_thai_moi == 'đang giao') 
         {
             $sql = "SELECT ten_buu_cuc, xa_huyen_tinh FROM buu_cuc WHERE id = ?";

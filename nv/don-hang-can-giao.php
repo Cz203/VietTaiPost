@@ -47,12 +47,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
         $ly_do = $_POST['ly_do'];
         $donhang->capNhatTrangThaiDon($ma_don, 'hủy', $shipper['id'], $shipper['id_buu_cuc'], 'Đơn hàng đã bị hủy vì: ' . $ly_do);
         echo "<script>alert('Đã hủy đơn hàng.');</script>";
+        header("Location: don-hang-can-giao.php");
+        exit();
     }
-    // elseif ($hanh_dong === 'xac_nhan_dem_ve') 
-    // {
-    //     $donhang->capNhatTrangThaiDon($ma_don, 'đang giao', $shipper['id'], $shipper['id_buu_cuc'], 'Đơn hàng của bạn đang ở bưu cục ');
-    //     echo "<script>alert('Đã xác nhận lấy đơn hàng.');</script>";
-    // }
+    elseif ($hanh_dong === 'tra_ve_buu_cuc') 
+    {
+        $donhang->capNhatTrangThaiDon($ma_don, 'trả về bưu cục', $shipper['id'], $shipper['id_buu_cuc'], 'Đơn hàng đang được giao tới bạn');
+        echo "<script>alert('Đã trả về bưu cục.');</script>";
+        header("Location: don-hang-can-giao.php");
+        exit();
+    }
+    elseif ($hanh_dong === 'giao_thanh-cong') 
+    {
+        $donhang->capNhatTrangThaiDon($ma_don, 'giao thành công', $shipper['id'], $shipper['id_buu_cuc'], 'Đơn hàng của bạn đã được giao ');
+        echo "<script>alert('Xác nhận giao thành công.');</script>";
+        header("Location: don-hang-can-giao.php");
+        exit();
+    }
 }
 
 ?>
@@ -149,6 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
             </tbody>
         </table>
 </div>
+
 <?php 
 $tat_ca_don_hang_di_giao = $donhang->layTatCaDonHangCuaBan($shipper['id']);
 ?>
@@ -199,7 +211,7 @@ $tat_ca_don_hang_di_giao = $donhang->layTatCaDonHangCuaBan($shipper['id']);
                                 <li>
                                     <form method="post" class="d-inline">
                                         <input type="hidden" name="ma_don" value="<?= $don['ma_don_hang'] ?>">
-                                        <input type="hidden" name="hanh_dong" value="xac_giao_thanh_cong">
+                                        <input type="hidden" name="hanh_dong" value="giao_thanh-cong">
                                         <button type="submit" class="dropdown-item">Xác nhận đã giao thành công</button>
                                     </form>
                                 </li>
