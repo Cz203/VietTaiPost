@@ -33,7 +33,7 @@ class clsShipper extends ConnectDB
     }
 
 
-    //don hang
+    //đơn hàng được phân công cho shipper
     public function layTatCaDonHang($id_shipper)
     {
         // $conn = $this->connect();
