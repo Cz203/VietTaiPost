@@ -199,6 +199,26 @@ INSERT INTO `van_don` (`ma_van_don`, `ma_don_hang`, `id_shipper`, `id_buu_cuc`, 
 (156, 'DH6832039e8b9e7', 52, 16, 'đang đi giao', '00:58 25/05/2025: Đơn hàng đang được giao tới bạn', '2025-05-25 00:58:35', 'đang đi giao'),
 (157, 'DH6832039e8b9e7', 52, 16, 'giao thành công', '00:58 25/05/2025: Đơn hàng của bạn đã được giao thành công', '2025-05-25 00:58:40', 'đã giao hàng');
 
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sender_id` int(11) NOT NULL,
+  `sender_type` enum('shipper','khachhang') NOT NULL,
+  `receiver_id` int(11) NOT NULL,
+  `receiver_type` enum('shipper','khachhang') NOT NULL,
+  `message` text NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `sender_id` (`sender_id`),
+  KEY `receiver_id` (`receiver_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --

@@ -1,6 +1,27 @@
 <?php
 require_once '../controller/cls-admin.php';
+
 session_start();
+
+// Xử lý toggle status
+if (isset($_GET['toggle_status']) && isset($_GET['status'])) {
+    $admin = new clsAdmin();
+    $result = $admin->capNhatTrangThaiShipper($_GET['toggle_status'], $_GET['status']);
+    if ($result) {
+        $_SESSION['toast'] = [
+            'type' => 'success',
+            'message' => 'Cập nhật trạng thái thành công!'
+        ];
+    } else {
+        $_SESSION['toast'] = [
+            'type' => 'error',
+            'message' => 'Có lỗi xảy ra khi cập nhật trạng thái!'
+        ];
+    }
+    // Xóa các tham số GET và reload trang
+    header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
+    exit;
+}
 
 // Xử lý AJAX request để lấy thông tin chi tiết shipper
 if (isset($_GET['ajax']) && $_GET['ajax'] === 'getShipperDetail' && isset($_GET['id'])) {
@@ -52,6 +73,26 @@ if (isset($_GET['success']) && $_GET['success'] === 'add') {
     // Xóa tham số error khỏi URL
     header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
     exit;
+}
+
+if (isset($_POST['action'])) {
+    $action = $_POST['action'];
+
+    switch ($action) {
+        case 'toggleShipperStatus':
+            if (isset($_POST['shipper_id']) && isset($_POST['status'])) {
+                $shipper_id = $_POST['shipper_id'];
+                $status = $_POST['status'];
+                $admin = new clsAdmin();
+                $result = $admin->capNhatTrangThaiShipper($shipper_id, $status);
+                echo json_encode(['success' => $result]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Missing required parameters']);
+            }
+            break;
+
+            // Add other cases here
+    }
 }
 
 include('../models/showToast.php');
@@ -173,35 +214,30 @@ showToast();
                                             case 'Không hoạt động':
                                                 $statusClass = 'status-inactive';
                                                 break;
-                                            case 'Khóa tài khoản':
-                                                $statusClass = 'status-blocked';
-                                                break;
                                         }
                                         ?>
                                     <span class="status-badge <?php echo $statusClass; ?>">
                                         <?php echo htmlspecialchars($shipper['trang_thai']); ?>
                                     </span>
                                 </td>
-                                <td>
-                                    <?php
+                                <td><?php
                                         echo $shipper['last_login']
                                             ? date('d/m/Y H:i', strtotime($shipper['last_login']))
                                             : 'Chưa đăng nhập';
-                                        ?>
+                                        ?></td>
+
                                 </td>
                                 <td class="action-buttons">
                                     <button class="btn btn-info btn-sm"
                                         onclick="viewShipper(<?php echo $shipper['id']; ?>)">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    <button class="btn btn-warning btn-sm"
-                                        onclick="editShipper(<?php echo $shipper['id']; ?>)">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm"
-                                        onclick="deleteShipper(<?php echo $shipper['id']; ?>)">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                    <div class="form-check form-switch d-inline-block ms-2">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                            id="statusSwitch<?php echo $shipper['id']; ?>"
+                                            <?php echo $shipper['trang_thai'] === 'Đang hoạt động' ? 'checked' : ''; ?>
+                                            onclick="window.location.href='?toggle_status=<?php echo $shipper['id']; ?>&status=<?php echo $shipper['trang_thai'] === 'Đang hoạt động' ? 'Không hoạt động' : 'Đang hoạt động'; ?>'">
+                                    </div>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -462,6 +498,38 @@ showToast();
             }
         });
     });
+
+    function toggleShipperStatus(shipperId, isActive) {
+        const status = isActive ? 'Đang hoạt động' : 'Không hoạt động';
+
+        fetch('../controller/process.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=toggleShipperStatus&shipper_id=${shipperId}&status=${status}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    toastr.success('Cập nhật trạng thái thành công');
+                    // Reload trang sau khi cập nhật thành công
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000); // Đợi 1 giây để người dùng thấy thông báo thành công
+                } else {
+                    toastr.error('Có lỗi xảy ra khi cập nhật trạng thái');
+                    // Revert the toggle if there was an error
+                    document.getElementById(`statusSwitch${shipperId}`).checked = !isActive;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                toastr.error('Có lỗi xảy ra khi cập nhật trạng thái');
+                // Revert the toggle if there was an error
+                document.getElementById(`statusSwitch${shipperId}`).checked = !isActive;
+            });
+    }
     </script>
 </body>
 

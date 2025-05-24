@@ -16,6 +16,11 @@ class clsShipper extends ConnectDB
             $shipper = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if (password_verify($mat_khau, $shipper['mat_khau'])) {
+                // Cập nhật last_login
+                $updateSql = "UPDATE shipper SET last_login = NOW() WHERE id = ?";
+                $updateStmt = $conn->prepare($updateSql);
+                $updateStmt->execute([$shipper['id']]);
+
                 $_SESSION['id'] = $shipper['id'];
                 return $shipper;
             }
@@ -62,7 +67,7 @@ class clsShipper extends ConnectDB
             INNER JOIN (
                 SELECT vd1.*
                 FROM van_don vd1
-                INNER JOIN (
+                INNER JOIN (    
                     SELECT ma_don_hang, MAX(thoi_gian_cap_nhat) AS latest_time
                     FROM van_don
                     GROUP BY ma_don_hang
@@ -277,5 +282,8 @@ class clsShipper extends ConnectDB
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-   
+
 }
+
+}
+
