@@ -209,7 +209,7 @@ class clsAdmin extends ConnectDB
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-//vận chuyển đơn qua các bưu cục
+    //vận chuyển đơn qua các bưu cục
     public function lay_danh_sach_buu_cuc()
     {
         try {
@@ -221,10 +221,10 @@ class clsAdmin extends ConnectDB
             return [];
         }
     }
-   public function lay_don_hang_theo_buu_cuc($id_buu_cuc = null)
+    public function lay_don_hang_theo_buu_cuc($id_buu_cuc = null)
     {
         try {
-            $conn = $this->connect(); 
+            $conn = $this->connect();
             if ($id_buu_cuc !== null) {
                 $sql = "SELECT dh.*, vd.id_buu_cuc, vd.trang_thai, vd.lich_su
                     FROM don_hang dh
@@ -302,9 +302,8 @@ class clsAdmin extends ConnectDB
         $stmtbc->execute([$ma_don_hang]);
         $row = $stmtbc->fetch(PDO::FETCH_ASSOC);
 
-        
-        if ($row) 
-        {
+
+        if ($row) {
             $id_buu_cuc = $row['id_buu_cuc'];
             // Truy vấn tên bưu cục
             $sqlBuuCuc = "SELECT ten_buu_cuc FROM buu_cuc WHERE id = ?";
@@ -329,7 +328,7 @@ class clsAdmin extends ConnectDB
         }
     }
 
-//tra hàng về bưu cục
+    //tra hàng về bưu cục
     public function traHangVeBuuCuc($ma_don_hang, $id_buu_cuc)
     {
         // $conn = $this->connect();
@@ -356,7 +355,7 @@ class clsAdmin extends ConnectDB
 
         // return $ket_qua;
 
-         $conn = $this->connect();
+        $conn = $this->connect();
 
         // 1. Lấy thông tin bưu cục
         $sqlBuuCuc = "SELECT ten_buu_cuc, xa_huyen_tinh FROM buu_cuc WHERE id = ?";
@@ -374,7 +373,8 @@ class clsAdmin extends ConnectDB
         $dia_chi_nguoi_nhan = $rowDon ? $rowDon['dia_chi_nguoi_nhan_mac_dinh'] : '';
 
         // 3. Hàm lấy Quận + Tỉnh/TP từ địa chỉ
-        function lay_quan_tinh($dia_chi) {
+        function lay_quan_tinh($dia_chi)
+        {
             $parts = array_map('trim', explode(',', $dia_chi));
             $count = count($parts);
             return $count >= 2 ? implode(', ', array_slice($parts, -2)) : '';
@@ -408,9 +408,4 @@ class clsAdmin extends ConnectDB
 
         return $ket_qua;
     }
-
-
-    
-
-
 }

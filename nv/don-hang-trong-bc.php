@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <title>Đơn hàng tồn trong bưu cục</title>
@@ -7,22 +8,21 @@
     <link rel="stylesheet" href="../asset/css/style.css">
 </head>
 
-<body  class="d-flex">
+<body class="d-flex">
     <?php
     require_once 'view/sidebar.php';
     ?>
-    
+
     <div class="main-content">
 
-    <?php
-    require_once 'view/header.php';
-    ?>
-<div class="container px-4 pb-5">
-    trang chủ
-</div>
+        <?php
+        require_once 'view/header.php';
+        ?>
+        <div class="container px-4 pb-5">
+            trang chủ
+        </div>
 
 
 </body>
+
 </html>
-
-
