@@ -57,7 +57,7 @@ class clsShipper extends ConnectDB
     {
         $conn = $this->connect();
         // $sql = "SELECT * FROM don_hang where trang_thai = 'đã lấy hàng'";
-         $stmt = $conn->prepare("SELECT dh.*
+        $stmt = $conn->prepare("SELECT dh.*
             FROM don_hang dh
             INNER JOIN (
                 SELECT vd1.*
@@ -71,7 +71,7 @@ class clsShipper extends ConnectDB
             WHERE dh.trang_thai = 'đã lấy hàng'
             AND vd.id_shipper = ?
             ORDER BY vd.thoi_gian_cap_nhat DESC
-        "); 
+        ");
 
         $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -119,123 +119,111 @@ class clsShipper extends ConnectDB
         try {
             $conn = $this->connect();
 
-        if ($trang_thai_moi == 'Lấy đơn hàng') 
-        {
-            $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
-                                VALUES (?, ?, ?, ?, ?, NOW(), ?)";
-            $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su;
-            $trang_thai = 'đang đi giao';
-            $ghi_chu = 'đang đi giao';
+            if ($trang_thai_moi == 'Lấy đơn hàng') {
+                $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
+                                    VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+                $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su;
+                $trang_thai = 'đang đi giao';
+                $ghi_chu = 'đang đi giao';
 
-            $stmt2 = $conn->prepare($sqlInsertVanDon);
-            $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai, $lich_su, $ghi_chu]);
-            return;
-        }
-
-        if ($trang_thai_moi == 'trả về bưu cục') 
-        {
-            $sqlBuuCuc = "SELECT ten_buu_cuc FROM buu_cuc WHERE id = ?";
-            $stmtBuuCuc = $conn->prepare($sqlBuuCuc);
-            $stmtBuuCuc->execute([$id_buu_cuc]);
-            $row = $stmtBuuCuc->fetch(PDO::FETCH_ASSOC);
-            $ten_buu_cuc = $row ? $row['ten_buu_cuc'] : 'Không rõ bưu cục';
-
-            $ghi_chu_lich_su = "Đơn hàng của bạn đã đến ";
-            $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su . $ten_buu_cuc;
-
-            $trang_thai_moi = 'ở bưu cục';
-            $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
-                                VALUES (?, ?, ?, ?, ?, NOW(), ?)";
-                                
-            $trang_thai = 'ở bưu cục';
-            $ghi_chu = 'có thể giao';
-
-            $stmt2 = $conn->prepare($sqlInsertVanDon);
-            $stmt2->execute([$ma_don, null, $id_buu_cuc, $trang_thai, $lich_su, $ghi_chu]);
-            return;
-        }
-
-        if ($trang_thai_moi == 'giao thành công') //rsdfd
-        {
-            // 1. Cập nhật trạng thái đơn hàng thành 'giao thành công'
-            $sqlUpdateDon = "UPDATE don_hang SET trang_thai = 'đã giao' WHERE ma_don_hang = ?";
-            $stmt = $conn->prepare($sqlUpdateDon);
-            $stmt->execute([$ma_don]);
-
-            $ghi_chu_lich_su = "Đơn hàng của bạn đã được giao thành công";
-            $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su;
-
-            // 4. Thêm bản ghi vận đơn mới với trạng thái 'ở bưu cục'
-            
-            $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
-                                VALUES (?, ?, ?, ?, ?, NOW(), ?)";
-            $ghi_chu = 'đã giao hàng';
-            $stmt2 = $conn->prepare($sqlInsertVanDon);
-            $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai_moi, $lich_su, $ghi_chu]);
-
-            return;
-        }
-
-        if ($trang_thai_moi == 'đang giao') 
-        {
-            $sql = "SELECT ten_buu_cuc, xa_huyen_tinh FROM buu_cuc WHERE id = ?";
-            $stmtbc = $conn->prepare($sql);
-            $stmtbc->execute([$id_buu_cuc]);
-            $row = $stmtbc->fetch(PDO::FETCH_ASSOC);
-            $ten_buu_cuc = $row ? $row['ten_buu_cuc'] : 'Không rõ bưu cục';
-            $xa_huyen_tinh_buu_cuc = $row ? $row['xa_huyen_tinh'] : '';
-
-            // Lấy địa chỉ người nhận
-            $sqlGetDiaChi = "SELECT dia_chi_nguoi_nhan_mac_dinh FROM don_hang WHERE ma_don_hang = ?";
-            $stmt3 = $conn->prepare($sqlGetDiaChi);
-            $stmt3->execute([$ma_don]);
-            $rowDon = $stmt3->fetch(PDO::FETCH_ASSOC);
-            $dia_chi_nguoi_nhan = $rowDon ? $rowDon['dia_chi_nguoi_nhan_mac_dinh'] : '';
-
-            // Hàm lấy Quận + Tỉnh/TP từ địa chỉ
-            function lay_quan_tinh($dia_chi) 
-            {
-                $parts = array_map('trim', explode(',', $dia_chi));
-                $count = count($parts);
-                return $count >= 2 ? implode(', ', array_slice($parts, -2)) : '';
+                $stmt2 = $conn->prepare($sqlInsertVanDon);
+                $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai, $lich_su, $ghi_chu]);
+                return;
             }
 
-            $quan_tinh_buu_cuc = lay_quan_tinh($xa_huyen_tinh_buu_cuc);
-            $quan_tinh_dia_chi = lay_quan_tinh($dia_chi_nguoi_nhan);
+            if ($trang_thai_moi == 'trả về bưu cục') {
+                $sqlBuuCuc = "SELECT ten_buu_cuc FROM buu_cuc WHERE id = ?";
+                $stmtBuuCuc = $conn->prepare($sqlBuuCuc);
+                $stmtBuuCuc->execute([$id_buu_cuc]);
+                $row = $stmtBuuCuc->fetch(PDO::FETCH_ASSOC);
+                $ten_buu_cuc = $row ? $row['ten_buu_cuc'] : 'Không rõ bưu cục';
 
-            $sqlUpdateDon = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
-            $stmt = $conn->prepare($sqlUpdateDon);
-            $stmt->execute([$trang_thai_moi, $ma_don]);
-            // So sánh
-            if ($quan_tinh_buu_cuc && $quan_tinh_dia_chi && $quan_tinh_buu_cuc == $quan_tinh_dia_chi)
-            {
-                $ghi_chu = "có thể giao";
-            } 
-            else 
-            {
-                $ghi_chu = "đợi vận chuyển qua bưu cục khác";
+                $ghi_chu_lich_su = "Đơn hàng của bạn đã đến ";
+                $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su . $ten_buu_cuc;
+
+                $trang_thai_moi = 'ở bưu cục';
+                $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
+                                    VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+
+                $trang_thai = 'ở bưu cục';
+                $ghi_chu = 'có thể giao';
+
+                $stmt2 = $conn->prepare($sqlInsertVanDon);
+                $stmt2->execute([$ma_don, null, $id_buu_cuc, $trang_thai, $lich_su, $ghi_chu]);
+                return;
             }
 
-            // Ghi vào bảng vận đơn
-            $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
-                                VALUES (?, ?, ?, ?, ?, NOW(), ?)";
-            $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su . $ten_buu_cuc;
-            $trang_thai = 'ở bưu cục';
-            $stmt2 = $conn->prepare($sqlInsertVanDon);
-            $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai, $lich_su, $ghi_chu]);
-        } 
-        else 
-        {
-            $sqlUpdateDon = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
-            $stmt = $conn->prepare($sqlUpdateDon);
-            $stmt->execute([$trang_thai_moi, $ma_don]);
+            if ($trang_thai_moi == 'giao thành công') {
+                $sqlUpdateDon = "UPDATE don_hang SET trang_thai = 'đã giao' WHERE ma_don_hang = ?";
+                $stmt = $conn->prepare($sqlUpdateDon);
+                $stmt->execute([$ma_don]);
 
-            $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
-                                VALUES (?, ?, ?, ?, ?, NOW(), ?)";
-            $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su;
+                $ghi_chu_lich_su = "Đơn hàng của bạn đã được giao thành công";
+                $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su;
 
-            $stmt2 = $conn->prepare($sqlInsertVanDon);
-            $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai_moi, $lich_su, null]);
+                $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
+                                    VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+                $ghi_chu = 'đã giao hàng';
+                $stmt2 = $conn->prepare($sqlInsertVanDon);
+                $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai_moi, $lich_su, $ghi_chu]);
+
+                return;
+            }
+
+            if ($trang_thai_moi == 'đang giao') {
+                $sql = "SELECT ten_buu_cuc, xa_huyen_tinh FROM buu_cuc WHERE id = ?";
+                $stmtbc = $conn->prepare($sql);
+                $stmtbc->execute([$id_buu_cuc]);
+                $row = $stmtbc->fetch(PDO::FETCH_ASSOC);
+                $ten_buu_cuc = $row ? $row['ten_buu_cuc'] : 'Không rõ bưu cục';
+                $xa_huyen_tinh_buu_cuc = $row ? $row['xa_huyen_tinh'] : '';
+
+                $sqlGetDiaChi = "SELECT dia_chi_nguoi_nhan_mac_dinh FROM don_hang WHERE ma_don_hang = ?";
+                $stmt3 = $conn->prepare($sqlGetDiaChi);
+                $stmt3->execute([$ma_don]);
+                $rowDon = $stmt3->fetch(PDO::FETCH_ASSOC);
+                $dia_chi_nguoi_nhan = $rowDon ? $rowDon['dia_chi_nguoi_nhan_mac_dinh'] : '';
+
+                function lay_quan_tinh($dia_chi)
+                {
+                    $parts = array_map('trim', explode(',', $dia_chi));
+                    $count = count($parts);
+                    return $count >= 2 ? implode(', ', array_slice($parts, -2)) : '';
+                }
+
+                $quan_tinh_buu_cuc = lay_quan_tinh($xa_huyen_tinh_buu_cuc);
+                $quan_tinh_dia_chi = lay_quan_tinh($dia_chi_nguoi_nhan);
+
+                $sqlUpdateDon = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
+                $stmt = $conn->prepare($sqlUpdateDon);
+                $stmt->execute([$trang_thai_moi, $ma_don]);
+
+                if ($quan_tinh_buu_cuc && $quan_tinh_dia_chi && $quan_tinh_buu_cuc == $quan_tinh_dia_chi) {
+                    $ghi_chu = "có thể giao";
+                } else {
+                    $ghi_chu = "đợi vận chuyển qua bưu cục khác";
+                }
+
+                $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
+                                    VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+                $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su . $ten_buu_cuc;
+                $trang_thai = 'ở bưu cục';
+                $stmt2 = $conn->prepare($sqlInsertVanDon);
+                $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai, $lich_su, $ghi_chu]);
+            } else {
+                $sqlUpdateDon = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
+                $stmt = $conn->prepare($sqlUpdateDon);
+                $stmt->execute([$trang_thai_moi, $ma_don]);
+
+                $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
+                                    VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+                $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su;
+
+                $stmt2 = $conn->prepare($sqlInsertVanDon);
+                $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai_moi, $lich_su, null]);
+            }
+        } catch (Exception $e) {
+            throw $e;
         }
     }
     //shipper lay hang di giao
