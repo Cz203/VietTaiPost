@@ -13,6 +13,7 @@ if ($search !== '') {
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <title>Quản lý shipper</title>
@@ -21,6 +22,7 @@ if ($search !== '') {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
+
 <body class="d-flex">
     <?php require_once 'view/sidebar.php'; ?>
 
@@ -42,11 +44,11 @@ if ($search !== '') {
                     <div style="max-height: 500px; overflow-y: auto;">
                         <ul class="list-group">
                             <?php foreach ($shippers as $shipper): ?>
-                                <li class="list-group-item">
-                                    <strong><?= htmlspecialchars($shipper['ho_ten']) ?></strong><br>
-                                    📞 <?= htmlspecialchars($shipper['so_dien_thoai']) ?><br>
-                                     🏢 <?= htmlspecialchars($shipper['ten_buu_cuc'] ?? 'Chưa có bưu cục') ?><br>
-                                </li>
+                            <li class="list-group-item">
+                                <strong><?= htmlspecialchars($shipper['ho_ten']) ?></strong><br>
+                                📞 <?= htmlspecialchars($shipper['so_dien_thoai']) ?><br>
+                                🏢 <?= htmlspecialchars($shipper['ten_buu_cuc'] ?? 'Chưa có bưu cục') ?><br>
+                            </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
@@ -61,7 +63,7 @@ if ($search !== '') {
         </div>
     </div>
 
-<script>
+    <script>
     var map = L.map('map').setView([10.75, 106.7], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -76,22 +78,51 @@ if ($search !== '') {
     });
 
     var markers = [];
+    var markerMap = {}; // Thêm object để lưu trữ marker theo ID
 
     <?php foreach ($shippers as $s): ?>
-        var marker = L.marker([<?= $s['vi_do'] ?>, <?= $s['kinh_do'] ?>], { icon: shipperIcon })
-            .bindPopup(`<strong><?= addslashes(htmlspecialchars($s['ho_ten'])) ?></strong><br>
+    var marker = L.marker([<?= $s['vi_do'] ?>, <?= $s['kinh_do'] ?>], {
+            icon: shipperIcon
+        })
+        .bindPopup(`<strong><?= addslashes(htmlspecialchars($s['ho_ten'])) ?></strong><br>
                 📞 <?= addslashes(htmlspecialchars($s['so_dien_thoai'])) ?><br>
                 🏢 Thuộc <?= htmlspecialchars($s['ten_buu_cuc'] ?? 'Chưa có bưu cục') ?>`);
-        marker.addTo(map);
-        markers.push(marker);
+    marker.addTo(map);
+    markers.push(marker);
+    markerMap[<?= $s['id'] ?>] = marker; // Lưu marker theo ID
     <?php endforeach; ?>
 
     if (markers.length > 0) {
         var group = L.featureGroup(markers);
         map.fitBounds(group.getBounds());
     }
-</script>
 
+    // Kết nối WebSocket
+    const ws = new WebSocket('ws://localhost:8080');
+
+    ws.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        const {
+            id,
+            vi_do,
+            kinh_do
+        } = data;
+
+        // Cập nhật vị trí marker trực tiếp từ markerMap
+        if (markerMap[id]) {
+            markerMap[id].setLatLng([vi_do, kinh_do]);
+        }
+    };
+
+    ws.onerror = function(error) {
+        console.error('WebSocket error:', error);
+    };
+
+    ws.onclose = function() {
+        console.log('WebSocket connection closed');
+    };
+    </script>
 
 </body>
+
 </html>
