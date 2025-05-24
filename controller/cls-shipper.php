@@ -281,9 +281,4 @@ class clsShipper extends ConnectDB
         $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
 }
-
-
-
