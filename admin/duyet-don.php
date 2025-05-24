@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                         <td><?= $don['ten_nguoi_gui'] ?><br><?= $don['dia_chi_nguoi_gui'] ?><br><?= $don['dia_chi_nguoi_gui_mac_dinh'] ?></td>
                         <td><?= $don['ten_nguoi_nhan'] ?><br><?= $don['dia_chi_nguoi_nhan'] ?><br><?= $don['dia_chi_nguoi_nhan_mac_dinh'] ?></td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal<?= $don['ma_don_hang'] ?>">
+                            <button type="button" class="btn btn-primary btn" data-bs-toggle="modal" data-bs-target="#modal<?= $don['ma_don_hang'] ?>">
                                 Chi tiết
                             </button>
                         </td>
@@ -79,13 +79,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                             <form method="post" style="display: inline;">
                                 <input type="hidden" name="ma_don_hang" value="<?= $don['ma_don_hang'] ?>">
                                 <input type="hidden" name="action" value="duyet">
-                                <button type="submit" class="btn btn-success btn-sm">Duyệt</button>
+                                <button type="submit" class="btn btn-success btn m-1">Duyệt</button>
                             </form>
 
                             <form method="post" style="display: inline;" onsubmit="return confirm('Bạn có chắc muốn hủy đơn này?');">
                                 <input type="hidden" name="ma_don_hang" value="<?= $don['ma_don_hang'] ?>">
                                 <input type="hidden" name="action" value="huy">
-                                <button type="submit" class="btn btn-danger btn-sm">Hủy</button>
+                                <button type="submit" class="btn btn-danger btn m-1">Hủy</button>
                             </form>
                         </td>
                     </tr>

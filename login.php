@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="mb-3">
                                 <label for="emailorsdt" class="form-label">Email / Số điện thoại</label>
                                 <input type="text" class="form-control" id="emailorsdt" name="emailorsdt"
-                                    placeholder="Nhập Email hoặc số điện thoại">
+                                    placeholder="Nhập Email">
                                 <span class="text-danger" id="emailorsdt_error"></span>
                             </div>
 
