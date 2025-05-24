@@ -117,8 +117,21 @@ class clsShipper extends ConnectDB
     {
         $conn = $this->connect();
 
-        if ($trang_thai_moi == 'đang giao') {
-           
+        if ($trang_thai_moi == 'Lấy đơn hàng') 
+        {
+            $sqlInsertVanDon = "INSERT INTO van_don (ma_don_hang, id_shipper, id_buu_cuc, trang_thai, lich_su, thoi_gian_cap_nhat, ghi_chu)
+                                VALUES (?, ?, ?, ?, ?, NOW(), ?)";
+            $lich_su = date("H:i d/m/Y") . ': ' . $ghi_chu_lich_su;
+            $trang_thai = 'đang đi giao';
+            $ghi_chu = 'đang đi giao';
+
+            $stmt2 = $conn->prepare($sqlInsertVanDon);
+            $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai, $lich_su, $ghi_chu]);
+            return;
+        }
+
+        if ($trang_thai_moi == 'đang giao') 
+        {
             $sql = "SELECT ten_buu_cuc, xa_huyen_tinh FROM buu_cuc WHERE id = ?";
             $stmtbc = $conn->prepare($sql);
             $stmtbc->execute([$id_buu_cuc]);
@@ -134,7 +147,8 @@ class clsShipper extends ConnectDB
             $dia_chi_nguoi_nhan = $rowDon ? $rowDon['dia_chi_nguoi_nhan_mac_dinh'] : '';
 
             // Hàm lấy Quận + Tỉnh/TP từ địa chỉ
-            function lay_quan_tinh($dia_chi) {
+            function lay_quan_tinh($dia_chi) 
+            {
                 $parts = array_map('trim', explode(',', $dia_chi));
                 $count = count($parts);
                 return $count >= 2 ? implode(', ', array_slice($parts, -2)) : '';
@@ -143,13 +157,16 @@ class clsShipper extends ConnectDB
             $quan_tinh_buu_cuc = lay_quan_tinh($xa_huyen_tinh_buu_cuc);
             $quan_tinh_dia_chi = lay_quan_tinh($dia_chi_nguoi_nhan);
 
-                $sqlUpdateDon = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
+            $sqlUpdateDon = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
             $stmt = $conn->prepare($sqlUpdateDon);
             $stmt->execute([$trang_thai_moi, $ma_don]);
             // So sánh
-            if ($quan_tinh_buu_cuc && $quan_tinh_dia_chi && $quan_tinh_buu_cuc == $quan_tinh_dia_chi) {
+            if ($quan_tinh_buu_cuc && $quan_tinh_dia_chi && $quan_tinh_buu_cuc == $quan_tinh_dia_chi)
+            {
                 $ghi_chu = "có thể giao";
-            } else {
+            } 
+            else 
+            {
                 $ghi_chu = "đợi vận chuyển qua bưu cục khác";
             }
 
@@ -160,7 +177,9 @@ class clsShipper extends ConnectDB
             $trang_thai = 'ở bưu cục';
             $stmt2 = $conn->prepare($sqlInsertVanDon);
             $stmt2->execute([$ma_don, $id_shipper, $id_buu_cuc, $trang_thai, $lich_su, $ghi_chu]);
-        } else {
+        } 
+        else 
+        {
             $sqlUpdateDon = "UPDATE don_hang SET trang_thai = ? WHERE ma_don_hang = ?";
             $stmt = $conn->prepare($sqlUpdateDon);
             $stmt->execute([$trang_thai_moi, $ma_don]);
@@ -177,13 +196,50 @@ class clsShipper extends ConnectDB
     public function layTatCaDonHangTrongBuuCuu($id_buu_cuc)
     {
         $conn = $this->connect();
-        $sql = "SELECT dh.*
-            FROM don_hang dh
-            INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
-            WHERE dh.trang_thai = 'đang giao' AND vd.ghi_chu = 'có thể giao' And vd.trang_thai = 'ở bưu cục'
-            AND vd.id_buu_cuc = ? ORDER BY vd.thoi_gian_cap_nhat DESC";
+        $sql = "SELECT dh.*, vd.trang_thai, vd.ghi_chu, vd.thoi_gian_cap_nhat
+                FROM don_hang dh
+                INNER JOIN (
+                    SELECT vd1.*
+                    FROM van_don vd1
+                    INNER JOIN (
+                        SELECT ma_don_hang, MAX(thoi_gian_cap_nhat) AS latest_time
+                        FROM van_don
+                        GROUP BY ma_don_hang
+                    ) latest_vd 
+                    ON vd1.ma_don_hang = latest_vd.ma_don_hang AND vd1.thoi_gian_cap_nhat = latest_vd.latest_time
+                ) vd 
+                ON dh.ma_don_hang = vd.ma_don_hang
+                WHERE dh.trang_thai = 'đang giao'
+                AND vd.id_buu_cuc = ? AND vd.ghi_chu = 'có thể giao'
+                ORDER BY vd.thoi_gian_cap_nhat DESC;
+                ";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$id_buu_cuc]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function layTatCaDonHangCuaBan($id_shipper)
+    {
+        $conn = $this->connect();
+        $sql = "SELECT dh.*, vd.trang_thai, vd.ghi_chu, vd.thoi_gian_cap_nhat
+                FROM don_hang dh
+                INNER JOIN (
+                    SELECT vd1.*
+                    FROM van_don vd1
+                    INNER JOIN (
+                        SELECT ma_don_hang, MAX(thoi_gian_cap_nhat) AS latest_time
+                        FROM van_don
+                        GROUP BY ma_don_hang
+                    ) latest_vd 
+                    ON vd1.ma_don_hang = latest_vd.ma_don_hang AND vd1.thoi_gian_cap_nhat = latest_vd.latest_time
+                ) vd 
+                ON dh.ma_don_hang = vd.ma_don_hang
+                WHERE dh.trang_thai = 'đang giao'
+                AND vd.id_shipper = ? AND vd.ghi_chu = 'đang đi giao'
+                ORDER BY vd.thoi_gian_cap_nhat DESC;
+                ";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
