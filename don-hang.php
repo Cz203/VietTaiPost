@@ -90,33 +90,33 @@ $don_hangs = $kh->layDonHangKhachHang($ma_khach_hang);
                             </td>
                             <td>
                                 <?php
-                                $statusClass = '';
-                                switch (strtolower($don['trang_thai'])) {
-                                    case 'chờ xử lý':
-                                        $statusClass = 'status-pending';
-                                        break;
-                                    case 'chờ shipper tới lấy':
-                                        $statusClass = 'status-waiting';
-                                        break;
-                                    case 'đã lấy hàng':
-                                        $statusClass = 'status-picked';
-                                        break;
-                                    case 'đang giao':
-                                        $statusClass = 'status-delivering';
-                                        break;
-                                    case 'đã giao':
-                                        $statusClass = 'status-delivered';
-                                        break;
-                                    case 'hủy':
-                                        $statusClass = 'status-cancelled';
-                                        break;
-                                }
+                                // $statusClass = '';
+                                // switch (strtolower($don['trang_thai'])) {
+                                //     case 'chờ xử lý':
+                                //         $statusClass = 'status-pending';
+                                //         break;
+                                //     case 'chờ shipper tới lấy':
+                                //         $statusClass = 'status-waiting';
+                                //         break;
+                                //     case 'đã lấy hàng':
+                                //         $statusClass = 'status-picked';
+                                //         break;
+                                //     case 'đang giao':
+                                //         $statusClass = 'status-delivering';
+                                //         break;
+                                //     case 'đã giao':
+                                //         $statusClass = 'status-delivered';
+                                //         break;
+                                //     case 'hủy':
+                                //         $statusClass = 'status-cancelled';
+                                //         break;
+                                // }
                                 ?>
                                 <span class="status-badge <?= $statusClass ?>"><?= $don['trang_thai'] ?></span>
                             </td>
                             <td>
                                 <div class="d-flex gap-2">
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-primary " data-bs-toggle="modal"
                                         data-bs-target="#modal<?= $don['ma_don_hang'] ?>">
                                         Chi tiết
                                     </button>
@@ -227,21 +227,29 @@ $don_hangs = $kh->layDonHangKhachHang($ma_khach_hang);
                                                                     break;
                                                                 case 'đã lấy hàng':
                                                                     $hasTracking = true;
-                                                                    echo "<p><strong>✅ Đã lấy hàng:</strong><br>📌 {$vd['lich_su']}<br>👤 Shipper: {$vd['ten_shipper']} ({$vd['sdt_shipper']})</p><hr>";
+                                                                    echo "<p><strong>✅ Đã lấy hàng:</strong><br>📌 {$vd['lich_su']}</p><hr>";
                                                                     break;
-                                                                case 'đang giao':
+                                                                case 'ở bưu cục':
+                                                                    $hasTracking = true;
+                                                                    echo "<p><strong>🏢 Đang ở bưu cục:</strong><br>📌 {$vd['lich_su']}<br></p><hr>";
+                                                                    break;
+                                                                case 'trong xe':
                                                                     $hasTracking = true;
                                                                     echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br></p><hr>";
                                                                     break;
-                                                                case 'đã giao':
+                                                                case 'đang đi giao':
                                                                     $hasTracking = true;
-                                                                    echo "<p><strong>🎉 Đã giao thành công:</strong><br>📌 {$vd['lich_su']}</p>";
+                                                                    echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br>👤 Shipper: {$vd['ten_shipper']} ({$vd['sdt_shipper']})</p><hr>";
                                                                     break;
                                                                 case 'hủy':
                                                                     $hasTracking = true;
-                                                                    echo "<p><strong> Đơn hàng đã bị hủy:</strong><br>📌 {$vd['lich_su']}</p>";
+                                                                    echo "<p><strong>❌ Đã bị hủy:</strong><br>📌 {$vd['lich_su']}</p>";
                                                                     break;
-                                                            }
+                                                                 case 'giao thành công':
+                                                                    $hasTracking = true;
+                                                                    echo "<p><strong>🎉 Đã giao thành công:</strong><br>📌 {$vd['lich_su']}<br>👤 Shipper: {$vd['ten_shipper']} ({$vd['sdt_shipper']})</p>";
+                                                                    break;
+                                                                    }
                                                         }
 
                                                         if (!$hasTracking) {

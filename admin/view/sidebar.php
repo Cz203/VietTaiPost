@@ -48,6 +48,18 @@
           </li>
         </ul>
       </li>
+      <hr>
+
+      <li class="nav-item">
+        <span class="nav-link text-white"><b>Vận chuyển hàng</b></span>
+        <ul style="list-style:none; padding-left: 1rem; margin-top: 0.5rem;">
+          <li>
+            <a class="nav-link text-white" href="van-chuyen-hang.php">Vận chuyển hàng qua các bưu cục</a>
+          </li>
+        </ul>
+      </li>
+      <hr>
+
     </ul>
     <hr>
     

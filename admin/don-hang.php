@@ -98,13 +98,25 @@ $tat_ca_don_hang = $admin->layTatCaDonHang();
                                                             $hasTracking = true;
                                                             echo "<p><strong>✅ Đã lấy hàng:</strong><br>📌 {$vd['lich_su']}</p><hr>";
                                                             break;
-                                                        case 'đang giao':
+                                                        case 'ở bưu cục':
                                                             $hasTracking = true;
-                                                            echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br><small>{$vd['thoi_gian_cap_nhat']}</small></p><hr>";
+                                                            echo "<p><strong>🏢 Đang ở bưu cục:</strong><br>📌 {$vd['lich_su']}<br></p><hr>";
                                                             break;
-                                                        case 'đã giao':
+                                                         case 'trong xe':
                                                             $hasTracking = true;
-                                                            echo "<p><strong>🎉 Đã giao thành công:</strong><br>📌 {$vd['lich_su']}</p>";
+                                                            echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br></p><hr>";
+                                                            break;
+                                                        case 'đang đi giao':
+                                                            $hasTracking = true;
+                                                            echo "<p><strong>🚚 Đang giao:</strong><br>📌 {$vd['lich_su']}<br>👤 Shipper: {$vd['ten_shipper']} ({$vd['sdt_shipper']})</p><hr>";
+                                                            break;
+                                                        case 'hủy':
+                                                            $hasTracking = true;
+                                                            echo "<p><strong>❌ Đã bị hủy:</strong><br>📌 {$vd['lich_su']}</p>";
+                                                            break;
+                                                        case 'giao thành công':
+                                                            $hasTracking = true;
+                                                            echo "<p><strong>🎉 Đã giao thành công:</strong><br>📌 {$vd['lich_su']}<br>👤 Shipper: {$vd['ten_shipper']} ({$vd['sdt_shipper']})</p>";
                                                             break;
                                                     }
                                                 }
