@@ -14,9 +14,9 @@
        <li class="nav-item">
         <span class="nav-link text-white"><b>Đơn hàng</b></span>
         <ul style="list-style:none; padding-left: 1rem; margin-top: 0.5rem;">
-          <li>
+          <!-- <li>
             <a class="nav-link text-white" href="don-hang-trong-bc.php">Đơn hàng trong bưu cục</a>
-          </li>
+          </li> -->
           <!-- <li>
             <a class="nav-link text-white" href="don-hang-can-lay.php">Đơn hàng cần lấy</a>
           </li> -->
@@ -27,9 +27,9 @@
           }
           $shipper = $_SESSION['shipper'] ?? null;
           require_once '../controller/cls-shipper.php';
-          $donhang = new clsShipper();
-          $tat_ca_don_hang = $donhang->layTatCaDonHang($shipper['id']);
-          $so_don = $donhang->demDonHangCanLay($shipper['id']);
+          $sidebar = new clsShipper();
+          $tat_ca_don_hang_sidebar = $sidebar->layTatCaDonHang($shipper['id']);
+          $so_don = $sidebar->demDonHangCanLay($shipper['id']);
           ?>
 
           <li>
