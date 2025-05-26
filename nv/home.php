@@ -21,7 +21,17 @@
         <?php
         require_once 'view/header.php';
         ?>
+        <div class="container px-4 pb-5">
+            <h4 class="mt-4">Thông tin Session (print_r):</h4>
+            <pre>
+                <?php print_r($_SESSION); ?>
+            </pre>
 
+            <h4 class="mt-4">Thông tin Session (var_dump):</h4>
+            <pre>
+                <?php var_dump($_SESSION); ?>
+            </pre>
+        </div>
     </div>
 
     <script src="../asset/js/bootstrap.bundle.min.js"></script>

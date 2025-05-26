@@ -18,31 +18,32 @@ $shipper = $_SESSION['shipper'];
             <!-- <button type="button" class="btn btn-light text-dark me-2">Đăng nhập</button> -->
             <button type="button" class="btn btn-primary"><a class="text-white" href="/viettaipost/nv/logout.php">Đăng
                     xuất</a></button>
+
         </div>
     </div>
 </div>
 
 <script>
-    const idShipper = <?php echo $shipper['id']; ?>;
-    const socket = new WebSocket('ws://localhost:8080'); // đổi port nếu khác
+const idShipper = <?php echo $shipper['id']; ?>;
+const socket = new WebSocket('ws://localhost:8080'); // đổi port nếu khác
 
-    socket.onopen = () => {
-        console.log('Đã kết nối WebSocket');
+socket.onopen = () => {
+    console.log('Đã kết nối WebSocket');
 
-        // Cập nhật vị trí mỗi 5 giây
-        setInterval(() => {
-            navigator.geolocation.getCurrentPosition(position => {
-                const data = {
-                    id: idShipper,
-                    vi_do: position.coords.latitude,
-                    kinh_do: position.coords.longitude
-                };
-                socket.send(JSON.stringify(data));
-            });
-        }, 5000);
-    };
+    // Cập nhật vị trí mỗi 5 giây
+    setInterval(() => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const data = {
+                id: idShipper,
+                vi_do: position.coords.latitude,
+                kinh_do: position.coords.longitude
+            };
+            socket.send(JSON.stringify(data));
+        });
+    }, 5000);
+};
 
-    socket.onerror = (err) => {
-        console.error('Lỗi WebSocket:', err);
-    };
+socket.onerror = (err) => {
+    console.error('Lỗi WebSocket:', err);
+};
 </script>

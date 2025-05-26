@@ -21,7 +21,15 @@ class clsShipper extends ConnectDB
                 $updateStmt = $conn->prepare($updateSql);
                 $updateStmt->execute([$shipper['id']]);
 
-                $_SESSION['id'] = $shipper['id'];
+                // Lưu toàn bộ thông tin shipper vào session
+                $_SESSION['shipper'] = $shipper;
+
+
+                // Debug session
+                echo "<pre>";
+                print_r($_SESSION);
+                echo "</pre>";
+
                 return $shipper;
             }
         }
@@ -29,6 +37,24 @@ class clsShipper extends ConnectDB
         return false;
     }
 
+    //lây mail kh
+    public function layEmailKhachHangTheoMaDon($ma_don)
+    {
+        $conn = $this->connect();
+
+        $sql = "SELECT kh.email
+                FROM don_hang dh
+                JOIN khachhang kh ON dh.ma_khach_hang = kh.id_khachhang
+                WHERE dh.ma_don_hang = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ma_don]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return $row['email'];
+        }
+        return null;
+    }
     //vi tri buu cuc 
     public function buuCuc($id_buu_cuc)
     {

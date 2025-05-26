@@ -44,13 +44,13 @@ function validateLoginInput() {
   let phonePattern = /^0\d{9,10}$/;
 
   if (input === "") {
-    errorField.textContent = "Vui lòng nhập email hoặc số điện thoại!";
+    errorField.textContent = "Vui lòng nhập email";
     return false;
   }
 
   if (!emailPattern.test(input) && !phonePattern.test(input)) {
     errorField.innerHTML =
-      "📧 Email phải có <b>@gmail.com</b><br>📱 Số điện thoại phải có <b>10-11 số</b> và bắt đầu bằng <b>0</b>!";
+      "📧 Email phải có <b>@gmail.com!";
     return false;
   }
 

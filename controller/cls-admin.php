@@ -429,4 +429,23 @@ class clsAdmin extends ConnectDB
             return false;
         }
     }
+
+    //lay mail khach hang
+    public function layEmailKhachHangTheoMaDon($ma_don)
+    {
+        $conn = $this->connect();
+
+        $sql = "SELECT kh.email
+                FROM don_hang dh
+                JOIN khachhang kh ON dh.ma_khach_hang = kh.id_khachhang
+                WHERE dh.ma_don_hang = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ma_don]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return $row['email'];
+        }
+        return null;
+    }
 }

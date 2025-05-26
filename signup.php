@@ -125,9 +125,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <!-- Email / Số điện thoại -->
                         <div class="mb-3">
-                            <label for="emailorsdt" class="form-label">Email / Số điện thoại</label>
-                            <input type="text" class="form-control" id="emailorsdt" name="emailorsdt"
-                                placeholder="Nhập email hoặc số điện thoại" oninput="validateLoginInput()" />
+
+                            <label for="emailorsdt" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="emailorsdt" name="emailorsdt" placeholder="Nhập email" oninput="validateLoginInput()" />
+
+
                             <div id="login_error" class="form-text text-danger"></div>
                         </div>
 
