@@ -45,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
         $ly_do = $_POST['ly_do'];
         $donhang->capNhatTrangThaiDon($ma_don, 'hủy', $shipper['id'], $shipper['id_buu_cuc'], 'Đơn hàng đã bị hủy vì: ' . $ly_do);
         echo "<script>alert('Đã hủy đơn hàng.');</script>";
-         header("Location: don-hang-can-lay.php");
-        exit();     
+        header("Location: don-hang-can-lay.php");
+        exit();
     } elseif ($hanh_dong === 'xac_nhan_dem_ve') {
         $donhang->capNhatTrangThaiDon($ma_don, 'đang giao', $shipper['id'], $shipper['id_buu_cuc'], 'Đơn hàng của bạn đang ở bưu cục ');
         echo "<script>alert('Đã xác nhận lấy đơn hàng.');</script>";
@@ -299,7 +299,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
                                     </li>
                                 </ul>
                             </div>
-
+                            <?php if ($don['trang_thai'] === 'chờ shipper tới lấy'): ?>
+                            <a href="chatbox_shipper.php" class="btn btn-primary m-1">
+                                <i class="fas fa-comments"></i> Chat với khách hàng
+                            </a>
+                            <?php endif; ?>
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="chatbox_khachhang.php" class="btn btn-info">
+                                    <i class="fas fa-comments"></i> Chat với khách hàng (Mới)
+                                </a>
+                            </div>
                         </td>
                     </tr>
 

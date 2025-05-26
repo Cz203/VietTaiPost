@@ -19,49 +19,49 @@ session_start();
         type="text/css" />
 </head>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-    }
+body {
+    font-family: Arial, sans-serif;
+}
 
-    .user-menu {
-        position: relative;
-        display: inline-block;
-    }
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
 
-    .user-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        border: 2px solid #ccc;
-        margin-top: 11px;
-        margin-left: 20px;
-        margin-bottom: 10px;
-        border: none;
-    }
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    margin-top: 11px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    border: none;
+}
 
-    .dropdown {
-        display: none;
-        position: absolute;
-        right: 0;
-        background: white;
-        min-width: 150px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        overflow: hidden;
-        z-index: 100;
-    }
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    min-width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 100;
+}
 
-    .dropdown a {
-        display: block;
-        padding: 10px;
-        text-decoration: none;
-        color: black;
-    }
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
 
-    .dropdown a:hover {
-        background: #f1f1f1;
-    }
+.dropdown a:hover {
+    background: #f1f1f1;
+}
 </style>
 
 <body>
@@ -1580,16 +1580,16 @@ session_start();
         <div class=""></div>
     </div>
     <script>
-        function toggleDropdown() {
-            var dropdown = document.getElementById("userDropdown");
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        }
+    function toggleDropdown() {
+        var dropdown = document.getElementById("userDropdown");
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
 
-        // Đóng dropdown khi click ra ngoài
-        document.addEventListener("click", function(event) {
-            var userMenu = document.querySelector(".user-menu");
-            if (!userMenu.contains(event.target)) {
-                document.getElementById("userDropdown").style.display = "none";
-            }
-        });
+    // Đóng dropdown khi click ra ngoài
+    document.addEventListener("click", function(event) {
+        var userMenu = document.querySelector(".user-menu");
+        if (!userMenu.contains(event.target)) {
+            document.getElementById("userDropdown").style.display = "none";
+        }
+    });
     </script>

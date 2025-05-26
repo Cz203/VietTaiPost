@@ -8,7 +8,7 @@
             <button type="button" class="btn text-dark me-2">Xin chào <?php echo $_SESSION['ho_ten'] ?></button>
             <!-- <button type="button" class="btn btn-light text-dark me-2">Đăng nhập</button> -->
             <a href="logout.php" class="btn btn-primary me-2">Đăng xuất</a>
-            <a href="chat.php" class="btn btn-primary me-2">Chat</a>
+
         </div>
     </div>
 </div>

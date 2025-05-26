@@ -1,175 +1,128 @@
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 
-// Database connection
-const db = mysql.createConnection({
+// Tạo kết nối database
+const pool = mysql.createPool({
   host: "localhost",
   user: "root",
   password: "",
   database: "qlgh",
 });
 
-// Store active users
-const activeUsers = new Map();
-
 function initializeChat(io) {
-  io.on("connection", (socket) => {
-    console.log("User connected to chat:", socket.id);
+  // Lưu trữ thông tin người dùng đang online
+  const onlineUsers = new Map();
 
-    // Handle user authentication
-    socket.on("authenticate", async (data) => {
-      const { userId, userType } = data;
-      activeUsers.set(socket.id, { userId, userType });
-      console.log("User authenticated:", {
-        socketId: socket.id,
+  io.on("connection", (socket) => {
+    console.log("User connected:", socket.id);
+
+    // Xử lý khi người dùng tham gia chat
+    socket.on("join_chat", async (data) => {
+      const { userId, userType, chatRoom, userRoom } = data;
+
+      // Lưu thông tin người dùng
+      onlineUsers.set(socket.id, {
         userId,
         userType,
+        chatRoom,
+        userRoom,
       });
 
-      // Join user's personal room
-      const userRoom = `user_${userId}_${userType}`;
+      // Tham gia vào phòng chat
+      socket.join(chatRoom);
       socket.join(userRoom);
-      console.log("User joined room:", userRoom);
 
-      // Get unread messages
-      const query = `
-        SELECT * FROM messages 
-        WHERE (sender_id = ? OR receiver_id = ?) 
-        AND is_read = 0
-        ORDER BY created_at ASC
-      `;
+      // Lấy lịch sử chat
+      try {
+        const [messages] = await pool.query(
+          `SELECT * FROM messages 
+                    WHERE (sender_id = ? AND sender_type = ? AND receiver_id = ? AND receiver_type = ?)
+                    OR (sender_id = ? AND sender_type = ? AND receiver_id = ? AND receiver_type = ?)
+                    ORDER BY created_at ASC`,
+          [
+            userId,
+            userType,
+            data.receiverId,
+            data.receiverType,
+            data.receiverId,
+            data.receiverType,
+            userId,
+            userType,
+          ]
+        );
 
-      db.query(query, [userId, userId], (err, results) => {
-        if (err) {
-          console.error("Error fetching messages:", err);
-          return;
-        }
-        console.log("Fetched unread messages:", results);
-        socket.emit("unread_messages", results);
-      });
+        socket.emit("chat_history", messages);
+      } catch (error) {
+        console.error("Error fetching chat history:", error);
+      }
     });
 
-    // Handle private messages
-    socket.on("private_message", async (data) => {
-      console.log("Received private message:", data);
-      const { receiverId, receiverType, message, chatRoom, userRoom } = data;
-      const sender = activeUsers.get(socket.id);
+    // Xử lý tin nhắn mới
+    socket.on("send_message", async (data) => {
+      const { message, receiverId, receiverType, chatRoom } = data;
+      const user = onlineUsers.get(socket.id);
 
-      if (!sender) {
-        console.error("Sender not found for socket:", socket.id);
-        return;
-      }
-
-      // Kiểm tra loại người gửi và người nhận
-      if (sender.userType === receiverType) {
-        console.error("Cannot send message to same user type");
-        socket.emit("error", "Không thể gửi tin nhắn cho cùng loại người dùng");
-        return;
-      }
+      if (!user) return;
 
       try {
-        // Save message to database
-        const query = `
-          INSERT INTO messages (sender_id, sender_type, receiver_id, receiver_type, message)
-          VALUES (?, ?, ?, ?, ?)
-        `;
-
-        const [result] = await db
-          .promise()
-          .execute(query, [
-            sender.userId,
-            sender.userType,
-            receiverId,
-            receiverType,
-            message,
-          ]);
-
-        console.log("Message saved to database with ID:", result.insertId);
+        // Lưu tin nhắn vào database
+        const [result] = await pool.query(
+          `INSERT INTO messages (sender_id, sender_type, receiver_id, receiver_type, message) 
+                    VALUES (?, ?, ?, ?, ?)`,
+          [user.userId, user.userType, receiverId, receiverType, message]
+        );
 
         const messageData = {
           id: result.insertId,
-          sender_id: sender.userId,
-          sender_type: sender.userType,
+          sender_id: user.userId,
+          sender_type: user.userType,
           receiver_id: receiverId,
           receiver_type: receiverType,
           message: message,
           created_at: new Date(),
         };
 
-        // Emit to sender
-        socket.emit("message_sent", messageData);
-        console.log("Message sent to sender");
-
-        // Emit to receiver if online
-        io.to(userRoom).emit("new_message", messageData);
-        console.log("Message sent to receiver room:", userRoom);
-
-        // Emit to chat room
+        // Gửi tin nhắn đến phòng chat
         io.to(chatRoom).emit("new_message", messageData);
-        console.log("Message sent to chat room:", chatRoom);
 
-        const messageClass =
-          messageData.sender_type === currentUser.type ? "sent" : "received";
-        const messageElement = document.createElement("div");
-        messageElement.className = `message ${messageClass}`;
-        messageElement.textContent = messageData.message;
-        messageElement.setAttribute("data-id", messageData.id);
-        messageElement.setAttribute("data-sender-id", messageData.sender_id);
-        messageElement.setAttribute(
-          "data-sender-type",
-          messageData.sender_type
-        );
-        messageElement.setAttribute(
-          "data-receiver-id",
-          messageData.receiver_id
-        );
-        messageElement.setAttribute(
-          "data-receiver-type",
-          messageData.receiver_type
-        );
-        messageElement.setAttribute(
-          "data-created-at",
-          messageData.created_at.toISOString()
+        // Kiểm tra trạng thái đơn hàng
+        const [orders] = await pool.query(
+          `SELECT * FROM don_hang 
+                    WHERE ma_khach_hang = ? AND trang_thai = 'chờ shipper tới lấy'`,
+          [user.userType === "khachhang" ? user.userId : receiverId]
         );
 
-        // Append message to chat container
-        const chatContainer = document.querySelector(".chat-container");
-        chatContainer.appendChild(messageElement);
+        if (orders.length > 0) {
+          // Gửi thông báo về trạng thái đơn hàng
+          io.to(chatRoom).emit("order_status", {
+            orderId: orders[0].ma_don_hang,
+            status: orders[0].trang_thai,
+          });
+        }
       } catch (error) {
-        console.error("Error saving message to database:", error);
-        socket.emit("error", "Failed to send message");
+        console.error("Error sending message:", error);
       }
     });
 
-    // Handle message read status
-    socket.on("mark_as_read", async (messageId) => {
-      console.log("Marking message as read:", messageId);
+    // Xử lý khi người dùng đánh dấu tin nhắn đã đọc
+    socket.on("mark_as_read", async (data) => {
+      const { messageId } = data;
       try {
-        const query = `
-          UPDATE messages 
-          SET is_read = 1 
-          WHERE id = ?
-        `;
-
-        await db.promise().execute(query, [messageId]);
-        console.log("Message marked as read:", messageId);
+        await pool.query("UPDATE messages SET is_read = 1 WHERE id = ?", [
+          messageId,
+        ]);
       } catch (error) {
         console.error("Error marking message as read:", error);
       }
     });
 
-    // Handle disconnection
+    // Xử lý khi người dùng ngắt kết nối
     socket.on("disconnect", () => {
-      activeUsers.delete(socket.id);
-      console.log("User disconnected from chat:", socket.id);
+      const user = onlineUsers.get(socket.id);
+      if (user) {
+        onlineUsers.delete(socket.id);
+        console.log("User disconnected:", user.userId);
+      }
     });
-  });
-
-  db.connect((err) => {
-    if (err) {
-      console.error("Error connecting to database:", err);
-      return;
-    }
-    console.log("Connected to database successfully");
   });
 }
 

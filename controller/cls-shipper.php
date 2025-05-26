@@ -21,7 +21,15 @@ class clsShipper extends ConnectDB
                 $updateStmt = $conn->prepare($updateSql);
                 $updateStmt->execute([$shipper['id']]);
 
-                $_SESSION['id'] = $shipper['id'];
+                // Lưu toàn bộ thông tin shipper vào session
+                $_SESSION['shipper'] = $shipper;
+
+
+                // Debug session
+                echo "<pre>";
+                print_r($_SESSION);
+                echo "</pre>";
+
                 return $shipper;
             }
         }

@@ -7,8 +7,8 @@ use PHPMailer\PHPMailer\Exception;
 function sendMail($toEmail, $toName, $subject, $bodyHtml, $bodyAlt = '')
 {
     $mail = new PHPMailer(true);
-    $mail->CharSet = 'UTF-8';              
-    $mail->Encoding = 'base64';           
+    $mail->CharSet = 'UTF-8';
+    $mail->Encoding = 'base64';
 
     try {
         // Cấu hình SMTP
@@ -18,10 +18,10 @@ function sendMail($toEmail, $toName, $subject, $bodyHtml, $bodyAlt = '')
         $mail->Username = ''; //điền mail vô
         $mail->Password = ''; // điền mã app vô
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;                   
+        $mail->Port = 587;
 
         // Thông tin người gửi và người nhận
-        $mail->setFrom('', 'Viettaipost');//điền mail vô ''
+        $mail->setFrom('', 'Viettaipost'); //điền mail vô ''
         $mail->addAddress($toEmail, $toName);
 
         // Nội dung email
@@ -38,4 +38,3 @@ function sendMail($toEmail, $toName, $subject, $bodyHtml, $bodyAlt = '')
         return false;
     }
 }
-?>

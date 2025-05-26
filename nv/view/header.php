@@ -18,7 +18,7 @@ $shipper = $_SESSION['shipper'];
             <!-- <button type="button" class="btn btn-light text-dark me-2">Đăng nhập</button> -->
             <button type="button" class="btn btn-primary"><a class="text-white" href="/viettaipost/nv/logout.php">Đăng
                     xuất</a></button>
-            <a href="../chat.php" class="btn btn-primary me-2">Chat</a>
+
         </div>
     </div>
 </div>
