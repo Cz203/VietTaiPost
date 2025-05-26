@@ -90,29 +90,6 @@ $don_hangs = $kh->layDonHangKhachHang($ma_khach_hang);
                         <td><?= $don['ten_nguoi_nhan'] ?><br><?= $don['dia_chi_nguoi_nhan'] ?><br><?= $don['dia_chi_nguoi_nhan_mac_dinh'] ?>
                         </td>
                         <td>
-                            <?php
-                                // $statusClass = '';
-                                // switch (strtolower($don['trang_thai'])) {
-                                //     case 'chờ xử lý':
-                                //         $statusClass = 'status-pending';
-                                //         break;
-                                //     case 'chờ shipper tới lấy':
-                                //         $statusClass = 'status-waiting';
-                                //         break;
-                                //     case 'đã lấy hàng':
-                                //         $statusClass = 'status-picked';
-                                //         break;
-                                //     case 'đang giao':
-                                //         $statusClass = 'status-delivering';
-                                //         break;
-                                //     case 'đã giao':
-                                //         $statusClass = 'status-delivered';
-                                //         break;
-                                //     case 'hủy':
-                                //         $statusClass = 'status-cancelled';
-                                //         break;
-                                // }
-                                ?>
                             <span class="status-badge <?= $statusClass ?>"><?= $don['trang_thai'] ?></span>
                         </td>
                         <td>

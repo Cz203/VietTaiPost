@@ -88,6 +88,16 @@ class clsKhachhang extends ConnectDB
         $stmt->execute([$ma_khach_hang]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    //layDonHangTheoMa
+    public function layDonHangTheoMa($ma_don_hang)
+    {
+        $conn = $this->connect();
+        $sql = "SELECT * FROM don_hang WHERE ma_don_hang = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ma_don_hang]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     public function layVanDonTheoMaDon($ma_don_hang)
     {
