@@ -71,10 +71,11 @@ error_log("Chat Room ID: " . $chatRoomId);
     <div class="chat-container">
         <div class="chat-header">
             <div class="receiver-info">
-                <img src="../asset/img/user-avatar.png" alt="Avatar">
+
                 <div>
                     <h5 class="mb-0"><?php echo htmlspecialchars($chatPartner['ho_ten']); ?></h5>
-                    <span class="user-type">Khách hàng</span>
+                    <span class="user-type">Khách hàng - Mã đơn:
+                        <?php echo htmlspecialchars($chatPartner['ma_don_hang']); ?></span>
                 </div>
             </div>
         </div>

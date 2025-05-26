@@ -91,106 +91,106 @@ error_log("Chat Room ID: " . $chatRoomId);
 
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
-    const socket = io('http://localhost:3000');
+        const socket = io('http://localhost:3000');
 
-    // Xử lý thu gọn/mở rộng chat box
-    const chatContainer = document.querySelector('.chat-container');
-    const chatHeader = document.querySelector('.chat-header');
+        // Xử lý thu gọn/mở rộng chat box
+        const chatContainer = document.querySelector('.chat-container');
+        const chatHeader = document.querySelector('.chat-header');
 
-    chatHeader.addEventListener('click', () => {
-        chatContainer.classList.toggle('minimized');
-    });
+        chatHeader.addEventListener('click', () => {
+            chatContainer.classList.toggle('minimized');
+        });
 
-    // Truyền thông tin người dùng vào biến global
-    window.userInfo = {
-        id: <?php echo json_encode($userId); ?>,
-        type: <?php echo json_encode($userType); ?>,
-        name: <?php echo json_encode($userName); ?>,
-        chatRoom: <?php echo json_encode($chatRoomId); ?>,
-        userRoom: <?php echo json_encode($userRoomId); ?>
-    };
+        // Truyền thông tin người dùng vào biến global
+        window.userInfo = {
+            id: <?php echo json_encode($userId); ?>,
+            type: <?php echo json_encode($userType); ?>,
+            name: <?php echo json_encode($userName); ?>,
+            chatRoom: <?php echo json_encode($chatRoomId); ?>,
+            userRoom: <?php echo json_encode($userRoomId); ?>
+        };
 
-    // Tham gia phòng chat khi trang được tải
-    socket.emit('join_chat', {
-        userId: window.userInfo.id,
-        userType: window.userInfo.type,
-        receiverId: <?php echo json_encode($chatPartner['id']); ?>,
-        receiverType: 'shipper',
-        chatRoom: window.userInfo.chatRoom,
-        userRoom: window.userInfo.userRoom
-    });
+        // Tham gia phòng chat khi trang được tải
+        socket.emit('join_chat', {
+            userId: window.userInfo.id,
+            userType: window.userInfo.type,
+            receiverId: <?php echo json_encode($chatPartner['id']); ?>,
+            receiverType: 'shipper',
+            chatRoom: window.userInfo.chatRoom,
+            userRoom: window.userInfo.userRoom
+        });
 
-    // Xử lý lịch sử chat
-    socket.on('chat_history', (messages) => {
-        const chatMessages = document.getElementById('chat-messages');
-        chatMessages.innerHTML = '';
-        messages.forEach(message => {
+        // Xử lý lịch sử chat
+        socket.on('chat_history', (messages) => {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = '';
+            messages.forEach(message => {
+                appendMessage(message);
+            });
+            scrollToBottom();
+        });
+
+        // Xử lý tin nhắn mới
+        socket.on('new_message', (message) => {
             appendMessage(message);
-        });
-        scrollToBottom();
-    });
-
-    // Xử lý tin nhắn mới
-    socket.on('new_message', (message) => {
-        appendMessage(message);
-        scrollToBottom();
-    });
-
-    // Xử lý trạng thái đơn hàng
-    socket.on('order_status', (data) => {
-        const statusBadge = document.querySelector('.status-badge');
-        statusBadge.innerHTML = `<i class="fas fa-box"></i> ${data.status}`;
-    });
-
-    // Hàm thêm tin nhắn vào giao diện
-    function appendMessage(message) {
-        const chatMessages = document.getElementById('chat-messages');
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${message.sender_id == window.userInfo.id ? 'sent' : 'received'}`;
-
-        const time = new Date(message.created_at).toLocaleTimeString('vi-VN', {
-            hour: '2-digit',
-            minute: '2-digit'
+            scrollToBottom();
         });
 
-        messageDiv.innerHTML = `
+        // Xử lý trạng thái đơn hàng
+        socket.on('order_status', (data) => {
+            const statusBadge = document.querySelector('.status-badge');
+            statusBadge.innerHTML = `<i class="fas fa-box"></i> ${data.status}`;
+        });
+
+        // Hàm thêm tin nhắn vào giao diện
+        function appendMessage(message) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${message.sender_id == window.userInfo.id ? 'sent' : 'received'}`;
+
+            const time = new Date(message.created_at).toLocaleTimeString('vi-VN', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            messageDiv.innerHTML = `
             <div class="message-content">${message.message}</div>
             <div class="message-time">${time}</div>
         `;
 
-        chatMessages.appendChild(messageDiv);
-        scrollToBottom();
-    }
-
-    // Hàm cuộn xuống tin nhắn mới nhất
-    function scrollToBottom() {
-        const chatMessages = document.getElementById('chat-messages');
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    // Xử lý gửi tin nhắn
-    document.getElementById('send-button').addEventListener('click', sendMessage);
-    document.getElementById('message-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
         }
-    });
 
-    function sendMessage() {
-        const messageInput = document.getElementById('message-input');
-        const message = messageInput.value.trim();
-
-        if (message) {
-            socket.emit('send_message', {
-                message: message,
-                receiverId: <?php echo json_encode($chatPartner['id']); ?>,
-                receiverType: 'shipper',
-                chatRoom: window.userInfo.chatRoom
-            });
-
-            messageInput.value = '';
+        // Hàm cuộn xuống tin nhắn mới nhất
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-    }
+
+        // Xử lý gửi tin nhắn
+        document.getElementById('send-button').addEventListener('click', sendMessage);
+        document.getElementById('message-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value.trim();
+
+            if (message) {
+                socket.emit('send_message', {
+                    message: message,
+                    receiverId: <?php echo json_encode($chatPartner['id']); ?>,
+                    receiverType: 'shipper',
+                    chatRoom: window.userInfo.chatRoom
+                });
+
+                messageInput.value = '';
+            }
+        }
     </script>
 </body>
 
