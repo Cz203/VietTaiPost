@@ -132,12 +132,12 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "khachhang") {
         Quản lí tài khoản
       </a>
     </li>
-    <li>
+    <!-- <li>
       <a href="chatbox_khachhang.php" class="nav-link">
         <svg class="bi" width="20" height="20"><use xlink:href="#chat-dots"></use></svg>
         Chat
       </a>
-    </li>
+    </li> -->
   </ul>
   <hr>
 </div>
