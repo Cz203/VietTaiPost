@@ -161,22 +161,25 @@ showToast();
     </style>
 </head>
 
-<body>
-    <div class="admin-container row">
+<body class="d-flex">
+    <?php
+    require_once 'view/sidebar.php';
+    ?>
+
+    <div class="main-content">
         <!-- Sidebar -->
 
-        <?php require_once 'view/sidebar.php'; ?>
+         <?php
+        require_once 'view/header.php';
+        ?>
 
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="container px-4 pb-5 card border rounded-5 mt-5">
             <!-- Header -->
-            <?php require_once 'view/header.php'; ?>
-
             <!-- Content Area -->
-            <div class="container py-4 card border rounded-4 p-3">
-                <div class="text-center mb-4">
-                    <h2>Danh sách Shipper</h2>
+                <div class="text-center mt-4">
+                    <h2>Danh sách Shipper</h2><hr>
                 </div>
 
                 <div class="mb-2">
@@ -244,7 +247,6 @@ showToast();
                         </tbody>
                     </table>
                 </div>
-            </div>
         </div>
     </div>
 
