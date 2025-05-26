@@ -448,4 +448,21 @@ class clsAdmin extends ConnectDB
         }
         return null;
     }
+
+    //Doanh thu
+    public function layTongDoanhThuPhiVanChuyen() 
+    {
+        $conn = $this->connect();  // Kết nối PDO
+
+        $sql = "SELECT SUM(phi_van_chuyen) AS tong_doanh_thu FROM don_hang where trang_thai = 'đã giao'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row && $row['tong_doanh_thu'] !== null) {
+            return $row['tong_doanh_thu'];
+        }
+        return 0;
+    }
+
 }
