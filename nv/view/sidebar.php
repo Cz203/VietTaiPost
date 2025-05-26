@@ -24,15 +24,15 @@
           </li> -->
 
                 <?php
-        if (session_status() == PHP_SESSION_NONE) {
-          session_start();
-        }
-        $shipper = $_SESSION['shipper'] ?? null;
-        require_once '../controller/cls-shipper.php';
-        $sidebar = new clsShipper();
-        $tat_ca_don_hang_sidebar = $sidebar->layTatCaDonHang($shipper['id']);
-        $so_don = $sidebar->demDonHangCanLay($shipper['id']);
-        ?>
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $shipper = $_SESSION['shipper'] ?? null;
+                require_once '../controller/cls-shipper.php';
+                $sidebar = new clsShipper();
+                $tat_ca_don_hang_sidebar = $sidebar->layTatCaDonHang($shipper['id']);
+                $so_don = $sidebar->demDonHangCanLay($shipper['id']);
+                ?>
 
                 <li>
                     <a class="nav-link text-white d-flex align-items-center justify-content-between"
@@ -57,7 +57,6 @@
             <ul style="list-style:none; padding-left: 1rem; margin-top: 0.5rem;">
                 <li>
                     <a class="nav-link text-white" href="duyet-don.php">Quản lí tài khoản</a>
-                    <a class="nav-link text-white" href="chatbox_shipper.php">Chat</a>
                 </li>
             </ul>
         </li>

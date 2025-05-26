@@ -133,7 +133,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
                                             Hủy đơn hàng
                                         </button>
                                     </li>
+
                                 </ul>
+                                <?php if ($don['trang_thai'] === 'chờ shipper tới lấy'): ?>
+                                <a href="chatbox_shipper.php" class="btn btn-primary m-1">
+                                    <i class="fas fa-comments"></i>Chat
+                                </a>
+                                <?php endif; ?>
+
                             </div>
 
                             <!-- Modal nhập lý do hủy -->
@@ -299,16 +306,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
                                     </li>
                                 </ul>
                             </div>
-                            <?php if ($don['trang_thai'] === 'chờ shipper tới lấy'): ?>
-                            <a href="chatbox_shipper.php" class="btn btn-primary m-1">
-                                <i class="fas fa-comments"></i> Chat với khách hàng
-                            </a>
-                            <?php endif; ?>
-                            <div class="d-flex gap-2 mt-2">
-                                <a href="chatbox_khachhang.php" class="btn btn-info">
-                                    <i class="fas fa-comments"></i> Chat với khách hàng (Mới)
-                                </a>
-                            </div>
+
+
                         </td>
                     </tr>
 
