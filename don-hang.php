@@ -94,20 +94,19 @@ $don_hangs = $kh->layDonHangKhachHang($ma_khach_hang);
                         </td>
                         <td>
                             <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-primary " data-bs-toggle="modal"
-                                    data-bs-target="#modal<?= $don['ma_don_hang'] ?>">Chi tiết
-                                </button>
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#modal<?= $don['ma_don_hang'] ?>">Chi tiết</button>
                                 <?php if (strtolower($don['trang_thai']) == 'chờ xử lý'): ?>
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#cancelModal<?= $don['ma_don_hang'] ?>">
-                                    Hủy đơn
-                                </button>
+                                    data-bs-target="#cancelModal<?= $don['ma_don_hang'] ?>">Hủy đơn</button>
                                 <?php endif; ?>
                             </div>
                             <div class="d-flex gap-2 mt-2">
-                                <a href="chatbox_khachhang.php" class="btn btn-info">
-                                    <i class="fas fa-comments"></i>Chat
-                                </a>
+                                <?php if ($don['trang_thai'] === 'chờ shipper tới lấy'): ?>
+                                <a href="chatbox_khachhang.php?ma_don_hang=<?= $don['ma_don_hang'] ?>"
+                                    class="btn btn-info btn-sm">
+                                    <i class="fas fa-comments"></i> Chat</a>
+                                <?php endif; ?>
                             </div>
                         </td>
 

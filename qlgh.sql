@@ -208,6 +208,7 @@ INSERT INTO `van_don` (`ma_van_don`, `ma_don_hang`, `id_shipper`, `id_buu_cuc`, 
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sender_id` int(11) NOT NULL,
+  `order_id` varchar(50) NOT NULL,
   `sender_type` enum('shipper','khachhang') NOT NULL,
   `receiver_id` int(11) NOT NULL,
   `receiver_type` enum('shipper','khachhang') NOT NULL,

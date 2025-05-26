@@ -8,7 +8,8 @@ class ConnectDB
     private $password = '';
     public $conn;
 
-    public function connect() {
+    public function connect()
+    {
         try {
             $this->conn = new PDO("mysql:host=$this->host;dbname=$this->dbname;charset=utf8", $this->username, $this->password);
             return $this->conn;
@@ -17,7 +18,7 @@ class ConnectDB
         }
     }
 
-    
+
     public function connectDB1()
     {
         $conn = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
@@ -33,6 +34,4 @@ class ConnectDB
     {
         mysqli_close($conn);
     }
-
 }
-?>

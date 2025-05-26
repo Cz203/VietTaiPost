@@ -10,10 +10,12 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
 
 <?php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -136,8 +138,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
 
                                 </ul>
                                 <?php if ($don['trang_thai'] === 'chờ shipper tới lấy'): ?>
-                                <a href="chatbox_shipper.php?ma_don_hang=<?= $don['ma_don_hang'] ?>" class="btn btn-primary m-1">
-                                    <i class="fas fa-comments"></i>Chat
+                                <a href="chatbox_shipper.php?ma_don_hang=<?= $don['ma_don_hang'] ?>"
+                                    class="btn btn-primary m-1">
+                                    <i class="fas fa-comments"></i> Chat
                                 </a>
                                 <?php endif; ?>
 

@@ -16,14 +16,19 @@ class clsShipper extends ConnectDB
             $shipper = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if (password_verify($mat_khau, $shipper['mat_khau'])) {
-                // Cập nhật last_login
-                $updateSql = "UPDATE shipper SET last_login = NOW() WHERE id = ?";
+                // Cập nhật last_login và trạng thái
+                $updateSql = "UPDATE shipper SET last_login = NOW(), trang_thai = 'Đang hoạt động' WHERE id = ?";
                 $updateStmt = $conn->prepare($updateSql);
                 $updateStmt->execute([$shipper['id']]);
 
+                // Lấy thông tin mới nhất của shipper
+                $sql = "SELECT * FROM shipper WHERE id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute([$shipper['id']]);
+                $shipper = $stmt->fetch(PDO::FETCH_ASSOC);
+
                 // Lưu toàn bộ thông tin shipper vào session
                 $_SESSION['shipper'] = $shipper;
-
 
                 // Debug session
                 echo "<pre>";
