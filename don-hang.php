@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="asset/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="asset/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <style>
     .status-badge {
         padding: 5px 10px;
@@ -103,9 +104,9 @@ $don_hangs = $kh->layDonHangKhachHang($ma_khach_hang);
                             </div>
                             <div class="d-flex gap-2 mt-2">
                                 <?php if ($don['trang_thai'] === 'chờ shipper tới lấy'): ?>
-                                <a href="chatbox_khachhang.php?ma_don_hang=<?= $don['ma_don_hang'] ?>"
-                                    class="btn btn-info btn-sm">
-                                    <i class="fas fa-comments"></i> Chat</a>
+                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#chatModal<?= $don['ma_don_hang'] ?>"><i
+                                        class="fas fa-comments"></i> Chat</button>
                                 <?php endif; ?>
                             </div>
                         </td>
@@ -253,13 +254,109 @@ $don_hangs = $kh->layDonHangKhachHang($ma_khach_hang);
 
 
                     </div>
+
+                    <!-- Modal Chat -->
+                    <div class="modal fade" id="chatModal<?= $don['ma_don_hang'] ?>" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Chat với shipper</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Đóng"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe src="chatbox_khachhang.php?ma_don_hang=<?= $don['ma_don_hang'] ?>"
+                                        style="width: 100%; height: 500px; border: none;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php endforeach; ?>
                 </tbody>
 
             </table>
         </div>
 
+        <script>
+        const socket = io('http://localhost:3000');
 
+        // Xử lý tin nhắn khi modal chat được mở
+        document.querySelectorAll('[data-bs-target^="#chatModal"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-bs-target');
+                const modal = document.querySelector(modalId);
+                const iframe = modal.querySelector('iframe');
+
+                // Đợi iframe load xong
+                iframe.onload = function() {
+                    const chatWindow = iframe.contentWindow;
+
+                    // Truyền thông tin người dùng vào iframe
+                    chatWindow.userInfo = {
+                        id: <?php echo json_encode($_SESSION['id']); ?>,
+                        type: 'khachhang',
+                        name: <?php echo json_encode($_SESSION['ho_ten']); ?>,
+                        chatRoom: chatWindow.userInfo.chatRoom,
+                        userRoom: chatWindow.userInfo.userRoom
+                    };
+
+                    // Tham gia phòng chat
+                    socket.emit('join_chat', {
+                        userId: chatWindow.userInfo.id,
+                        userType: chatWindow.userInfo.type,
+                        receiverId: chatWindow.userInfo.receiverId,
+                        receiverType: 'shipper',
+                        chatRoom: chatWindow.userInfo.chatRoom,
+                        userRoom: chatWindow.userInfo.userRoom
+                    });
+                };
+            });
+        });
+
+        // Xử lý tin nhắn mới
+        socket.on('new_message', (message) => {
+            const activeModal = document.querySelector('.modal.show');
+            if (activeModal) {
+                const iframe = activeModal.querySelector('iframe');
+                if (iframe) {
+                    const chatWindow = iframe.contentWindow;
+                    if (chatWindow.appendMessage) {
+                        chatWindow.appendMessage(message);
+                    }
+                }
+            }
+        });
+
+        // Xử lý lịch sử chat
+        socket.on('chat_history', (messages) => {
+            const activeModal = document.querySelector('.modal.show');
+            if (activeModal) {
+                const iframe = activeModal.querySelector('iframe');
+                if (iframe) {
+                    const chatWindow = iframe.contentWindow;
+                    if (chatWindow.loadChatHistory) {
+                        chatWindow.loadChatHistory(messages);
+                    }
+                }
+            }
+        });
+
+        // Xử lý trạng thái đơn hàng
+        socket.on('order_status', (data) => {
+            const activeModal = document.querySelector('.modal.show');
+            if (activeModal) {
+                const iframe = activeModal.querySelector('iframe');
+                if (iframe) {
+                    const chatWindow = iframe.contentWindow;
+                    if (chatWindow.updateOrderStatus) {
+                        chatWindow.updateOrderStatus(data);
+                    }
+                }
+            }
+        });
+        </script>
+
+    </div>
 </body>
 
 </html>
