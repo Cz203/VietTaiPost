@@ -142,6 +142,49 @@ class clsKhachhang extends ConnectDB
             return false;
         }
     }
+    public function layTongSoDonHang($ma_khach_hang) {
+    $conn = $this->connect();
+    $sql = "SELECT COUNT(*) AS tong FROM don_hang WHERE ma_khach_hang = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$ma_khach_hang]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['tong'] ?? 0;
+}
+
+    public function layTongSoDonTheoTrangThai($ma_khach_hang, $trang_thai) {
+        $conn = $this->connect();
+        $sql = "SELECT COUNT(*) AS tong FROM don_hang WHERE ma_khach_hang = ? AND trang_thai = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ma_khach_hang, $trang_thai]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['tong'] ?? 0;
+    }
+
+    public function layTongPhiVanChuyen($ma_khach_hang) {
+        $conn = $this->connect();
+        $sql = "SELECT SUM(phi_van_chuyen) AS tong_phi FROM don_hang WHERE ma_khach_hang = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ma_khach_hang]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['tong_phi'] ?? 0;
+    }
+
+    public function layTongCOD($ma_khach_hang) 
+    {
+        $sql = "SELECT SUM(thu_ho) as tong_cod FROM don_hang WHERE ma_khach_hang = :makh";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['makh' => $ma_khach_hang]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['tong_cod'] ?? 0;
+    }
+   
+     public function laySoDonTheoTrangThai($ma_khach_hang, $trang_thai) 
+     {
+        $sql = "SELECT COUNT(*) FROM don_hang WHERE ma_khach_hang = :makh AND trang_thai = :trangthai";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['makh' => $ma_khach_hang, 'trangthai' => $trang_thai]);
+        return $stmt->fetchColumn();
+    }
 }
 ?>
 

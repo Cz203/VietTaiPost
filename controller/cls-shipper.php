@@ -312,4 +312,35 @@ class clsShipper extends ConnectDB
         $stmt->execute([$id_shipper]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function demDonDaGiaoThanhCongTrongThang($id_shipper) {
+    $conn = $this->connect();
+    $sql = "SELECT COUNT(DISTINCT dh.ma_don_hang) as so_don
+            FROM don_hang dh
+            INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
+            WHERE dh.trang_thai = 'đã giao'
+            AND vd.id_shipper = ?
+            AND MONTH(vd.thoi_gian_cap_nhat) = MONTH(CURRENT_DATE())
+            AND YEAR(vd.thoi_gian_cap_nhat) = YEAR(CURRENT_DATE())";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$id_shipper]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['so_don'] ?? 0;
+    }
+    
+    public function demDonCanGiao($id_shipper) {
+    $conn = $this->connect();
+    $sql = "SELECT COUNT(DISTINCT dh.ma_don_hang) as so_don
+            FROM don_hang dh
+            INNER JOIN van_don vd ON dh.ma_don_hang = vd.ma_don_hang
+            WHERE dh.trang_thai = 'đang giao'
+            AND vd.id_shipper = ?
+            AND vd.ghi_chu = 'đang đi giao'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$id_shipper]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row['so_don'] ?? 0;
+    }
+
+
 }
