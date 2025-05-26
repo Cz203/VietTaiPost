@@ -55,11 +55,13 @@ body {
 .receiver-info h5 {
   margin: 0;
   font-size: 16px;
+  color: white;
 }
 
 .user-type {
   font-size: 12px;
   opacity: 0.8;
+  color: white;
 }
 
 .chat-messages {
@@ -145,12 +147,24 @@ body {
 }
 
 .status-badge {
-  background: var(--success-color);
-  color: white;
   padding: 5px 10px;
   border-radius: 15px;
   font-size: 0.8em;
   margin-left: 10px;
+  color: white;
+}
+
+.status-badge.online {
+  background: var(--success-color);
+}
+
+.status-badge.offline {
+  background: #dc3545;
+}
+
+.status-badge i {
+  font-size: 0.8em;
+  margin-right: 5px;
 }
 
 /* Thêm animation cho chat box */

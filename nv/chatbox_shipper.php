@@ -3,7 +3,8 @@ session_start();
 include('../config/connectdb.php');
 $db = new ConnectDB();
 $conn = $db->connectDB1();
-$ma_don_hang = $_GET['ma_don_hang'];
+
+$ma_don_hang = $_GET['ma_don_hang'] ?? null;
 // Debug session chi tiết
 
 // Kiểm tra đăng nhập
@@ -26,21 +27,31 @@ $sql = "SELECT
         FROM khachhang k 
         JOIN don_hang d ON k.id_khachhang = d.ma_khach_hang 
         JOIN van_don vd ON d.ma_don_hang = vd.ma_don_hang
-        WHERE vd.trang_thai = 'đợi lấy hàng'
-        AND vd.id_shipper = ? and vd.ma_don_hang = ?
+        WHERE vd.id_shipper = ? AND vd.ma_don_hang = ?
         ORDER BY vd.thoi_gian_cap_nhat DESC
         LIMIT 1";
 
+// Debug thông tin truy vấn
+error_log("SQL Query for shipper: " . $sql);
+error_log("Shipper ID in query: " . $userId);
+
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("is", $userId,$ma_don_hang);
+$stmt->bind_param("is", $userId, $ma_don_hang);
 $stmt->execute();
 $result = $stmt->get_result();
 $chatPartner = $result->fetch_assoc();
 
+// Debug kết quả truy vấn
+error_log("Query result: " . print_r($chatPartner, true));
+
 // Tạo ID phòng chat
-$chatRoomId = "chat_" . min($userId, $chatPartner['id_khachhang']) . "_" . max($userId, $chatPartner['id_khachhang']);
+$chatRoomId = "chat_shipper_" . $userId . "_customer_" . $chatPartner['id_khachhang'];
 $userRoomId = "user_" . $userId . "_shipper";
 
+// Debug thông tin
+error_log("Shipper ID: " . $userId);
+error_log("Customer ID: " . $chatPartner['id_khachhang']);
+error_log("Chat Room ID: " . $chatRoomId);
 
 ?>
 
@@ -65,9 +76,6 @@ $userRoomId = "user_" . $userId . "_shipper";
                     <h5 class="mb-0"><?php echo htmlspecialchars($chatPartner['ho_ten']); ?></h5>
                     <span class="user-type">Khách hàng</span>
                 </div>
-            </div>
-            <div class="status-badge">
-                <i class="fas fa-circle"></i> Online
             </div>
         </div>
 
