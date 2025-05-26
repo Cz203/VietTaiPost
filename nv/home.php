@@ -1,40 +1,75 @@
+<?php
+require_once '../controller/cls-shipper.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['shipper'])) {
+    header("Location: login.php");
+    exit();
+}
+
+
+$shipper = $_SESSION['shipper'];
+$id_shipper = $shipper['id'] ?? 1;
+// Lấy số liệu thống kê
+$donhang = new clsShipper();
+$so_don_da_giao = $donhang->demDonDaGiaoThanhCongTrongThang($id_shipper);
+$so_don_can_lay = $donhang->demDonHangCanLay($id_shipper);
+$so_don_can_giao = $donhang->demDonCanGiao($id_shipper);
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
     <meta charset="UTF-8">
-    <title>Trang chủ nhân viên</title>
+    <title>Dashboard Shipper</title>
     <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../asset/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body class="d-flex">
     <?php
     require_once 'view/sidebar.php';
-    require_once '../controller/cls-shipper.php';
-
-
     ?>
-
     <div class="main-content">
         <?php
         require_once 'view/header.php';
         ?>
-        <div class="container px-4 pb-5">
-            <h4 class="mt-4">Thông tin Session (print_r):</h4>
-            <pre>
-                <?php print_r($_SESSION); ?>
-            </pre>
+<div class="container px-4 pb-5 card border rounded-4 mt-5 py-4">
+        <h1>Thống kê đơn hàng cho Shipper</h1>
 
-            <h4 class="mt-4">Thông tin Session (var_dump):</h4>
-            <pre>
-                <?php var_dump($_SESSION); ?>
-            </pre>
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">Đơn đã giao thành công (Tháng này)</div>
+                    <div class="card-body">
+                        <h3 class="card-title"><?= $so_don_da_giao ?></h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-header">Đơn cần lấy</div>
+                    <div class="card-body">
+                        <h3 class="card-title"><?= $so_don_can_lay ?></h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-header">Đơn cần giao</div>
+                    <div class="card-body">
+                        <h3 class="card-title"><?= $so_don_can_giao ?></h3>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <script src="../asset/js/bootstrap.bundle.min.js"></script>
+    </div>
+    </div>
+    
 </body>
 
 </html>
