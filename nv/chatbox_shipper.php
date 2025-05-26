@@ -3,7 +3,7 @@ session_start();
 include('../config/connectdb.php');
 $db = new ConnectDB();
 $conn = $db->connectDB1();
-
+$ma_don_hang = $_GET['ma_don_hang'];
 // Debug session chi tiết
 
 // Kiểm tra đăng nhập
@@ -27,12 +27,12 @@ $sql = "SELECT
         JOIN don_hang d ON k.id_khachhang = d.ma_khach_hang 
         JOIN van_don vd ON d.ma_don_hang = vd.ma_don_hang
         WHERE vd.trang_thai = 'đợi lấy hàng'
-        AND vd.id_shipper = ?
+        AND vd.id_shipper = ? and vd.ma_don_hang = ?
         ORDER BY vd.thoi_gian_cap_nhat DESC
         LIMIT 1";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $userId);
+$stmt->bind_param("is", $userId,$ma_don_hang);
 $stmt->execute();
 $result = $stmt->get_result();
 $chatPartner = $result->fetch_assoc();

@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
 
                                 </ul>
                                 <?php if ($don['trang_thai'] === 'chờ shipper tới lấy'): ?>
-                                <a href="chatbox_shipper.php" class="btn btn-primary m-1">
+                                <a href="chatbox_shipper.php?ma_don_hang=<?= $don['ma_don_hang'] ?>" class="btn btn-primary m-1">
                                     <i class="fas fa-comments"></i>Chat
                                 </a>
                                 <?php endif; ?>
