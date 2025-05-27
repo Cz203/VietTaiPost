@@ -15,13 +15,13 @@ function sendMail($toEmail, $toName, $subject, $bodyHtml, $bodyAlt = '')
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = ''; //điền mail vô
+        $mail->Username = 'buianhtai4903@gmail.com'; //điền mail vô
         $mail->Password = ''; // điền mã app vô
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
         // Thông tin người gửi và người nhận
-        $mail->setFrom('', 'Viettaipost'); //điền mail vô ''
+        $mail->setFrom('buianhtai4903@gmail.com', 'Viettaipost'); //điền mail vô ''
         $mail->addAddress($toEmail, $toName);
 
         // Nội dung email
