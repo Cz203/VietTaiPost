@@ -138,8 +138,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
 
                                 </ul>
                                 <?php if ($don['trang_thai'] === 'chờ shipper tới lấy'): ?>
-                                <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal"
-                                    data-bs-target="#chatModal<?= $don['ma_don_hang'] ?>">
+                                <button type="button" class="btn btn-primary m-1"
+                                    onclick="openChat('<?= $don['ma_don_hang'] ?>')" data-bs-toggle="modal"
+                                    data-bs-target="#chatModal">
                                     <i class="fas fa-comments"></i> Chat
                                 </button>
                                 <?php endif; ?>
@@ -385,7 +386,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
         </div>
 
         <!-- Modal Chat -->
-        <div class="modal fade" id="chatModal<?= $don['ma_don_hang'] ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="chatModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -393,8 +394,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
                     </div>
                     <div class="modal-body">
-                        <iframe src="chatbox_shipper.php?ma_don_hang=<?= $don['ma_don_hang'] ?>"
-                            style="width: 100%; height: 500px; border: none;"></iframe>
+                        <iframe id="chatFrame" style="width: 100%; height: 500px; border: none;"></iframe>
                     </div>
                 </div>
             </div>
@@ -402,82 +402,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hanh_dong'], $_POST['
     </div>
 
     <script>
-    const socket = io('http://localhost:3000');
-
-    // Xử lý tin nhắn khi modal chat được mở
-    document.querySelectorAll('[data-bs-target^="#chatModal"]').forEach(button => {
-        button.addEventListener('click', function() {
-            const modalId = this.getAttribute('data-bs-target');
-            const modal = document.querySelector(modalId);
-            const iframe = modal.querySelector('iframe');
-
-            // Đợi iframe load xong
-            iframe.onload = function() {
-                const chatWindow = iframe.contentWindow;
-
-                // Truyền thông tin người dùng vào iframe
-                chatWindow.userInfo = {
-                    id: <?php echo json_encode($shipper['id']); ?>,
-                    type: 'shipper',
-                    name: <?php echo json_encode($shipper['ho_ten']); ?>,
-                    chatRoom: chatWindow.userInfo.chatRoom,
-                    userRoom: chatWindow.userInfo.userRoom
-                };
-
-                // Tham gia phòng chat
-                socket.emit('join_chat', {
-                    userId: chatWindow.userInfo.id,
-                    userType: chatWindow.userInfo.type,
-                    receiverId: chatWindow.userInfo.receiverId,
-                    receiverType: 'khachhang',
-                    chatRoom: chatWindow.userInfo.chatRoom,
-                    userRoom: chatWindow.userInfo.userRoom
-                });
-            };
-        });
-    });
-
-    // Xử lý tin nhắn mới
-    socket.on('new_message', (message) => {
-        const activeModal = document.querySelector('.modal.show');
-        if (activeModal) {
-            const iframe = activeModal.querySelector('iframe');
-            if (iframe) {
-                const chatWindow = iframe.contentWindow;
-                if (chatWindow.appendMessage) {
-                    chatWindow.appendMessage(message);
-                }
-            }
-        }
-    });
-
-    // Xử lý lịch sử chat
-    socket.on('chat_history', (messages) => {
-        const activeModal = document.querySelector('.modal.show');
-        if (activeModal) {
-            const iframe = activeModal.querySelector('iframe');
-            if (iframe) {
-                const chatWindow = iframe.contentWindow;
-                if (chatWindow.loadChatHistory) {
-                    chatWindow.loadChatHistory(messages);
-                }
-            }
-        }
-    });
-
-    // Xử lý trạng thái đơn hàng
-    socket.on('order_status', (data) => {
-        const activeModal = document.querySelector('.modal.show');
-        if (activeModal) {
-            const iframe = activeModal.querySelector('iframe');
-            if (iframe) {
-                const chatWindow = iframe.contentWindow;
-                if (chatWindow.updateOrderStatus) {
-                    chatWindow.updateOrderStatus(data);
-                }
-            }
-        }
-    });
+    function openChat(maDonHang) {
+        document.getElementById('chatFrame').src = 'chatbox_shipper.php?ma_don_hang=' + maDonHang;
+    }
     </script>
 </body>
 
