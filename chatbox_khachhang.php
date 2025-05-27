@@ -91,7 +91,7 @@ error_log("Chat Room ID: " . $chatRoomId);
 
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
-        // const socket = io('http://localhost:3000');
+        const socket = io('http://localhost:3000');
 
         // Xử lý thu gọn/mở rộng chat box
         const chatContainer = document.querySelector('.chat-container');
