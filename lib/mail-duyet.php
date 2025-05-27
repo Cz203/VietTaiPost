@@ -1,11 +1,21 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '../../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 1));
+$dotenv->load();
+
+
+
+
+
 function sendMail($toEmail, $toName, $subject, $bodyHtml, $bodyAlt = '')
 {
+    $laymai = $_ENV['mail'];
+    $laycode = $_ENV['code'];
+    $laycode = str_replace('-', ' ', $laycode);
     $mail = new PHPMailer(true);
     $mail->CharSet = 'UTF-8';
     $mail->Encoding = 'base64';
@@ -15,13 +25,13 @@ function sendMail($toEmail, $toName, $subject, $bodyHtml, $bodyAlt = '')
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = ''; //điền mail vô
-        $mail->Password = ''; // điền mã app vô
+        $mail->Username = $laymai; //điền mail vô
+        $mail->Password = $laycode; // điền mã app vô
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
         // Thông tin người gửi và người nhận
-        $mail->setFrom('', 'Viettaipost'); //điền mail vô ''
+        $mail->setFrom($laymai, 'Viettaipost'); //điền mail vô ''
         $mail->addAddress($toEmail, $toName);
 
         // Nội dung email
