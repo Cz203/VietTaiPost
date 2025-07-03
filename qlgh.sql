@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 27, 2025 at 08:48 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th7 01, 2025 lúc 12:21 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `qlgh`
+-- Cơ sở dữ liệu: `qlgh`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `buu_cuc`
+-- Cấu trúc bảng cho bảng `buu_cuc`
 --
 
 CREATE TABLE `buu_cuc` (
@@ -39,7 +39,7 @@ CREATE TABLE `buu_cuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `buu_cuc`
+-- Đang đổ dữ liệu cho bảng `buu_cuc`
 --
 
 INSERT INTO `buu_cuc` (`id`, `ten_buu_cuc`, `dia_chi`, `xa_huyen_tinh`, `vi_do`, `kinh_do`, `so_dien_thoai`, `thoi_gian_tao`) VALUES
@@ -61,12 +61,13 @@ INSERT INTO `buu_cuc` (`id`, `ten_buu_cuc`, `dia_chi`, `xa_huyen_tinh`, `vi_do`,
 (16, 'Bưu cục Tân Phước', 'Số 789, ĐT865', 'TT.Mỹ Phước, Huyện Tân Phước, Tỉnh Tiền Giang', 10.4770255, 106.1953924, '02733771234', '2025-05-15 20:00:00'),
 (17, 'Bưu cục Chợ Gạo', 'Số 321, Đường 30 tháng 4', 'TT.Chợ Gạo, Huyện Chợ Gạo, Tỉnh Tiền Giang', 10.3503430, 106.4641900, '02733441234', '2025-05-15 20:00:00'),
 (18, 'Bưu cục Cai Lậy', 'Số 12, Đường Thanh Tâm', 'TT.Cai Lậy, Thị xã Cai Lậy, Tỉnh Tiền Giang', 10.4061585, 106.1193273, '02733551234', '2025-05-15 20:00:00'),
-(21, 'Bưu cục An Phú Đông', '37 đường An Phú Đông 3', 'Phường An Phú Đông, Quận 12, Thành phố Thành phố Hồ Chí Minh', 10.8540525, 106.7005464, '04321432123', '2025-05-17 04:21:14');
+(21, 'Bưu cục An Phú Đông', '37 đường An Phú Đông 3', 'Phường An Phú Đông, Quận 12, Thành phố Thành phố Hồ Chí Minh', 10.8540525, 106.7005464, '04321432123', '2025-05-17 04:21:14'),
+(22, 'buu cuc iuh', 'phuong 1 nguyen van bao', 'Phường 1, Quận Gò Vấp, Thành phố Hồ Chí Minh', 10.8221838, 106.6872067, '', '2025-05-28 00:51:40');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `don_hang`
+-- Cấu trúc bảng cho bảng `don_hang`
 --
 
 CREATE TABLE `don_hang` (
@@ -98,7 +99,7 @@ CREATE TABLE `don_hang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `don_hang`
+-- Đang đổ dữ liệu cho bảng `don_hang`
 --
 
 INSERT INTO `don_hang` (`ma_don_hang`, `ten_don_hang`, `so_luong`, `trong_luong`, `ten_nguoi_gui`, `sdt_nguoi_gui`, `ma_khach_hang`, `ten_nguoi_nhan`, `sdt_nguoi_nhan`, `dia_chi_nguoi_gui`, `dia_chi_nguoi_gui_mac_dinh`, `lat_nguoi_gui`, `lng_nguoi_gui`, `dia_chi_nguoi_nhan`, `dia_chi_nguoi_nhan_mac_dinh`, `lat_nguoi_nhan`, `lng_nguoi_nhan`, `thu_ho`, `trang_thai`, `phi_van_chuyen`, `nguoi_tra_phi`, `ngay_tao`, `thoi_gian_hen_lay`, `ngay_giao_du_kien`, `ghi_chu`) VALUES
@@ -107,12 +108,17 @@ INSERT INTO `don_hang` (`ma_don_hang`, `ten_don_hang`, `so_luong`, `trong_luong`
 ('DH6834a67b19f86', 'Ly giữ nhiệt', 1, 1000, 'Trần Gia Thuận', '4356121331', 3, 'Lê Minh Kha', '12763123', 'Số 7 Tô ngọc vân', 'Phường Thạnh Xuân, Quận 12, Thành phố Hồ Chí Minh', '10.878750109290465', '106.67749553918841', 'Y tế Hưng Thạnh', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.522158728066907', '106.28498643636705', 90000, 'hủy', 21000, 'người nhận', '2025-05-27 00:35:55', 'Cả ngày', '30/5/2025', 'ghi chú'),
 ('DH6834a7a3c2fb2', 'Tạ', 1, 1000, 'Bùi Anh Tuấn', '', 4, 'Tài ', '456', '8 tô ngọc vân', 'Phường Thạnh Xuân, Quận 12, Thành phố Hồ Chí Minh', '10.879314052155443', '106.67789250612262', 'a ', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520848331804906', '106.28713488578798', 0, 'đã giao', 21000, 'người gửi', '2025-05-27 00:40:51', 'Cả ngày', '30/5/2025', ''),
 ('DH68355697ec7b7', 'Đơn hàng ở An Phú đông', 1, 1000, 'Tô Vân', '12321', 3, 'Trần Ngọc Trân', '1231245123', 'villa an phú đông quận 12', 'Phường An Phú Đông, Quận 12, Thành phố Hồ Chí Minh', '10.853816344898052', '106.708888225895', '302 ấp hưng điền', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520574249005142', '106.28657724387021', 10000, 'đã giao', 21000, 'người gửi', '2025-05-27 13:07:19', 'Cả ngày', '30/5/2025', ''),
-('DH68355eb5f2053', 'Truyện', 1, 1999, 'Bùi Anh Tài Em', '123', 3, 'Lê Minh Quí', '12321', 'L29 lê đức thọ ', 'Phường 15, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.841972888643134', '106.67650209408382', '2131', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.521712876558766', '106.291209508672', 0, 'đã giao', 25000, 'người gửi', '2025-05-27 13:41:57', 'Cả ngày', '30/5/2025', '12312');
+('DH68355eb5f2053', 'Truyện', 1, 1999, 'Bùi Anh Tài Em', '123', 3, 'Lê Minh Quí', '12321', 'L29 lê đức thọ ', 'Phường 15, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.841972888643134', '106.67650209408382', '2131', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.521712876558766', '106.291209508672', 0, 'đã giao', 25000, 'người gửi', '2025-05-27 13:41:57', 'Cả ngày', '30/5/2025', '12312'),
+('DH68356999ab9fb', 'Truyện Cười', 1, 10000, 'Bùi Văn Long', '12321', 3, '1123asd ád', '21321', 'a ', 'Phường 5, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.82657684483532', '106.6919741034508', 'qưdasd ád', 'Xã Phú Mỹ, Huyện Tân Phước, Tỉnh Tiền Giang', '10.525615331125953', '106.33601546287537', 1293421, 'chờ shipper tới lấy', 73000, 'người nhận', '2025-05-27 14:28:25', 'Cả ngày', '30/5/2025', '123'),
+('DH6835ef2a257a5', 'Truyện', 1, 20000, 'Bùi Anh Tài', '4356121331', 3, 'Cao Mỹ Lệ', '1231245123', 'số 23 lê đức thọ', 'Phường 5, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.827506942358772', '106.69071078300477', 'dưới cầu chín hấn bên hưng điền', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520510866713886', '106.28749966621399', 500000, 'chờ xử lý', 133000, 'người nhận', '2025-05-27 23:58:18', 'Cả ngày', '30/5/2025', '1'),
+('DH6835f5ea37432', 'abc ', 1, 10000, 'Bùi Anh Tài', '4356121331', 3, 'Đinh Quốc Kiệt', '1231245123', 'lê đức thọ 72613/123', 'Phường 15, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.850436914433548', '106.67088389396669', 'khu dân cư d1 hưng thạnh', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.522300838519113', '106.28574281930925', 200000, 'hủy', 73000, 'người nhận', '2025-05-28 00:27:06', 'Chiều 13:30 - 17:30', '31/5/2025', 'a'),
+('DH6836250e5b4ff', 'Thùng nhựa Duy Tân', 2, 10, 'Việt', '0913998110', 3, 'Chí cao', '0913992110', '80/13 Đường số 8', 'Phường An Phú Đông, Quận 12, Thành phố Hồ Chí Minh', '10.857988785374413', '106.69609113510505', 'Bến đò kinh nâng, ấp hưng điền', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.520199777891367', '106.28572659240099', 50, 'chờ xử lý', 21000, 'người nhận', '2025-05-28 03:48:14', 'Cả ngày', '31/5/2025', 'Hàng to bự'),
+('DH68365cb27abc6', 'Thùng nhựa Duy Tân', 2, 3000, 'Cao Dương Quốc Việt', '0913998110', 5, 'Bùi Anh Tài', '0918726466', '30/13 Đường số 8', 'Phường 11, Quận Gò Vấp, Thành phố Hồ Chí Minh', '10.838811992172754', '106.66292206696681', 'Bến đò kinh nâng', 'Xã Hưng Thạnh, Huyện Tân Phước, Tỉnh Tiền Giang', '10.52019238045293', '106.28581414740492', 30, 'đã giao', 31000, 'người gửi', '2025-05-28 07:45:38', 'Cả ngày', '31/5/2025', 'Hàng to bự');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khachhang`
+-- Cấu trúc bảng cho bảng `khachhang`
 --
 
 CREATE TABLE `khachhang` (
@@ -126,17 +132,19 @@ CREATE TABLE `khachhang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `khachhang`
+-- Đang đổ dữ liệu cho bảng `khachhang`
 --
 
 INSERT INTO `khachhang` (`id_khachhang`, `ho_ten`, `so_dien_thoai`, `email`, `mat_khau`, `ngay_tao`, `ngay_cap_nhat`) VALUES
 (3, 'Bùi Anh Tài', '0385485869', 'buianhtai4903@gmail.com', '$2y$10$7la7hkBsOjkcSK/P4OEaUuLzrRtkELGUp51bGPjMBzyhc5Tqcoqyq', '2025-05-24 17:32:17', '2025-05-24 17:57:08'),
-(4, 'Bùi Anh Tuấn', '0385485555', 'buianhtuandasdasdasd4903@gmail.com', '$2y$10$7la7hkBsOjkcSK/P4OEaUuLzrRtkELGUp51bGPjMBzyhc5Tqcoqyq', '2025-05-24 17:32:17', '2025-05-24 17:57:08');
+(4, 'Bùi Anh Tuấn', '0385485555', 'buianhtuandasdasdasd4903@gmail.com', '$2y$10$7la7hkBsOjkcSK/P4OEaUuLzrRtkELGUp51bGPjMBzyhc5Tqcoqyq', '2025-05-24 17:32:17', '2025-05-24 17:57:08'),
+(5, 'Cao Dương Quốc Việt', '0913998110', 'caoduongvietquoc@gmail.com', '$2y$10$LgcSprIbZ6S43LYyTOCUFunQuQaRFg6UPepbUYwJ3XOSIpA/OynBO', '2025-05-27 11:54:37', '2025-05-28 00:43:24'),
+(6, 'Cao Quốc Việt', NULL, 'caoviet@gmail.com', '$2y$10$twTXzMda4Nd2HzbY.o1MluPn//TpBWhv7QNc1BS5PHF7oSgz9.B5m', '2025-05-28 00:41:28', '2025-05-28 00:41:28');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messages`
+-- Cấu trúc bảng cho bảng `messages`
 --
 
 CREATE TABLE `messages` (
@@ -150,10 +158,19 @@ CREATE TABLE `messages` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender_id`, `sender_type`, `receiver_id`, `receiver_type`, `message`, `is_read`, `created_at`) VALUES
+(34, 5, 'khachhang', 48, 'shipper', 'Chào chị', 0, '2025-05-28 00:47:24'),
+(35, 5, 'khachhang', 48, 'shipper', 'Khi nào chị tới', 0, '2025-05-28 00:47:27'),
+(36, 48, 'shipper', 5, 'khachhang', 'Em chuaanr bij toi', 0, '2025-05-28 00:48:09');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shipper`
+-- Cấu trúc bảng cho bảng `shipper`
 --
 
 CREATE TABLE `shipper` (
@@ -175,27 +192,28 @@ CREATE TABLE `shipper` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `shipper`
+-- Đang đổ dữ liệu cho bảng `shipper`
 --
 
 INSERT INTO `shipper` (`id`, `ho_ten`, `so_dien_thoai`, `mat_khau`, `id_buu_cuc`, `vi_do`, `kinh_do`, `ngay_tao`, `ngay_cap_nhat`, `trang_thai`, `cccd_truoc`, `cccd_sau`, `bang_lai_xe`, `giay_dk_xe`, `last_login`) VALUES
-(46, 'Bùi Anh Tài', '0385485869', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 1, 10.8399293, 106.6466813, '2025-05-24 16:14:09', '2025-05-24 16:34:07', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', NULL),
-(47, 'Bùi Anh Long', '0385485868', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 1, 10.8532660, 106.6630058, '2025-05-24 16:14:09', '2025-05-24 20:02:09', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-25 03:02:09'),
-(48, 'Cao Mỹ Lệ', '0385485867', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 1, 10.8280738, 106.6859282, '2025-05-24 16:14:09', '2025-05-27 06:44:28', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-27 13:44:28'),
-(49, 'Nguyễn Minh Nhật', '0385485866', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 21, 10.4857710, 106.2112824, '2025-05-24 16:14:09', '2025-05-27 06:48:12', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-27 13:24:26'),
+(46, 'Bùi Anh Tài', '0385485869', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 1, 10.8462080, 106.6631168, '2025-05-24 16:14:09', '2025-05-27 21:20:09', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-28 03:24:12'),
+(47, 'Bùi Anh Long', '0385485868', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 1, 10.8255500, 106.6805700, '2025-05-24 16:14:09', '2025-05-27 21:10:32', 'Không hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-28 00:17:51'),
+(48, 'Cao Mỹ Lệ', '0385485867', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 1, 10.8225774, 106.6872232, '2025-05-24 16:14:09', '2025-05-28 00:49:38', 'Không hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-28 07:47:55'),
+(49, 'Nguyễn Minh Nhật', '0385485866', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 21, 10.8702300, 106.6369000, '2025-05-24 16:14:09', '2025-05-27 21:08:14', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-27 13:24:26'),
 (50, 'Nguyễn Văn Lâm', '0385485865', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 21, 10.8766335, 106.6405024, '2025-05-24 16:14:09', '2025-05-24 16:34:13', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', NULL),
 (51, 'Trần Quang Vinh', '0385485864', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 21, 10.8766335, 106.6290521, '2025-05-24 16:14:09', '2025-05-24 16:34:13', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', NULL),
-(52, 'Đinh Quốc Kiệt', '0385485863', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 16, 10.4857710, 106.2112824, '2025-05-24 16:14:09', '2025-05-27 06:47:57', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-27 13:33:58'),
+(52, 'Đinh Quốc Kiệt', '0385485863', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 16, 10.8226188, 106.6871955, '2025-05-24 16:14:09', '2025-05-28 01:01:34', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-28 07:49:45'),
 (53, 'Lê Minh Quí', '0385485862', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 16, 10.5386300, 106.3341800, '2025-05-24 16:14:09', '2025-05-27 06:46:47', 'Không hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-27 13:46:35'),
-(54, 'Trần Gia Thuận', '0385485861', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 16, 10.4857710, 106.2112824, '2025-05-24 16:14:09', '2025-05-27 06:48:02', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-27 13:33:34'),
+(54, 'Trần Gia Thuận', '0385485861', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 16, 10.5252326, 106.3342902, '2025-05-24 16:14:09', '2025-05-27 08:05:36', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', '2025-05-27 15:01:48'),
 (55, 'Nguyễn Trọng Phúc', '0385485860', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 14, 10.3632900, 106.3405500, '2025-05-24 16:14:09', '2025-05-24 17:28:13', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', NULL),
 (56, 'Nguyễn Hữu Duy', '0385485859', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 14, 10.3898800, 106.3141200, '2025-05-24 16:14:09', '2025-05-24 17:29:26', 'Đang hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', NULL),
-(57, 'Nguyễn Thanh Phi', '0385485858', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 14, 10.3720400, 106.3651700, '2025-05-24 16:14:09', '2025-05-27 06:48:17', 'Không hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', NULL);
+(57, 'Nguyễn Thanh Phi', '0385485858', '$2y$10$p0gTG1cjIUuKR4232XI6ceVKa7UJ9.1WXV.2meClQYZqn9ScuyWpG', 14, 10.3720400, 106.3651700, '2025-05-24 16:14:09', '2025-05-27 06:48:17', 'Không hoạt động', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', 'uploads/shipper/1748103249_5_20_2025 5_41_13 PM.png', NULL),
+(58, 'Cao Quốc Việt', '0385485899', '$2y$10$OPr.9tx9Cmfluj4l0MpxWOYxXd2EPEjlgsYEWCiNVxNi6GVXKgJS6', 1, NULL, NULL, '2025-05-28 00:52:54', '2025-05-28 00:52:54', 'Không hoạt động', 'uploads/shipper/1748393574_339270412_1093103971406681_7793780546994289977_n.jpg', 'uploads/shipper/1748393574_339270412_1093103971406681_7793780546994289977_n.jpg', 'uploads/shipper/1748393574_339270412_1093103971406681_7793780546994289977_n.jpg', 'uploads/shipper/1748393574_339270412_1093103971406681_7793780546994289977_n.jpg', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `van_don`
+-- Cấu trúc bảng cho bảng `van_don`
 --
 
 CREATE TABLE `van_don` (
@@ -210,7 +228,7 @@ CREATE TABLE `van_don` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `van_don`
+-- Đang đổ dữ liệu cho bảng `van_don`
 --
 
 INSERT INTO `van_don` (`ma_van_don`, `ma_don_hang`, `id_shipper`, `id_buu_cuc`, `trang_thai`, `lich_su`, `thoi_gian_cap_nhat`, `ghi_chu`) VALUES
@@ -238,7 +256,6 @@ INSERT INTO `van_don` (`ma_van_don`, `ma_don_hang`, `id_shipper`, `id_buu_cuc`, 
 (178, 'DH6834a67b19f86', NULL, 21, 'trong xe', '13:29 27/05/2025: Đơn hàng của bạn đã rời Bưu cục An Phú Đông', '2025-05-27 13:29:37', NULL),
 (179, 'DH6834a7a3c2fb2', NULL, 21, 'trong xe', '13:29 27/05/2025: Đơn hàng của bạn đã rời Bưu cục An Phú Đông', '2025-05-27 13:29:38', NULL),
 (180, 'DH6834a67b19f86', NULL, 21, 'ở bưu cục', '13:29 27/05/2025: Đơn hàng của bạn đã đến Bưu cục An Phú Đông', '2025-05-27 13:29:40', 'đợi vận chuyển qua bưu cục khác'),
-(181, 'DH68355697ec7b7', NULL, 21, 'trong xe', '13:29 27/05/2025: Đơn hàng của bạn đã rời Bưu cục An Phú Đông', '2025-05-27 13:29:49', NULL),
 (182, 'DH6834a67b19f86', NULL, 21, 'trong xe', '13:29 27/05/2025: Đơn hàng của bạn đã rời Bưu cục An Phú Đông', '2025-05-27 13:29:51', NULL),
 (183, 'DH6834a7a3c2fb2', NULL, 17, 'ở bưu cục', '13:30 27/05/2025: Đơn hàng của bạn đã đến Bưu cục Chợ Gạo', '2025-05-27 13:30:05', 'đợi vận chuyển qua bưu cục khác'),
 (184, 'DH68355697ec7b7', NULL, 17, 'ở bưu cục', '13:30 27/05/2025: Đơn hàng của bạn đã đến Bưu cục Chợ Gạo', '2025-05-27 13:30:06', 'đợi vận chuyển qua bưu cục khác'),
@@ -263,32 +280,57 @@ INSERT INTO `van_don` (`ma_van_don`, `ma_don_hang`, `id_shipper`, `id_buu_cuc`, 
 (203, 'DH68355eb5f2053', NULL, 1, 'trong xe', '13:45 27/05/2025: Đơn hàng của bạn đã rời Bưu cục Lê Đức Thọ', '2025-05-27 13:45:30', NULL),
 (204, 'DH68355eb5f2053', NULL, 16, 'ở bưu cục', '13:45 27/05/2025: Đơn hàng của bạn đã đến Bưu cục Tân Phước', '2025-05-27 13:45:32', 'có thể giao'),
 (205, 'DH68355eb5f2053', 53, 16, 'đang đi giao', '13:46 27/05/2025: Đơn hàng đang được giao tới bạn', '2025-05-27 13:46:38', 'đang đi giao'),
-(206, 'DH68355eb5f2053', 53, 16, 'giao thành công', '13:46 27/05/2025: Đơn hàng của bạn đã được giao thành công', '2025-05-27 13:46:41', 'đã giao hàng');
+(206, 'DH68355eb5f2053', 53, 16, 'giao thành công', '13:46 27/05/2025: Đơn hàng của bạn đã được giao thành công', '2025-05-27 13:46:41', 'đã giao hàng'),
+(207, 'DH68356999ab9fb', 48, 1, 'đợi lấy hàng', '14:28 27/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-27 14:28:48', NULL),
+(208, 'DH683590537c1a5', 47, 1, 'đợi lấy hàng', '17:13 27/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-27 17:13:59', NULL),
+(209, 'DH683590537c1a5', 47, 1, 'đã lấy hàng', '00:24 28/05/2025: Đơn hàng đã được shipper lấy', '2025-05-28 00:24:20', NULL),
+(210, 'DH683590537c1a5', 47, 1, 'ở bưu cục', '00:24 28/05/2025: Đơn hàng của bạn đang ở bưu cục Bưu cục Lê Đức Thọ', '2025-05-28 00:24:24', 'đợi vận chuyển qua bưu cục khác'),
+(211, 'DH683590537c1a5', NULL, 1, 'trong xe', '00:24 28/05/2025: Đơn hàng của bạn đã rời Bưu cục Lê Đức Thọ', '2025-05-28 00:24:33', NULL),
+(212, 'DH683590537c1a5', NULL, 16, 'ở bưu cục', '00:24 28/05/2025: Đơn hàng của bạn đã đến Bưu cục Tân Phước', '2025-05-28 00:24:38', 'đợi vận chuyển qua bưu cục khác'),
+(213, 'DH683590537c1a5', NULL, 1, 'trong xe', '00:24 28/05/2025: Đơn hàng của bạn đã rời Bưu cục Lê Đức Thọ', '2025-05-28 00:24:40', NULL),
+(214, 'DH6835f5ea37432', 46, 1, 'đợi lấy hàng', '00:27 28/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-28 00:27:12', NULL),
+(215, 'DH6835f5ea37432', 46, 1, 'đã lấy hàng', '00:28 28/05/2025: Đơn hàng đã được shipper lấy', '2025-05-28 00:28:23', NULL),
+(216, 'DH6835f5ea37432', 46, 1, 'ở bưu cục', '00:28 28/05/2025: Đơn hàng của bạn đang ở bưu cục Bưu cục Lê Đức Thọ', '2025-05-28 00:28:24', 'đợi vận chuyển qua bưu cục khác'),
+(217, 'DH6835f5ea37432', NULL, 1, 'trong xe', '00:28 28/05/2025: Đơn hàng của bạn đã rời Bưu cục Lê Đức Thọ', '2025-05-28 00:28:35', NULL),
+(218, 'DH6835f5ea37432', NULL, 16, 'ở bưu cục', '00:28 28/05/2025: Đơn hàng của bạn đã đến Bưu cục Tân Phước', '2025-05-28 00:28:41', 'có thể giao'),
+(219, 'DH6835f5ea37432', 52, 16, 'đang đi giao', '00:29 28/05/2025: Đơn hàng đang được giao tới bạn', '2025-05-28 00:29:53', 'đang đi giao'),
+(220, 'DH68365cb27abc6', 48, 1, 'đợi lấy hàng', '07:46 28/05/2025: Đơn hàng đã được duyệt, chờ shipper tới lấy', '2025-05-28 07:46:09', NULL),
+(221, 'DH68365cb27abc6', 48, 1, 'đã lấy hàng', '07:48 28/05/2025: Đơn hàng đã được shipper lấy', '2025-05-28 07:48:43', NULL),
+(222, 'DH68365cb27abc6', 48, 1, 'ở bưu cục', '07:48 28/05/2025: Đơn hàng của bạn đang ở bưu cục Bưu cục Lê Đức Thọ', '2025-05-28 07:48:47', 'đợi vận chuyển qua bưu cục khác'),
+(223, 'DH68365cb27abc6', NULL, 1, 'trong xe', '07:49 28/05/2025: Đơn hàng của bạn đã rời Bưu cục Lê Đức Thọ', '2025-05-28 07:49:14', NULL),
+(224, 'DH68365cb27abc6', NULL, 7, 'ở bưu cục', '07:49 28/05/2025: Đơn hàng của bạn đã đến Bưu cục Nguyễn Thị Thập', '2025-05-28 07:49:20', 'đợi vận chuyển qua bưu cục khác'),
+(225, 'DH68365cb27abc6', NULL, 1, 'trong xe', '07:49 28/05/2025: Đơn hàng của bạn đã rời Bưu cục Lê Đức Thọ', '2025-05-28 07:49:23', NULL),
+(226, 'DH68365cb27abc6', NULL, 16, 'ở bưu cục', '07:49 28/05/2025: Đơn hàng của bạn đã đến Bưu cục Tân Phước', '2025-05-28 07:49:27', 'có thể giao'),
+(227, 'DH68365cb27abc6', 52, 16, 'đang đi giao', '07:49 28/05/2025: Đơn hàng đang được giao tới bạn', '2025-05-28 07:49:56', 'đang đi giao'),
+(228, 'DH6835f5ea37432', NULL, 16, 'ở bưu cục', '07:50 28/05/2025: Đơn hàng của bạn đã đến Bưu cục Tân Phước', '2025-05-28 07:50:02', 'có thể giao'),
+(229, 'DH6835f5ea37432', 52, 16, 'đang đi giao', '07:50 28/05/2025: Đơn hàng đang được giao tới bạn', '2025-05-28 07:50:03', 'đang đi giao'),
+(230, 'DH6835f5ea37432', 52, 16, 'hủy', '07:50 28/05/2025: Đơn hàng đã bị hủy vì: khach ko nghr may', '2025-05-28 07:50:18', NULL),
+(231, 'DH68365cb27abc6', 52, 16, 'giao thành công', '07:50 28/05/2025: Đơn hàng của bạn đã được giao thành công', '2025-05-28 07:50:20', 'đã giao hàng');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `buu_cuc`
+-- Chỉ mục cho bảng `buu_cuc`
 --
 ALTER TABLE `buu_cuc`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `don_hang`
+-- Chỉ mục cho bảng `don_hang`
 --
 ALTER TABLE `don_hang`
   ADD PRIMARY KEY (`ma_don_hang`);
 
 --
--- Indexes for table `khachhang`
+-- Chỉ mục cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`id_khachhang`);
 
 --
--- Indexes for table `messages`
+-- Chỉ mục cho bảng `messages`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`),
@@ -296,50 +338,50 @@ ALTER TABLE `messages`
   ADD KEY `receiver_id` (`receiver_id`);
 
 --
--- Indexes for table `shipper`
+-- Chỉ mục cho bảng `shipper`
 --
 ALTER TABLE `shipper`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `van_don`
+-- Chỉ mục cho bảng `van_don`
 --
 ALTER TABLE `van_don`
   ADD PRIMARY KEY (`ma_van_don`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `buu_cuc`
+-- AUTO_INCREMENT cho bảng `buu_cuc`
 --
 ALTER TABLE `buu_cuc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT for table `khachhang`
+-- AUTO_INCREMENT cho bảng `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `id_khachhang` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_khachhang` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `messages`
+-- AUTO_INCREMENT cho bảng `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- AUTO_INCREMENT for table `shipper`
+-- AUTO_INCREMENT cho bảng `shipper`
 --
 ALTER TABLE `shipper`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
--- AUTO_INCREMENT for table `van_don`
+-- AUTO_INCREMENT cho bảng `van_don`
 --
 ALTER TABLE `van_don`
-  MODIFY `ma_van_don` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=207;
+  MODIFY `ma_van_don` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
