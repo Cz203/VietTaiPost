@@ -1,8 +1,13 @@
-"# VietTaiPost"
-tk admin:
-adminvippro
-adminadmin
+## 🔐 Tài khoản đăng nhập demo
 
-tk shipper:
-0385485869
-123456
+### 🛠️ Tài khoản Admin:
+
+- **Username:** `adminvippro`
+- **Password:** `adminadmin`
+
+### 🚚 Tài khoản Shipper:
+
+- **Số điện thoại:** `0385485869`
+- **Mật khẩu:** `123456`
+
+Còn khách hàng Tự tạo giúp e =)))
